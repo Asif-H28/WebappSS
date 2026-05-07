@@ -3,7 +3,6 @@ import toast from 'react-hot-toast';
 import { 
   useGetAppVersionsQuery, 
   useCreateAppVersionMutation, 
-  useUpdateAppVersionMutation, 
   useDeleteAppVersionMutation 
 } from '../../store/apiSlice.ts';
 import { 
