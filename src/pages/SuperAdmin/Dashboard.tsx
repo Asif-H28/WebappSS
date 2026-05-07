@@ -22,11 +22,9 @@ import {
 const Dashboard = () => {
   const { data: versions, isLoading, isFetching, refetch } = useGetAppVersionsQuery();
   const [createAppVersion] = useCreateAppVersionMutation();
-  const [updateVersion] = useUpdateAppVersionMutation();
   const [deleteVersion] = useDeleteAppVersionMutation();
 
   const [isFormOpen, setIsFormOpen] = useState(false);
-  const [editingVersion, setEditingVersion] = useState<any>(null);
   const [deletingId, setDeletingId] = useState<string | null>(null);
 
   const [formData, setFormData] = useState({
@@ -58,11 +56,9 @@ const Dashboard = () => {
       pin: ''
     });
     setIsFormOpen(false);
-    setEditingVersion(null);
   };
 
   const handleEdit = (v: any) => {
-    setEditingVersion(v);
     setFormData({
       version: v.version,
       downloadUrl: v.downloadUrl,
