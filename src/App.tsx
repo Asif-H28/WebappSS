@@ -88,6 +88,7 @@ function App() {
             <div className="nav-links" aria-label="Section links">
               <a href="#features">Features</a>
               <a href="#roles">Who It's For</a>
+              <a href="#queries">Queries</a>
               <a href="#download">Download</a>
             </div>
             <div className="nav-actions">
@@ -116,6 +117,7 @@ function App() {
       <div className={`mobile-menu ${isMobileMenuOpen ? 'open' : ''}`} role="dialog" aria-modal="true" aria-label="Mobile navigation">
         <a href="#features" onClick={closeMobileMenu}>Features</a>
         <a href="#roles" onClick={closeMobileMenu}>Who It's For</a>
+        <a href="#queries" onClick={closeMobileMenu}>Queries</a>
         <a href="#download" onClick={closeMobileMenu}>Download</a>
         <a href="#download" className="btn btn-primary" onClick={closeMobileMenu}>
           <Download size={16} strokeWidth={2.5} />
@@ -132,14 +134,14 @@ function App() {
             <div className="hero-content">
               <div className="hero-badge">
                 <span className="hero-badge-dot"></span>
-                Built with Flutter · Free to Download
+                Built with Flutter · Enterprise Grade
               </div>
               <h1>The <span>Smarter</span> Way to Run Your School</h1>
               <p>SchoolSync brings admin, teachers, and students onto one unified platform — manage classes, attendance, exams, and communication with ease.</p>
               <div className="hero-ctas">
                 <button className="btn btn-primary btn-hero" onClick={openModal}>
                   <Download size={18} strokeWidth={2.5} />
-                  Download Free
+                  Get the App
                 </button>
                 <a href="#features" className="btn btn-ghost btn-hero">See Features</a>
               </div>
@@ -403,7 +405,7 @@ function App() {
                 Flutter App · v1.0
               </div>
               <h2 id="download-title">Download SchoolSync Today</h2>
-              <p>Get the full School Management System on your Android device — free, fast, and ready to use.</p>
+              <p>Get the full School Management System on your Android device — secure, fast, and ready to use.</p>
               <div className="download-buttons">
                 <button className="download-btn primary" onClick={() => alert('APK link coming soon!')}>
                   <Smartphone size={24} />
@@ -420,7 +422,43 @@ function App() {
                   </div>
                 </button>
               </div>
-              <p className="download-note">Free to download · Android 6.0+ required · No account needed to explore</p>
+              <p className="download-note">Secure Download · Android 6.0+ required · Organisation ID required</p>
+            </div>
+          </div>
+        </section>
+
+        {/* QUERY FORM */}
+        <section className="queries" id="queries" aria-labelledby="queries-title">
+          <div className="container">
+            <div className="section-header reveal">
+              <p className="section-tag">Have Questions?</p>
+              <h2 id="queries-title">Send us a Query</h2>
+              <p>Our team will get back to you within 24 hours to help you set up your school.</p>
+            </div>
+            <div className="query-card reveal">
+              <form className="query-form" onSubmit={(e) => { e.preventDefault(); alert('Query sent successfully!'); }}>
+                <div className="form-grid">
+                  <div className="form-group">
+                    <label htmlFor="name">Full Name</label>
+                    <input type="text" id="name" placeholder="John Doe" required />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="email">Work Email</label>
+                    <input type="email" id="email" placeholder="john@school.edu" required />
+                  </div>
+                </div>
+                <div className="form-group">
+                  <label htmlFor="school">School Name</label>
+                  <input type="text" id="school" placeholder="Greenwood High School" required />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="message">How can we help?</label>
+                  <textarea id="message" rows={4} placeholder="Tell us about your school's needs..." required></textarea>
+                </div>
+                <button type="submit" className="btn btn-primary btn-form">
+                  Submit Request
+                </button>
+              </form>
             </div>
           </div>
         </section>
