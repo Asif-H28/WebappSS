@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useAppSelector, useAppDispatch } from './store/hooks.ts';
+import { useGetAppVersionsQuery } from './store/apiSlice.ts';
 import type { RootState } from './store/index.ts';
 import { toggleTheme } from './store/themeSlice.ts';
 import { 
@@ -25,8 +26,11 @@ import {
 function App() {
   const theme = useAppSelector((state: RootState) => state.theme.mode);
   const dispatch = useAppDispatch();
+  const { data: versions } = useGetAppVersionsQuery();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const latestVersion = Array.isArray(versions) ? versions[0] : null;
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
@@ -396,18 +400,26 @@ function App() {
           </div>
         </section>
 
-        {/* DOWNLOAD SECTION */}
         <section className="download" id="download" aria-labelledby="download-title">
           <div className="container">
             <div className="download-card reveal">
               <div className="version-badge">
                 <Play size={12} fill="currentColor" />
-                Flutter App · v1.0
+                Flutter App · {latestVersion ? `v${latestVersion.version}` : 'v1.0'}
               </div>
               <h2 id="download-title">Download SchoolSync Today</h2>
               <p>Get the full School Management System on your Android device — secure, fast, and ready to use.</p>
               <div className="download-buttons">
-                <button className="download-btn primary" onClick={() => alert('APK link coming soon!')}>
+                <button 
+                  className="download-btn primary" 
+                  onClick={() => {
+                    if (latestVersion?.downloadUrl) {
+                      window.location.href = latestVersion.downloadUrl;
+                    } else {
+                      alert('APK link coming soon!');
+                    }
+                  }}
+                >
                   <Smartphone size={24} />
                   <div className="download-btn-label">
                     <span>Download for</span>
@@ -491,7 +503,16 @@ function App() {
             <h3 id="modal-title">Download SchoolSync</h3>
             <p>Choose your preferred download option:</p>
             <div className="modal-options">
-              <button className="modal-option" onClick={() => alert('APK download starting...')}>
+              <button 
+                className="modal-option" 
+                onClick={() => {
+                  if (latestVersion?.downloadUrl) {
+                    window.location.href = latestVersion.downloadUrl;
+                  } else {
+                    alert('APK download starting...');
+                  }
+                }}
+              >
                 <div className="modal-option-icon" aria-hidden="true">📱</div>
                 <div className="modal-option-text">
                   <h4>Android APK</h4>

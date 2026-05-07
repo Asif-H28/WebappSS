@@ -4,22 +4,25 @@ import { useSuperAdminSignInMutation } from '../../store/apiSlice.ts';
 import { useAppDispatch } from '../../store/hooks.ts';
 import { setCredentials } from '../../store/authSlice.ts';
 import { Lock, Mail, Loader2, ShieldCheck, ArrowRight } from 'lucide-react';
+import toast from 'react-hot-toast';
 
 const SignIn = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [signIn, { isLoading, error }] = useSuperAdminSignInMutation();
+  const [signIn, { isLoading }] = useSuperAdminSignInMutation();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    const loadingToast = toast.loading('Authenticating...');
     try {
       const result = await signIn({ email, password }).unwrap();
       dispatch(setCredentials({ token: result.token, user: result.admin }));
+      toast.success('Access Granted. Welcome back.', { id: loadingToast });
       navigate('/whitehouse/dashboard');
-    } catch (err) {
-      console.error('Failed to sign in:', err);
+    } catch (err: any) {
+      toast.error(err.data?.message || 'Invalid credentials.', { id: loadingToast });
     }
   };
 
@@ -35,11 +38,6 @@ const SignIn = () => {
         </div>
 
         <form className="auth-form" onSubmit={handleSubmit}>
-          {error && (
-            <div className="auth-error">
-              Invalid credentials. Please try again.
-            </div>
-          )}
           
           <div className="form-group">
             <label htmlFor="email">Administrative Email</label>

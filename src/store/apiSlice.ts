@@ -13,7 +13,7 @@ export const apiSlice = createApi({
       return headers;
     },
   }),
-  tagTypes: ['SuperAdmin'],
+  tagTypes: ['SuperAdmin', 'AppVersions'],
   endpoints: (builder) => ({
     superAdminSignIn: builder.mutation({
       query: (credentials) => ({
@@ -33,6 +33,36 @@ export const apiSlice = createApi({
       query: () => '/super-admin/profile',
       providesTags: ['SuperAdmin'],
     }),
+    getAppVersions: builder.query<any[], void>({
+      query: () => '/super-admin/app',
+      transformResponse: (response: any) => {
+        return Array.isArray(response) ? response : (response.data || response.versions || []);
+      },
+      providesTags: ['AppVersions'],
+    }),
+    createAppVersion: builder.mutation({
+      query: (data) => ({
+        url: '/super-admin/app',
+        method: 'POST',
+        body: data,
+      }),
+      invalidatesTags: ['AppVersions'],
+    }),
+    updateAppVersion: builder.mutation({
+      query: ({ id, ...data }) => ({
+        url: `/super-admin/app/${id}`,
+        method: 'PUT',
+        body: data,
+      }),
+      invalidatesTags: ['AppVersions'],
+    }),
+    deleteAppVersion: builder.mutation({
+      query: (id) => ({
+        url: `/super-admin/app/${id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['AppVersions'],
+    }),
   }),
 });
 
@@ -40,4 +70,8 @@ export const {
   useSuperAdminSignInMutation,
   useSuperAdminSignUpMutation,
   useGetSuperAdminProfileQuery,
+  useGetAppVersionsQuery,
+  useCreateAppVersionMutation,
+  useUpdateAppVersionMutation,
+  useDeleteAppVersionMutation,
 } = apiSlice;

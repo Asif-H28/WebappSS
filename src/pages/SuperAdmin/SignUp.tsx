@@ -4,6 +4,7 @@ import { useSuperAdminSignUpMutation } from '../../store/apiSlice.ts';
 import { useAppDispatch } from '../../store/hooks.ts';
 import { setCredentials } from '../../store/authSlice.ts';
 import { User, Mail, Lock, ShieldPlus, Loader2, ArrowRight } from 'lucide-react';
+import toast from 'react-hot-toast';
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
@@ -11,18 +12,20 @@ const SignUp = () => {
     email: '',
     password: '',
   });
-  const [signUp, { isLoading, error }] = useSuperAdminSignUpMutation();
+  const [signUp, { isLoading }] = useSuperAdminSignUpMutation();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    const loadingToast = toast.loading('Establishing authority...');
     try {
       const result = await signUp(formData).unwrap();
       dispatch(setCredentials({ token: result.token, user: result.admin }));
+      toast.success('Account created successfully!', { id: loadingToast });
       navigate('/whitehouse/dashboard');
-    } catch (err) {
-      console.error('Failed to sign up:', err);
+    } catch (err: any) {
+      toast.error(err.data?.message || 'Failed to create account.', { id: loadingToast });
     }
   };
 
@@ -42,12 +45,6 @@ const SignUp = () => {
         </div>
 
         <form className="auth-form" onSubmit={handleSubmit}>
-          {error && (
-            <div className="auth-error">
-              Failed to create account. Email might already be in use.
-            </div>
-          )}
-
           <div className="form-group">
             <label htmlFor="name">Full Name</label>
             <div className="input-wrapper">
