@@ -463,22 +463,7 @@ function App() {
           </div>
         </section>
 
-        {/* TECH STACK */}
-        <section className="tech" aria-label="Technology stack">
-          <div className="container">
-            <h3>Powered by</h3>
-            <div className="tech-pills">
-              <TechPill name="Flutter" />
-              <TechPill name="Node.js & Express" />
-              <TechPill name="MongoDB Atlas" />
-              <TechPill name="Firebase FCM" />
-              <TechPill name="Cloudinary" />
-              <TechPill name="JWT Auth" />
-              <TechPill name="Render" />
-              <TechPill name="Bcrypt" />
-            </div>
-          </div>
-        </section>
+
 
         {/* FOOTER */}
         <footer>
@@ -555,13 +540,6 @@ function RoleCard({ icon, iconBg, title, description, list }: { icon: string, ic
   );
 }
 
-function TechPill({ name }: { name: string }) {
-  return (
-    <span className="tech-pill">
-      <span className="tech-pill-dot"></span>
-      {name}
-    </span>
-  );
-}
+
 
 export default App;

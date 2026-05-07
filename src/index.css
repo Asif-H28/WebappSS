@@ -240,12 +240,6 @@ p { text-wrap: pretty; max-width: 72ch; }
   .btn-form { align-self: stretch; }
 }
 
-/* ===== TECH STACK ===== */
-.tech { padding: clamp(var(--space-12), 6vw, var(--space-20)) 0; border-top: 1px solid var(--color-border); }
-.tech h3 { text-align: center; font-size: var(--text-sm); text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-text-faint); font-weight: 600; margin-bottom: var(--space-8); }
-.tech-pills { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: var(--space-3); }
-.tech-pill { display: flex; align-items: center; gap: var(--space-2); padding: var(--space-2) var(--space-4); border: 1px solid var(--color-border); border-radius: var(--radius-full); font-size: var(--text-xs); color: var(--color-text-muted); font-weight: 500; background: var(--color-surface); }
-.tech-pill-dot { width: 6px; height: 6px; border-radius: var(--radius-full); background: var(--color-primary); }
 
 /* ===== FOOTER ===== */
 footer { padding: var(--space-10) 0; border-top: 1px solid var(--color-border); }
