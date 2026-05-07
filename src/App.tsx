@@ -76,14 +76,14 @@ function App() {
       <nav className="nav" role="navigation" aria-label="Main navigation">
         <div className="container--wide">
           <div className="nav-inner">
-            <a href="#" className="nav-logo" aria-label="EduSync home">
+            <a href="#" className="nav-logo" aria-label="SchoolSync home">
               <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
                 <rect x="2" y="2" width="24" height="24" rx="7" fill="currentColor" opacity="0.15"/>
                 <path d="M7 10.5L14 7L21 10.5V17.5L14 21L7 17.5V10.5Z" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round"/>
                 <path d="M14 7V21M7 10.5L21 10.5" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round" opacity="0.5"/>
                 <circle cx="14" cy="14" r="2" fill="currentColor"/>
               </svg>
-              EduSync
+              SchoolSync
             </a>
             <div className="nav-links" aria-label="Section links">
               <a href="#features">Features</a>
@@ -135,7 +135,7 @@ function App() {
                 Built with Flutter · Free to Download
               </div>
               <h1>The <span>Smarter</span> Way to Run Your School</h1>
-              <p>EduSync brings admin, teachers, and students onto one unified platform — manage classes, attendance, exams, and communication with ease.</p>
+              <p>SchoolSync brings admin, teachers, and students onto one unified platform — manage classes, attendance, exams, and communication with ease.</p>
               <div className="hero-ctas">
                 <button className="btn btn-primary btn-hero" onClick={openModal}>
                   <Download size={18} strokeWidth={2.5} />
@@ -204,7 +204,7 @@ function App() {
                 </div>
               </div>
               <div className="phone-wrap reveal">
-                <div className="phone" role="img" aria-label="EduSync app screen mockup">
+                <div className="phone" role="img" aria-label="SchoolSync app screen mockup">
                   <div className="phone-notch"></div>
                   <div className="phone-screen">
                     <div className="phone-status">
@@ -402,7 +402,7 @@ function App() {
                 <Play size={12} fill="currentColor" />
                 Flutter App · v1.0
               </div>
-              <h2 id="download-title">Download EduSync Today</h2>
+              <h2 id="download-title">Download SchoolSync Today</h2>
               <p>Get the full School Management System on your Android device — free, fast, and ready to use.</p>
               <div className="download-buttons">
                 <button className="download-btn primary" onClick={() => alert('APK link coming soon!')}>
@@ -452,9 +452,9 @@ function App() {
                   <path d="M7 10.5L14 7L21 10.5V17.5L14 21L7 17.5V10.5Z" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round"/>
                   <circle cx="14" cy="14" r="2" fill="currentColor"/>
                 </svg>
-                EduSync — School Management System
+                SchoolSync — School Management System
               </div>
-              <p className="footer-copy">Built with Flutter & Node.js · Designed for real schools</p>
+              <p className="footer-copy">Powered by SchoolSync · All Rights Reserved</p>
             </div>
           </div>
         </footer>
@@ -465,7 +465,7 @@ function App() {
         <div className={`modal-overlay ${isModalOpen ? 'open' : ''}`} role="dialog" aria-modal="true" aria-labelledby="modal-title" onClick={(e) => e.target === e.currentTarget && closeModal()}>
           <div className="modal">
             <button className="modal-close" onClick={closeModal} aria-label="Close modal">×</button>
-            <h3 id="modal-title">Download EduSync</h3>
+            <h3 id="modal-title">Download SchoolSync</h3>
             <p>Choose your preferred download option:</p>
             <div className="modal-options">
               <button className="modal-option" onClick={() => alert('APK download starting...')}>
