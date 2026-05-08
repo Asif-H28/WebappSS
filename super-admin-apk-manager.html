@@ -1,656 +1,1533 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>EduSync Super Admin — APK Manager</title>
-<meta name="description" content="Super Admin panel for managing EduSync Flutter app versions and APK download links.">
-<link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,600,700&display=swap" rel="stylesheet">
-<style>
-/* ===== ART DIRECTION =====
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SchoolSync Super Admin — APK Manager</title>
+  <meta name="description"
+    content="Super Admin panel for managing SchoolSync Flutter app versions and APK download links.">
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,600,700&display=swap" rel="stylesheet">
+  <style>
+    /* ===== ART DIRECTION =====
    Concept: Super Admin dashboard → authoritative, precise, minimal
-   Palette: Deep slate surfaces, teal accent (consistent with EduSync brand)
+   Palette: Deep slate surfaces, teal accent (consistent with SchoolSync brand)
    Typography: Satoshi (body) only — no display font, this is a tool not editorial
    Density: Dense, data-focused
    ========================= */
 
-:root, [data-theme="light"] {
-  --text-xs:   clamp(0.75rem,  0.7rem  + 0.25vw, 0.875rem);
-  --text-sm:   clamp(0.875rem, 0.8rem  + 0.35vw, 1rem);
-  --text-base: clamp(1rem,     0.95rem + 0.25vw, 1.125rem);
-  --text-lg:   clamp(1.125rem, 1rem    + 0.75vw, 1.5rem);
-  --text-xl:   clamp(1.5rem,   1.2rem  + 1.25vw, 2.25rem);
+    :root,
+    [data-theme="light"] {
+      --text-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
+      --text-sm: clamp(0.875rem, 0.8rem + 0.35vw, 1rem);
+      --text-base: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+      --text-lg: clamp(1.125rem, 1rem + 0.75vw, 1.5rem);
+      --text-xl: clamp(1.5rem, 1.2rem + 1.25vw, 2.25rem);
 
-  --space-1:0.25rem;--space-2:0.5rem;--space-3:0.75rem;--space-4:1rem;
-  --space-5:1.25rem;--space-6:1.5rem;--space-8:2rem;--space-10:2.5rem;
-  --space-12:3rem;--space-16:4rem;
+      --space-1: 0.25rem;
+      --space-2: 0.5rem;
+      --space-3: 0.75rem;
+      --space-4: 1rem;
+      --space-5: 1.25rem;
+      --space-6: 1.5rem;
+      --space-8: 2rem;
+      --space-10: 2.5rem;
+      --space-12: 3rem;
+      --space-16: 4rem;
 
-  --radius-sm:0.375rem;--radius-md:0.5rem;--radius-lg:0.75rem;
-  --radius-xl:1rem;--radius-full:9999px;
-  --transition-interactive:180ms cubic-bezier(0.16,1,0.3,1);
+      --radius-sm: 0.375rem;
+      --radius-md: 0.5rem;
+      --radius-lg: 0.75rem;
+      --radius-xl: 1rem;
+      --radius-full: 9999px;
+      --transition-interactive: 180ms cubic-bezier(0.16, 1, 0.3, 1);
 
-  /* Light surfaces */
-  --color-bg:            #f4f5f7;
-  --color-surface:       #ffffff;
-  --color-surface-2:     #f8f9fa;
-  --color-surface-offset:#eef0f3;
-  --color-divider:       #e1e4e8;
-  --color-border:        oklch(0.3 0 0 / 0.1);
-  --color-text:          #0f1117;
-  --color-text-muted:    #5c6070;
-  --color-text-faint:    #9ba3af;
-  --color-text-inverse:  #ffffff;
-  --color-primary:       #01696f;
-  --color-primary-hover: #0c4e54;
-  --color-primary-active:#0f3638;
-  --color-primary-highlight:#d0e9e9;
-  --color-success:       #1a7f4b;
-  --color-success-bg:    #dcf5e9;
-  --color-warning:       #996600;
-  --color-warning-bg:    #fff3cd;
-  --color-error:         #b91c1c;
-  --color-error-bg:      #fee2e2;
-  --color-latest-bg:     #d0e9e9;
-  --color-latest-text:   #01696f;
-  --shadow-sm:0 1px 2px oklch(0.2 0.01 80/0.06);
-  --shadow-md:0 4px 12px oklch(0.2 0.01 80/0.08);
-  --shadow-lg:0 12px 32px oklch(0.2 0.01 80/0.12);
-  --content-wide:1200px;
-  --font-body:'Satoshi','Inter',sans-serif;
-  --sidebar-w:240px;
-}
+      /* Light surfaces */
+      --color-bg: #f4f5f7;
+      --color-surface: #ffffff;
+      --color-surface-2: #f8f9fa;
+      --color-surface-offset: #eef0f3;
+      --color-divider: #e1e4e8;
+      --color-border: oklch(0.3 0 0 / 0.1);
+      --color-text: #0f1117;
+      --color-text-muted: #5c6070;
+      --color-text-faint: #9ba3af;
+      --color-text-inverse: #ffffff;
+      --color-primary: #01696f;
+      --color-primary-hover: #0c4e54;
+      --color-primary-active: #0f3638;
+      --color-primary-highlight: #d0e9e9;
+      --color-success: #1a7f4b;
+      --color-success-bg: #dcf5e9;
+      --color-warning: #996600;
+      --color-warning-bg: #fff3cd;
+      --color-error: #b91c1c;
+      --color-error-bg: #fee2e2;
+      --color-latest-bg: #d0e9e9;
+      --color-latest-text: #01696f;
+      --shadow-sm: 0 1px 2px oklch(0.2 0.01 80/0.06);
+      --shadow-md: 0 4px 12px oklch(0.2 0.01 80/0.08);
+      --shadow-lg: 0 12px 32px oklch(0.2 0.01 80/0.12);
+      --content-wide: 1200px;
+      --font-body: 'Satoshi', 'Inter', sans-serif;
+      --sidebar-w: 240px;
+    }
 
-[data-theme="dark"] {
-  --color-bg:            #0d1117;
-  --color-surface:       #161b22;
-  --color-surface-2:     #1c2333;
-  --color-surface-offset:#1a2030;
-  --color-divider:       #21262d;
-  --color-border:        oklch(1 0 0 / 0.08);
-  --color-text:          #e6edf3;
-  --color-text-muted:    #8b949e;
-  --color-text-faint:    #484f58;
-  --color-text-inverse:  #0d1117;
-  --color-primary:       #4ecdc4;
-  --color-primary-hover: #3abdb4;
-  --color-primary-active:#2da8a0;
-  --color-primary-highlight:#112929;
-  --color-success:       #4ade80;
-  --color-success-bg:    #052e16;
-  --color-warning:       #fbbf24;
-  --color-warning-bg:    #1c1200;
-  --color-error:         #f87171;
-  --color-error-bg:      #1c0808;
-  --color-latest-bg:     #112929;
-  --color-latest-text:   #4ecdc4;
-  --shadow-sm:0 1px 2px oklch(0 0 0/0.25);
-  --shadow-md:0 4px 12px oklch(0 0 0/0.35);
-  --shadow-lg:0 12px 32px oklch(0 0 0/0.5);
-}
+    [data-theme="dark"] {
+      --color-bg: #0d1117;
+      --color-surface: #161b22;
+      --color-surface-2: #1c2333;
+      --color-surface-offset: #1a2030;
+      --color-divider: #21262d;
+      --color-border: oklch(1 0 0 / 0.08);
+      --color-text: #e6edf3;
+      --color-text-muted: #8b949e;
+      --color-text-faint: #484f58;
+      --color-text-inverse: #0d1117;
+      --color-primary: #4ecdc4;
+      --color-primary-hover: #3abdb4;
+      --color-primary-active: #2da8a0;
+      --color-primary-highlight: #112929;
+      --color-success: #4ade80;
+      --color-success-bg: #052e16;
+      --color-warning: #fbbf24;
+      --color-warning-bg: #1c1200;
+      --color-error: #f87171;
+      --color-error-bg: #1c0808;
+      --color-latest-bg: #112929;
+      --color-latest-text: #4ecdc4;
+      --shadow-sm: 0 1px 2px oklch(0 0 0/0.25);
+      --shadow-md: 0 4px 12px oklch(0 0 0/0.35);
+      --shadow-lg: 0 12px 32px oklch(0 0 0/0.5);
+    }
 
-@media(prefers-color-scheme:dark){:root:not([data-theme]){
-  --color-bg:#0d1117;--color-surface:#161b22;--color-surface-2:#1c2333;
-  --color-surface-offset:#1a2030;--color-divider:#21262d;
-  --color-border:oklch(1 0 0/0.08);--color-text:#e6edf3;
-  --color-text-muted:#8b949e;--color-text-faint:#484f58;
-  --color-text-inverse:#0d1117;--color-primary:#4ecdc4;
-  --color-primary-hover:#3abdb4;--color-primary-active:#2da8a0;
-  --color-primary-highlight:#112929;--color-success:#4ade80;
-  --color-success-bg:#052e16;--color-warning:#fbbf24;--color-warning-bg:#1c1200;
-  --color-error:#f87171;--color-error-bg:#1c0808;
-  --color-latest-bg:#112929;--color-latest-text:#4ecdc4;
-  --shadow-sm:0 1px 2px oklch(0 0 0/0.25);--shadow-md:0 4px 12px oklch(0 0 0/0.35);
-  --shadow-lg:0 12px 32px oklch(0 0 0/0.5);
-}}
+    @media(prefers-color-scheme:dark) {
+      :root:not([data-theme]) {
+        --color-bg: #0d1117;
+        --color-surface: #161b22;
+        --color-surface-2: #1c2333;
+        --color-surface-offset: #1a2030;
+        --color-divider: #21262d;
+        --color-border: oklch(1 0 0/0.08);
+        --color-text: #e6edf3;
+        --color-text-muted: #8b949e;
+        --color-text-faint: #484f58;
+        --color-text-inverse: #0d1117;
+        --color-primary: #4ecdc4;
+        --color-primary-hover: #3abdb4;
+        --color-primary-active: #2da8a0;
+        --color-primary-highlight: #112929;
+        --color-success: #4ade80;
+        --color-success-bg: #052e16;
+        --color-warning: #fbbf24;
+        --color-warning-bg: #1c1200;
+        --color-error: #f87171;
+        --color-error-bg: #1c0808;
+        --color-latest-bg: #112929;
+        --color-latest-text: #4ecdc4;
+        --shadow-sm: 0 1px 2px oklch(0 0 0/0.25);
+        --shadow-md: 0 4px 12px oklch(0 0 0/0.35);
+        --shadow-lg: 0 12px 32px oklch(0 0 0/0.5);
+      }
+    }
 
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-html{-webkit-font-smoothing:antialiased;scroll-behavior:smooth;}
-body{min-height:100dvh;font-family:var(--font-body);font-size:var(--text-sm);color:var(--color-text);background:var(--color-bg);display:flex;transition:background var(--transition-interactive),color var(--transition-interactive);}
-img,svg{display:block;max-width:100%;}
-ul{list-style:none;}
-button{cursor:pointer;background:none;border:none;font:inherit;color:inherit;}
-input,textarea,select{font:inherit;color:inherit;}
-h1,h2,h3,h4{text-wrap:balance;line-height:1.2;}
-:focus-visible{outline:2px solid var(--color-primary);outline-offset:3px;border-radius:var(--radius-sm);}
-@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:0.01ms!important;transition-duration:0.01ms!important;}}
-a,button,[role="button"],input,textarea,select{transition:color var(--transition-interactive),background var(--transition-interactive),border-color var(--transition-interactive),box-shadow var(--transition-interactive),opacity var(--transition-interactive);}
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-/* ===== AUTH SCREEN ===== */
-.auth-screen{display:flex;align-items:center;justify-content:center;min-height:100dvh;width:100%;background:var(--color-bg);padding:var(--space-4);}
-.auth-card{background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-xl);padding:var(--space-10);width:100%;max-width:400px;box-shadow:var(--shadow-lg);}
-.auth-logo{display:flex;align-items:center;gap:var(--space-3);margin-bottom:var(--space-8);}
-.auth-logo svg{color:var(--color-primary);}
-.auth-logo-text{font-size:var(--text-base);font-weight:700;color:var(--color-text);}
-.auth-logo-sub{font-size:var(--text-xs);color:var(--color-text-muted);}
-.auth-card h1{font-size:var(--text-lg);font-weight:700;margin-bottom:var(--space-2);}
-.auth-card p{font-size:var(--text-sm);color:var(--color-text-muted);margin-bottom:var(--space-8);max-width:none;}
-.form-group{margin-bottom:var(--space-5);}
-.form-label{display:block;font-size:var(--text-xs);font-weight:600;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:var(--space-2);}
-.form-input{width:100%;padding:var(--space-3) var(--space-4);background:var(--color-bg);border:1px solid var(--color-border);border-radius:var(--radius-md);font-size:var(--text-sm);color:var(--color-text);outline:none;}
-.form-input:focus{border-color:var(--color-primary);box-shadow:0 0 0 3px oklch(from var(--color-primary) l c h/0.15);}
-.form-input::placeholder{color:var(--color-text-faint);}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:var(--space-2);padding:var(--space-3) var(--space-5);border-radius:var(--radius-md);font-size:var(--text-sm);font-weight:600;cursor:pointer;border:none;white-space:nowrap;min-height:40px;}
-.btn-primary{background:var(--color-primary);color:var(--color-text-inverse);}
-.btn-primary:hover{background:var(--color-primary-hover);}
-.btn-primary:active{background:var(--color-primary-active);}
-.btn-ghost{background:transparent;color:var(--color-text-muted);border:1px solid var(--color-border);}
-.btn-ghost:hover{color:var(--color-text);border-color:oklch(from var(--color-text) l c h/0.25);}
-.btn-danger{background:var(--color-error-bg);color:var(--color-error);border:1px solid oklch(from var(--color-error) l c h/0.3);}
-.btn-danger:hover{background:var(--color-error);color:#fff;}
-.btn-sm{padding:var(--space-2) var(--space-3);font-size:var(--text-xs);min-height:32px;}
-.btn-full{width:100%;}
-.auth-error{background:var(--color-error-bg);color:var(--color-error);border:1px solid oklch(from var(--color-error) l c h/0.3);border-radius:var(--radius-md);padding:var(--space-3) var(--space-4);font-size:var(--text-xs);margin-bottom:var(--space-5);display:none;}
-.auth-error.show{display:block;}
+    html {
+      -webkit-font-smoothing: antialiased;
+      scroll-behavior: smooth;
+    }
 
-/* ===== SIDEBAR ===== */
-.sidebar{width:var(--sidebar-w);min-height:100dvh;background:var(--color-surface);border-right:1px solid var(--color-border);display:flex;flex-direction:column;position:fixed;left:0;top:0;bottom:0;z-index:50;transition:transform var(--transition-interactive);}
-.sidebar-header{padding:var(--space-5) var(--space-5) var(--space-4);border-bottom:1px solid var(--color-border);}
-.sidebar-logo{display:flex;align-items:center;gap:var(--space-3);}
-.sidebar-logo svg{color:var(--color-primary);flex-shrink:0;}
-.sidebar-logo-text{font-weight:700;font-size:var(--text-sm);color:var(--color-text);}
-.sidebar-logo-badge{font-size:var(--text-xs);color:var(--color-primary);font-weight:600;background:var(--color-primary-highlight);padding:2px 8px;border-radius:var(--radius-full);margin-top:2px;}
-.sidebar-nav{flex:1;padding:var(--space-4) var(--space-3);display:flex;flex-direction:column;gap:var(--space-1);}
-.nav-item{display:flex;align-items:center;gap:var(--space-3);padding:var(--space-3) var(--space-3);border-radius:var(--radius-md);font-size:var(--text-sm);font-weight:500;color:var(--color-text-muted);cursor:pointer;text-decoration:none;}
-.nav-item:hover{background:var(--color-surface-offset);color:var(--color-text);}
-.nav-item.active{background:var(--color-primary-highlight);color:var(--color-primary);}
-.nav-item svg{flex-shrink:0;opacity:0.7;}
-.nav-item.active svg{opacity:1;}
-.sidebar-footer{padding:var(--space-4) var(--space-3);border-top:1px solid var(--color-border);display:flex;flex-direction:column;gap:var(--space-2);}
-.sidebar-user{display:flex;align-items:center;gap:var(--space-3);padding:var(--space-2);}
-.sidebar-avatar{width:32px;height:32px;border-radius:var(--radius-full);background:var(--color-primary-highlight);display:flex;align-items:center;justify-content:center;color:var(--color-primary);font-size:var(--text-xs);font-weight:700;flex-shrink:0;}
-.sidebar-user-name{font-size:var(--text-xs);font-weight:600;color:var(--color-text);}
-.sidebar-user-role{font-size:var(--text-xs);color:var(--color-text-faint);}
+    body {
+      min-height: 100dvh;
+      font-family: var(--font-body);
+      font-size: var(--text-sm);
+      color: var(--color-text);
+      background: var(--color-bg);
+      display: flex;
+      transition: background var(--transition-interactive), color var(--transition-interactive);
+    }
 
-/* ===== MAIN LAYOUT ===== */
-.main-layout{display:none;width:100%;}
-.main-layout.visible{display:flex;}
-.main-content{margin-left:var(--sidebar-w);flex:1;min-height:100dvh;display:flex;flex-direction:column;}
-.topbar{height:56px;background:var(--color-surface);border-bottom:1px solid var(--color-border);display:flex;align-items:center;justify-content:space-between;padding:0 var(--space-6);position:sticky;top:0;z-index:40;}
-.topbar-left{display:flex;align-items:center;gap:var(--space-4);}
-.topbar-title{font-size:var(--text-base);font-weight:700;color:var(--color-text);}
-.topbar-right{display:flex;align-items:center;gap:var(--space-3);}
-.hamburger-btn{display:none;width:36px;height:36px;align-items:center;justify-content:center;border-radius:var(--radius-md);color:var(--color-text-muted);}
-.theme-toggle{width:36px;height:36px;display:flex;align-items:center;justify-content:center;border-radius:var(--radius-md);color:var(--color-text-muted);border:1px solid var(--color-border);}
-.theme-toggle:hover{color:var(--color-text);}
-.page-body{flex:1;padding:var(--space-6);max-width:var(--content-wide);}
+    img,
+    svg {
+      display: block;
+      max-width: 100%;
+    }
 
-/* ===== STATUS BAR ===== */
-.status-bar{display:flex;align-items:center;gap:var(--space-3);padding:var(--space-3) var(--space-5);border-radius:var(--radius-md);font-size:var(--text-xs);font-weight:500;margin-bottom:var(--space-6);display:none;}
-.status-bar.show{display:flex;}
-.status-bar.success{background:var(--color-success-bg);color:var(--color-success);}
-.status-bar.error{background:var(--color-error-bg);color:var(--color-error);}
-.status-bar.loading{background:var(--color-primary-highlight);color:var(--color-primary);}
+    ul {
+      list-style: none;
+    }
 
-/* ===== STATS ROW ===== */
-.stats-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(200px,100%),1fr));gap:var(--space-4);margin-bottom:var(--space-6);}
-.stat-card{background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-lg);padding:var(--space-5);}
-.stat-label{font-size:var(--text-xs);color:var(--color-text-muted);text-transform:uppercase;letter-spacing:0.05em;font-weight:600;margin-bottom:var(--space-2);}
-.stat-value{font-size:var(--text-xl);font-weight:700;color:var(--color-text);font-variant-numeric:tabular-nums;line-height:1;}
-.stat-sub{font-size:var(--text-xs);color:var(--color-text-faint);margin-top:var(--space-1);}
+    button {
+      cursor: pointer;
+      background: none;
+      border: none;
+      font: inherit;
+      color: inherit;
+    }
 
-/* ===== PANEL ===== */
-.panel{background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-lg);overflow:hidden;margin-bottom:var(--space-6);}
-.panel-header{display:flex;align-items:center;justify-content:space-between;padding:var(--space-5) var(--space-6);border-bottom:1px solid var(--color-border);}
-.panel-title{font-size:var(--text-base);font-weight:700;color:var(--color-text);}
-.panel-sub{font-size:var(--text-xs);color:var(--color-text-muted);margin-top:2px;}
-.panel-body{padding:var(--space-6);}
+    input,
+    textarea,
+    select {
+      font: inherit;
+      color: inherit;
+    }
 
-/* ===== FORM GRID ===== */
-.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-5);}
-.form-grid .span2{grid-column:1/-1;}
-.form-actions{display:flex;align-items:center;gap:var(--space-3);margin-top:var(--space-6);}
-textarea.form-input{resize:vertical;min-height:80px;}
+    h1,
+    h2,
+    h3,
+    h4 {
+      text-wrap: balance;
+      line-height: 1.2;
+    }
 
-/* ===== TABLE ===== */
-.table-wrap{overflow-x:auto;}
-table{width:100%;border-collapse:collapse;}
-th{text-align:left;font-size:var(--text-xs);font-weight:600;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:0.05em;padding:var(--space-3) var(--space-4);border-bottom:1px solid var(--color-border);white-space:nowrap;}
-td{padding:var(--space-4);border-bottom:1px solid var(--color-divider);font-size:var(--text-sm);vertical-align:middle;}
-tr:last-child td{border-bottom:none;}
-tr:hover td{background:var(--color-surface-2);}
-.td-url{max-width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-.td-url a{color:var(--color-primary);text-decoration:none;font-family:monospace;font-size:var(--text-xs);}
-.td-url a:hover{text-decoration:underline;}
-.td-actions{display:flex;align-items:center;gap:var(--space-2);white-space:nowrap;}
-.badge{display:inline-flex;align-items:center;gap:var(--space-1);padding:2px 10px;border-radius:var(--radius-full);font-size:var(--text-xs);font-weight:600;}
-.badge-latest{background:var(--color-latest-bg);color:var(--color-latest-text);}
-.badge-old{background:var(--color-surface-offset);color:var(--color-text-faint);}
-.badge-dot{width:5px;height:5px;border-radius:var(--radius-full);background:currentColor;}
-.version-tag{font-family:monospace;font-size:var(--text-xs);font-weight:700;color:var(--color-text);}
-.date-text{font-size:var(--text-xs);color:var(--color-text-muted);white-space:nowrap;}
+    :focus-visible {
+      outline: 2px solid var(--color-primary);
+      outline-offset: 3px;
+      border-radius: var(--radius-sm);
+    }
 
-/* ===== EMPTY STATE ===== */
-.empty-state{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:var(--space-16) var(--space-8);}
-.empty-icon{width:48px;height:48px;color:var(--color-text-faint);margin-bottom:var(--space-4);}
-.empty-state h3{font-size:var(--text-base);font-weight:600;color:var(--color-text);margin-bottom:var(--space-2);}
-.empty-state p{font-size:var(--text-sm);color:var(--color-text-muted);max-width:36ch;}
+    @media(prefers-reduced-motion:reduce) {
 
-/* ===== SKELETON ===== */
-@keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
-.skeleton{background:linear-gradient(90deg,var(--color-surface-offset) 25%,var(--color-surface-2) 50%,var(--color-surface-offset) 75%);background-size:200% 100%;animation:shimmer 1.5s ease-in-out infinite;border-radius:var(--radius-sm);}
-.skel-row td .skeleton{height:16px;border-radius:var(--radius-sm);}
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
 
-/* ===== CONFIRM MODAL ===== */
-.modal-overlay{position:fixed;inset:0;background:oklch(0 0 0/0.6);backdrop-filter:blur(4px);z-index:200;display:none;align-items:center;justify-content:center;padding:var(--space-4);}
-.modal-overlay.open{display:flex;}
-.modal{background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-xl);padding:var(--space-8);max-width:400px;width:100%;box-shadow:var(--shadow-lg);}
-.modal h3{font-size:var(--text-base);font-weight:700;margin-bottom:var(--space-2);}
-.modal p{font-size:var(--text-sm);color:var(--color-text-muted);margin-bottom:var(--space-8);max-width:none;}
-.modal-actions{display:flex;gap:var(--space-3);justify-content:flex-end;}
+    a,
+    button,
+    [role="button"],
+    input,
+    textarea,
+    select {
+      transition: color var(--transition-interactive), background var(--transition-interactive), border-color var(--transition-interactive), box-shadow var(--transition-interactive), opacity var(--transition-interactive);
+    }
 
-/* ===== EDIT DRAWER ===== */
-.drawer-overlay{position:fixed;inset:0;background:oklch(0 0 0/0.5);backdrop-filter:blur(4px);z-index:150;display:none;}
-.drawer-overlay.open{display:block;}
-.drawer{position:fixed;right:0;top:0;bottom:0;width:min(480px,100vw);background:var(--color-surface);border-left:1px solid var(--color-border);box-shadow:var(--shadow-lg);z-index:160;transform:translateX(100%);transition:transform 0.25s cubic-bezier(0.16,1,0.3,1);display:flex;flex-direction:column;}
-.drawer.open{transform:translateX(0);}
-.drawer-header{display:flex;align-items:center;justify-content:space-between;padding:var(--space-5) var(--space-6);border-bottom:1px solid var(--color-border);}
-.drawer-title{font-size:var(--text-base);font-weight:700;}
-.drawer-body{flex:1;overflow-y:auto;padding:var(--space-6);}
-.drawer-footer{padding:var(--space-5) var(--space-6);border-top:1px solid var(--color-border);display:flex;gap:var(--space-3);justify-content:flex-end;}
+    /* ===== AUTH SCREEN ===== */
+    .auth-screen {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100dvh;
+      width: 100%;
+      background: var(--color-bg);
+      padding: var(--space-4);
+    }
 
-/* ===== RESPONSIVE ===== */
-.sidebar-mobile-close{display:none;position:absolute;top:var(--space-4);right:var(--space-4);}
-@media(max-width:768px){
-  .sidebar{transform:translateX(-100%);}
-  .sidebar.mobile-open{transform:translateX(0);}
-  .sidebar-mobile-close{display:flex;}
-  .main-content{margin-left:0;}
-  .hamburger-btn{display:flex;}
-  .form-grid{grid-template-columns:1fr;}
-  .form-grid .span2{grid-column:1;}
-  .stats-row{grid-template-columns:1fr 1fr;}
-  .page-body{padding:var(--space-4);}
-  .td-url{max-width:160px;}
-}
-@media(max-width:480px){
-  .stats-row{grid-template-columns:1fr;}
-  th.hide-mobile,td.hide-mobile{display:none;}
-}
+    .auth-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      padding: var(--space-10);
+      width: 100%;
+      max-width: 400px;
+      box-shadow: var(--shadow-lg);
+    }
 
-/* ===== SPINNER ===== */
-@keyframes spin{to{transform:rotate(360deg)}}
-.spinner{width:16px;height:16px;border:2px solid oklch(from var(--color-text-inverse) l c h/0.3);border-top-color:var(--color-text-inverse);border-radius:var(--radius-full);animation:spin 0.6s linear infinite;display:none;}
-.btn.loading .spinner{display:block;}
-.btn.loading .btn-label{display:none;}
-</style>
+    .auth-logo {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      margin-bottom: var(--space-8);
+    }
+
+    .auth-logo svg {
+      color: var(--color-primary);
+    }
+
+    .auth-logo-text {
+      font-size: var(--text-base);
+      font-weight: 700;
+      color: var(--color-text);
+    }
+
+    .auth-logo-sub {
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+    }
+
+    .auth-card h1 {
+      font-size: var(--text-lg);
+      font-weight: 700;
+      margin-bottom: var(--space-2);
+    }
+
+    .auth-card p {
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-8);
+      max-width: none;
+    }
+
+    .form-group {
+      margin-bottom: var(--space-5);
+    }
+
+    .form-label {
+      display: block;
+      font-size: var(--text-xs);
+      font-weight: 600;
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: var(--space-2);
+    }
+
+    .form-input {
+      width: 100%;
+      padding: var(--space-3) var(--space-4);
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      font-size: var(--text-sm);
+      color: var(--color-text);
+      outline: none;
+    }
+
+    .form-input:focus {
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 3px oklch(from var(--color-primary) l c h/0.15);
+    }
+
+    .form-input::placeholder {
+      color: var(--color-text-faint);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+      padding: var(--space-3) var(--space-5);
+      border-radius: var(--radius-md);
+      font-size: var(--text-sm);
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      white-space: nowrap;
+      min-height: 40px;
+    }
+
+    .btn-primary {
+      background: var(--color-primary);
+      color: var(--color-text-inverse);
+    }
+
+    .btn-primary:hover {
+      background: var(--color-primary-hover);
+    }
+
+    .btn-primary:active {
+      background: var(--color-primary-active);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--color-text-muted);
+      border: 1px solid var(--color-border);
+    }
+
+    .btn-ghost:hover {
+      color: var(--color-text);
+      border-color: oklch(from var(--color-text) l c h/0.25);
+    }
+
+    .btn-danger {
+      background: var(--color-error-bg);
+      color: var(--color-error);
+      border: 1px solid oklch(from var(--color-error) l c h/0.3);
+    }
+
+    .btn-danger:hover {
+      background: var(--color-error);
+      color: #fff;
+    }
+
+    .btn-sm {
+      padding: var(--space-2) var(--space-3);
+      font-size: var(--text-xs);
+      min-height: 32px;
+    }
+
+    .btn-full {
+      width: 100%;
+    }
+
+    .auth-error {
+      background: var(--color-error-bg);
+      color: var(--color-error);
+      border: 1px solid oklch(from var(--color-error) l c h/0.3);
+      border-radius: var(--radius-md);
+      padding: var(--space-3) var(--space-4);
+      font-size: var(--text-xs);
+      margin-bottom: var(--space-5);
+      display: none;
+    }
+
+    .auth-error.show {
+      display: block;
+    }
+
+    /* ===== SIDEBAR ===== */
+    .sidebar {
+      width: var(--sidebar-w);
+      min-height: 100dvh;
+      background: var(--color-surface);
+      border-right: 1px solid var(--color-border);
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      z-index: 50;
+      transition: transform var(--transition-interactive);
+    }
+
+    .sidebar-header {
+      padding: var(--space-5) var(--space-5) var(--space-4);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .sidebar-logo {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+
+    .sidebar-logo svg {
+      color: var(--color-primary);
+      flex-shrink: 0;
+    }
+
+    .sidebar-logo-text {
+      font-weight: 700;
+      font-size: var(--text-sm);
+      color: var(--color-text);
+    }
+
+    .sidebar-logo-badge {
+      font-size: var(--text-xs);
+      color: var(--color-primary);
+      font-weight: 600;
+      background: var(--color-primary-highlight);
+      padding: 2px 8px;
+      border-radius: var(--radius-full);
+      margin-top: 2px;
+    }
+
+    .sidebar-nav {
+      flex: 1;
+      padding: var(--space-4) var(--space-3);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-1);
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      padding: var(--space-3) var(--space-3);
+      border-radius: var(--radius-md);
+      font-size: var(--text-sm);
+      font-weight: 500;
+      color: var(--color-text-muted);
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .nav-item:hover {
+      background: var(--color-surface-offset);
+      color: var(--color-text);
+    }
+
+    .nav-item.active {
+      background: var(--color-primary-highlight);
+      color: var(--color-primary);
+    }
+
+    .nav-item svg {
+      flex-shrink: 0;
+      opacity: 0.7;
+    }
+
+    .nav-item.active svg {
+      opacity: 1;
+    }
+
+    .sidebar-footer {
+      padding: var(--space-4) var(--space-3);
+      border-top: 1px solid var(--color-border);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+
+    .sidebar-user {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      padding: var(--space-2);
+    }
+
+    .sidebar-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: var(--radius-full);
+      background: var(--color-primary-highlight);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-primary);
+      font-size: var(--text-xs);
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .sidebar-user-name {
+      font-size: var(--text-xs);
+      font-weight: 600;
+      color: var(--color-text);
+    }
+
+    .sidebar-user-role {
+      font-size: var(--text-xs);
+      color: var(--color-text-faint);
+    }
+
+    /* ===== MAIN LAYOUT ===== */
+    .main-layout {
+      display: none;
+      width: 100%;
+    }
+
+    .main-layout.visible {
+      display: flex;
+    }
+
+    .main-content {
+      margin-left: var(--sidebar-w);
+      flex: 1;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .topbar {
+      height: 56px;
+      background: var(--color-surface);
+      border-bottom: 1px solid var(--color-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 var(--space-6);
+      position: sticky;
+      top: 0;
+      z-index: 40;
+    }
+
+    .topbar-left {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+    }
+
+    .topbar-title {
+      font-size: var(--text-base);
+      font-weight: 700;
+      color: var(--color-text);
+    }
+
+    .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+
+    .hamburger-btn {
+      display: none;
+      width: 36px;
+      height: 36px;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--radius-md);
+      color: var(--color-text-muted);
+    }
+
+    .theme-toggle {
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--radius-md);
+      color: var(--color-text-muted);
+      border: 1px solid var(--color-border);
+    }
+
+    .theme-toggle:hover {
+      color: var(--color-text);
+    }
+
+    .page-body {
+      flex: 1;
+      padding: var(--space-6);
+      max-width: var(--content-wide);
+    }
+
+    /* ===== STATUS BAR ===== */
+    .status-bar {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      padding: var(--space-3) var(--space-5);
+      border-radius: var(--radius-md);
+      font-size: var(--text-xs);
+      font-weight: 500;
+      margin-bottom: var(--space-6);
+      display: none;
+    }
+
+    .status-bar.show {
+      display: flex;
+    }
+
+    .status-bar.success {
+      background: var(--color-success-bg);
+      color: var(--color-success);
+    }
+
+    .status-bar.error {
+      background: var(--color-error-bg);
+      color: var(--color-error);
+    }
+
+    .status-bar.loading {
+      background: var(--color-primary-highlight);
+      color: var(--color-primary);
+    }
+
+    /* ===== STATS ROW ===== */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(min(200px, 100%), 1fr));
+      gap: var(--space-4);
+      margin-bottom: var(--space-6);
+    }
+
+    .stat-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-5);
+    }
+
+    .stat-label {
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-weight: 600;
+      margin-bottom: var(--space-2);
+    }
+
+    .stat-value {
+      font-size: var(--text-xl);
+      font-weight: 700;
+      color: var(--color-text);
+      font-variant-numeric: tabular-nums;
+      line-height: 1;
+    }
+
+    .stat-sub {
+      font-size: var(--text-xs);
+      color: var(--color-text-faint);
+      margin-top: var(--space-1);
+    }
+
+    /* ===== PANEL ===== */
+    .panel {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      margin-bottom: var(--space-6);
+    }
+
+    .panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--space-5) var(--space-6);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .panel-title {
+      font-size: var(--text-base);
+      font-weight: 700;
+      color: var(--color-text);
+    }
+
+    .panel-sub {
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+      margin-top: 2px;
+    }
+
+    .panel-body {
+      padding: var(--space-6);
+    }
+
+    /* ===== FORM GRID ===== */
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-5);
+    }
+
+    .form-grid .span2 {
+      grid-column: 1/-1;
+    }
+
+    .form-actions {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      margin-top: var(--space-6);
+    }
+
+    textarea.form-input {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    /* ===== TABLE ===== */
+    .table-wrap {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th {
+      text-align: left;
+      font-size: var(--text-xs);
+      font-weight: 600;
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: var(--space-3) var(--space-4);
+      border-bottom: 1px solid var(--color-border);
+      white-space: nowrap;
+    }
+
+    td {
+      padding: var(--space-4);
+      border-bottom: 1px solid var(--color-divider);
+      font-size: var(--text-sm);
+      vertical-align: middle;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    tr:hover td {
+      background: var(--color-surface-2);
+    }
+
+    .td-url {
+      max-width: 280px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .td-url a {
+      color: var(--color-primary);
+      text-decoration: none;
+      font-family: monospace;
+      font-size: var(--text-xs);
+    }
+
+    .td-url a:hover {
+      text-decoration: underline;
+    }
+
+    .td-actions {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      white-space: nowrap;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-1);
+      padding: 2px 10px;
+      border-radius: var(--radius-full);
+      font-size: var(--text-xs);
+      font-weight: 600;
+    }
+
+    .badge-latest {
+      background: var(--color-latest-bg);
+      color: var(--color-latest-text);
+    }
+
+    .badge-old {
+      background: var(--color-surface-offset);
+      color: var(--color-text-faint);
+    }
+
+    .badge-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: var(--radius-full);
+      background: currentColor;
+    }
+
+    .version-tag {
+      font-family: monospace;
+      font-size: var(--text-xs);
+      font-weight: 700;
+      color: var(--color-text);
+    }
+
+    .date-text {
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+      white-space: nowrap;
+    }
+
+    /* ===== EMPTY STATE ===== */
+    .empty-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: var(--space-16) var(--space-8);
+    }
+
+    .empty-icon {
+      width: 48px;
+      height: 48px;
+      color: var(--color-text-faint);
+      margin-bottom: var(--space-4);
+    }
+
+    .empty-state h3 {
+      font-size: var(--text-base);
+      font-weight: 600;
+      color: var(--color-text);
+      margin-bottom: var(--space-2);
+    }
+
+    .empty-state p {
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+      max-width: 36ch;
+    }
+
+    /* ===== SKELETON ===== */
+    @keyframes shimmer {
+      0% {
+        background-position: -200% 0
+      }
+
+      100% {
+        background-position: 200% 0
+      }
+    }
+
+    .skeleton {
+      background: linear-gradient(90deg, var(--color-surface-offset) 25%, var(--color-surface-2) 50%, var(--color-surface-offset) 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s ease-in-out infinite;
+      border-radius: var(--radius-sm);
+    }
+
+    .skel-row td .skeleton {
+      height: 16px;
+      border-radius: var(--radius-sm);
+    }
+
+    /* ===== CONFIRM MODAL ===== */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: oklch(0 0 0/0.6);
+      backdrop-filter: blur(4px);
+      z-index: 200;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-4);
+    }
+
+    .modal-overlay.open {
+      display: flex;
+    }
+
+    .modal {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      padding: var(--space-8);
+      max-width: 400px;
+      width: 100%;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .modal h3 {
+      font-size: var(--text-base);
+      font-weight: 700;
+      margin-bottom: var(--space-2);
+    }
+
+    .modal p {
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-8);
+      max-width: none;
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: var(--space-3);
+      justify-content: flex-end;
+    }
+
+    /* ===== EDIT DRAWER ===== */
+    .drawer-overlay {
+      position: fixed;
+      inset: 0;
+      background: oklch(0 0 0/0.5);
+      backdrop-filter: blur(4px);
+      z-index: 150;
+      display: none;
+    }
+
+    .drawer-overlay.open {
+      display: block;
+    }
+
+    .drawer {
+      position: fixed;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      width: min(480px, 100vw);
+      background: var(--color-surface);
+      border-left: 1px solid var(--color-border);
+      box-shadow: var(--shadow-lg);
+      z-index: 160;
+      transform: translateX(100%);
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .drawer.open {
+      transform: translateX(0);
+    }
+
+    .drawer-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--space-5) var(--space-6);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .drawer-title {
+      font-size: var(--text-base);
+      font-weight: 700;
+    }
+
+    .drawer-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: var(--space-6);
+    }
+
+    .drawer-footer {
+      padding: var(--space-5) var(--space-6);
+      border-top: 1px solid var(--color-border);
+      display: flex;
+      gap: var(--space-3);
+      justify-content: flex-end;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    .sidebar-mobile-close {
+      display: none;
+      position: absolute;
+      top: var(--space-4);
+      right: var(--space-4);
+    }
+
+    @media(max-width:768px) {
+      .sidebar {
+        transform: translateX(-100%);
+      }
+
+      .sidebar.mobile-open {
+        transform: translateX(0);
+      }
+
+      .sidebar-mobile-close {
+        display: flex;
+      }
+
+      .main-content {
+        margin-left: 0;
+      }
+
+      .hamburger-btn {
+        display: flex;
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .form-grid .span2 {
+        grid-column: 1;
+      }
+
+      .stats-row {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .page-body {
+        padding: var(--space-4);
+      }
+
+      .td-url {
+        max-width: 160px;
+      }
+    }
+
+    @media(max-width:480px) {
+      .stats-row {
+        grid-template-columns: 1fr;
+      }
+
+      th.hide-mobile,
+      td.hide-mobile {
+        display: none;
+      }
+    }
+
+    /* ===== SPINNER ===== */
+    @keyframes spin {
+      to {
+        transform: rotate(360deg)
+      }
+    }
+
+    .spinner {
+      width: 16px;
+      height: 16px;
+      border: 2px solid oklch(from var(--color-text-inverse) l c h/0.3);
+      border-top-color: var(--color-text-inverse);
+      border-radius: var(--radius-full);
+      animation: spin 0.6s linear infinite;
+      display: none;
+    }
+
+    .btn.loading .spinner {
+      display: block;
+    }
+
+    .btn.loading .btn-label {
+      display: none;
+    }
+  </style>
 </head>
+
 <body>
 
-<!-- ===== AUTH SCREEN ===== -->
-<div class="auth-screen" id="authScreen">
-  <div class="auth-card">
-    <div class="auth-logo">
-      <svg width="36" height="36" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-        <rect x="2" y="2" width="24" height="24" rx="7" fill="currentColor" opacity="0.15"/>
-        <path d="M7 10.5L14 7L21 10.5V17.5L14 21L7 17.5V10.5Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
-        <path d="M14 7V21M7 10.5L21 10.5" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round" opacity="0.5"/>
-        <circle cx="14" cy="14" r="2" fill="currentColor"/>
-      </svg>
-      <div>
-        <div class="auth-logo-text">EduSync</div>
-        <div class="auth-logo-sub" style="font-size:var(--text-xs);color:var(--color-text-muted);">Super Admin Portal</div>
-      </div>
-    </div>
-    <h1>Sign in to continue</h1>
-    <p>Enter your Super Admin JWT token to access the APK management dashboard.</p>
-    <div class="auth-error" id="authError"></div>
-    <div class="form-group">
-      <label class="form-label" for="tokenInput">Super Admin Token</label>
-      <input class="form-input" type="password" id="tokenInput" placeholder="Bearer token from /api/super-admin/login" autocomplete="current-password">
-    </div>
-    <button class="btn btn-primary btn-full" id="loginBtn" onclick="handleLogin()">
-      <span class="btn-label">Sign In</span>
-      <span class="spinner"></span>
-    </button>
-    <p style="margin-top:var(--space-5);font-size:var(--text-xs);color:var(--color-text-faint);text-align:center;">Token is stored in memory only and cleared on refresh.</p>
-  </div>
-</div>
-
-<!-- ===== MAIN APP ===== -->
-<div class="main-layout" id="mainLayout">
-
-  <!-- SIDEBAR -->
-  <aside class="sidebar" id="sidebar" role="navigation" aria-label="Sidebar">
-    <button class="btn sidebar-mobile-close" onclick="closeSidebar()" aria-label="Close sidebar">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
-    </button>
-    <div class="sidebar-header">
-      <div class="sidebar-logo">
-        <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-          <rect x="2" y="2" width="24" height="24" rx="7" fill="currentColor" opacity="0.15"/>
-          <path d="M7 10.5L14 7L21 10.5V17.5L14 21L7 17.5V10.5Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
-          <circle cx="14" cy="14" r="2" fill="currentColor"/>
+  <!-- ===== AUTH SCREEN ===== -->
+  <div class="auth-screen" id="authScreen">
+    <div class="auth-card">
+      <div class="auth-logo">
+        <svg width="36" height="36" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+          <rect x="2" y="2" width="24" height="24" rx="7" fill="currentColor" opacity="0.15" />
+          <path d="M7 10.5L14 7L21 10.5V17.5L14 21L7 17.5V10.5Z" stroke="currentColor" stroke-width="1.8"
+            stroke-linejoin="round" />
+          <path d="M14 7V21M7 10.5L21 10.5" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"
+            opacity="0.5" />
+          <circle cx="14" cy="14" r="2" fill="currentColor" />
         </svg>
         <div>
-          <div class="sidebar-logo-text">EduSync</div>
-          <div class="sidebar-logo-badge">Super Admin</div>
-        </div>
-      </div>
-    </div>
-    <nav class="sidebar-nav">
-      <a class="nav-item active" href="#">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7,10 12,15 17,10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-        APK Versions
-      </a>
-      <a class="nav-item" href="#" onclick="showToast('Other modules coming soon','loading');return false;">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-        Organizations
-      </a>
-      <a class="nav-item" href="#" onclick="showToast('Other modules coming soon','loading');return false;">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
-        Licenses
-      </a>
-    </nav>
-    <div class="sidebar-footer">
-      <div class="sidebar-user">
-        <div class="sidebar-avatar">SA</div>
-        <div>
-          <div class="sidebar-user-name">Super Admin</div>
-          <div class="sidebar-user-role">appv1backend.onrender.com</div>
-        </div>
-      </div>
-      <button class="btn btn-ghost btn-sm" onclick="handleLogout()" style="width:100%;justify-content:flex-start;gap:var(--space-2);">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16,17 21,12 16,7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-        Sign Out
-      </button>
-    </div>
-  </aside>
-
-  <!-- MAIN CONTENT -->
-  <div class="main-content">
-    <header class="topbar">
-      <div class="topbar-left">
-        <button class="hamburger-btn" onclick="openSidebar()" aria-label="Open sidebar">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
-        </button>
-        <span class="topbar-title">APK Version Manager</span>
-      </div>
-      <div class="topbar-right">
-        <button class="theme-toggle" data-theme-toggle aria-label="Toggle theme">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-        </button>
-        <button class="btn btn-ghost btn-sm" onclick="loadVersions()">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23,4 23,10 17,10"/><polyline points="1,20 1,14 7,14"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>
-          Refresh
-        </button>
-      </div>
-    </header>
-
-    <main class="page-body" id="main">
-
-      <!-- Status bar -->
-      <div class="status-bar" id="statusBar" role="status" aria-live="polite"></div>
-
-      <!-- Stats -->
-      <div class="stats-row" id="statsRow">
-        <div class="stat-card">
-          <div class="stat-label">Total Versions</div>
-          <div class="stat-value" id="statTotal">—</div>
-          <div class="stat-sub">All releases stored</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-label">Latest Version</div>
-          <div class="stat-value" id="statLatest" style="font-size:var(--text-lg);font-family:monospace;">—</div>
-          <div class="stat-sub" id="statLatestDate">—</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-label">Public API</div>
-          <div class="stat-value" style="font-size:var(--text-xs);font-family:monospace;color:var(--color-primary);word-break:break-all;">/api/super-admin/app/latest</div>
-          <div class="stat-sub">No auth required</div>
-        </div>
-      </div>
-
-      <!-- ADD VERSION FORM -->
-      <div class="panel">
-        <div class="panel-header">
-          <div>
-            <div class="panel-title">Publish New Version</div>
-            <div class="panel-sub">Automatically marks all previous versions as non-latest</div>
+          <div class="auth-logo-text">SchoolSync</div>
+          <div class="auth-logo-sub" style="font-size:var(--text-xs);color:var(--color-text-muted);">Super Admin Portal
           </div>
-          <button class="btn btn-ghost btn-sm" onclick="toggleForm()" id="formToggleBtn">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
-            Add Version
+        </div>
+      </div>
+      <h1>Sign in to continue</h1>
+      <p>Enter your Super Admin JWT token to access the APK management dashboard.</p>
+      <div class="auth-error" id="authError"></div>
+      <div class="form-group">
+        <label class="form-label" for="tokenInput">Super Admin Token</label>
+        <input class="form-input" type="password" id="tokenInput" placeholder="Bearer token from /api/super-admin/login"
+          autocomplete="current-password">
+      </div>
+      <button class="btn btn-primary btn-full" id="loginBtn" onclick="handleLogin()">
+        <span class="btn-label">Sign In</span>
+        <span class="spinner"></span>
+      </button>
+      <p style="margin-top:var(--space-5);font-size:var(--text-xs);color:var(--color-text-faint);text-align:center;">
+        Token is stored in memory only and cleared on refresh.</p>
+    </div>
+  </div>
+
+  <!-- ===== MAIN APP ===== -->
+  <div class="main-layout" id="mainLayout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar" role="navigation" aria-label="Sidebar">
+      <button class="btn sidebar-mobile-close" onclick="closeSidebar()" aria-label="Close sidebar">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M18 6L6 18M6 6l12 12" />
+        </svg>
+      </button>
+      <div class="sidebar-header">
+        <div class="sidebar-logo">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+            <rect x="2" y="2" width="24" height="24" rx="7" fill="currentColor" opacity="0.15" />
+            <path d="M7 10.5L14 7L21 10.5V17.5L14 21L7 17.5V10.5Z" stroke="currentColor" stroke-width="1.8"
+              stroke-linejoin="round" />
+            <circle cx="14" cy="14" r="2" fill="currentColor" />
+          </svg>
+          <div>
+            <div class="sidebar-logo-text">SchoolSync</div>
+            <div class="sidebar-logo-badge">Super Admin</div>
+          </div>
+        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <a class="nav-item active" href="#">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
+            <polyline points="7,10 12,15 17,10" />
+            <line x1="12" y1="15" x2="12" y2="3" />
+          </svg>
+          APK Versions
+        </a>
+        <a class="nav-item" href="#" onclick="showToast('Other modules coming soon','loading');return false;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="7" height="7" />
+            <rect x="14" y="3" width="7" height="7" />
+            <rect x="14" y="14" width="7" height="7" />
+            <rect x="3" y="14" width="7" height="7" />
+          </svg>
+          Organizations
+        </a>
+        <a class="nav-item" href="#" onclick="showToast('Other modules coming soon','loading');return false;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="11" width="18" height="11" rx="2" />
+            <path d="M7 11V7a5 5 0 0110 0v4" />
+          </svg>
+          Licenses
+        </a>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="sidebar-user">
+          <div class="sidebar-avatar">SA</div>
+          <div>
+            <div class="sidebar-user-name">Super Admin</div>
+            <div class="sidebar-user-role">appv1backend.onrender.com</div>
+          </div>
+        </div>
+        <button class="btn btn-ghost btn-sm" onclick="handleLogout()"
+          style="width:100%;justify-content:flex-start;gap:var(--space-2);">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4" />
+            <polyline points="16,17 21,12 16,7" />
+            <line x1="21" y1="12" x2="9" y2="12" />
+          </svg>
+          Sign Out
+        </button>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="hamburger-btn" onclick="openSidebar()" aria-label="Open sidebar">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M3 6h18M3 12h18M3 18h18" />
+            </svg>
+          </button>
+          <span class="topbar-title">APK Version Manager</span>
+        </div>
+        <div class="topbar-right">
+          <button class="theme-toggle" data-theme-toggle aria-label="Toggle theme">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+            </svg>
+          </button>
+          <button class="btn btn-ghost btn-sm" onclick="loadVersions()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="23,4 23,10 17,10" />
+              <polyline points="1,20 1,14 7,14" />
+              <path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15" />
+            </svg>
+            Refresh
           </button>
         </div>
-        <div class="panel-body" id="addFormBody" style="display:none;">
-          <form id="addVersionForm" onsubmit="handleCreateVersion(event)">
-            <div class="form-grid">
-              <div>
-                <label class="form-label" for="f_version">Version Number *</label>
-                <input class="form-input" id="f_version" type="text" placeholder="e.g. 1.0.0" required>
-              </div>
-              <div>
-                <label class="form-label" for="f_date">Deployed Date *</label>
-                <input class="form-input" id="f_date" type="date" required>
-              </div>
-              <div class="span2">
-                <label class="form-label" for="f_url">Download URL *</label>
-                <input class="form-input" id="f_url" type="url" placeholder="https://github.com/user/repo/releases/download/v1.0.0/app.apk" required>
-              </div>
-              <div class="span2">
-                <label class="form-label" for="f_notes">Release Notes</label>
-                <textarea class="form-input" id="f_notes" placeholder="What changed in this version?"></textarea>
-              </div>
-            </div>
-            <div class="form-actions">
-              <button class="btn btn-primary" type="submit" id="createBtn">
-                <span class="btn-label">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7,10 12,15 17,10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                  Publish Version
-                </span>
-                <span class="spinner"></span>
-              </button>
-              <button class="btn btn-ghost" type="button" onclick="resetForm()">Cancel</button>
-            </div>
-          </form>
-        </div>
-      </div>
+      </header>
 
-      <!-- VERSIONS TABLE -->
-      <div class="panel">
-        <div class="panel-header">
-          <div>
-            <div class="panel-title">All Versions</div>
-            <div class="panel-sub" id="tableSubtitle">Loading releases…</div>
+      <main class="page-body" id="main">
+
+        <!-- Status bar -->
+        <div class="status-bar" id="statusBar" role="status" aria-live="polite"></div>
+
+        <!-- Stats -->
+        <div class="stats-row" id="statsRow">
+          <div class="stat-card">
+            <div class="stat-label">Total Versions</div>
+            <div class="stat-value" id="statTotal">—</div>
+            <div class="stat-sub">All releases stored</div>
           </div>
-          <a href="https://appv1backend.onrender.com/api/super-admin/app/latest" target="_blank" rel="noopener noreferrer" class="btn btn-ghost btn-sm">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-            Public API
-          </a>
+          <div class="stat-card">
+            <div class="stat-label">Latest Version</div>
+            <div class="stat-value" id="statLatest" style="font-size:var(--text-lg);font-family:monospace;">—</div>
+            <div class="stat-sub" id="statLatestDate">—</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Public API</div>
+            <div class="stat-value"
+              style="font-size:var(--text-xs);font-family:monospace;color:var(--color-primary);word-break:break-all;">
+              /api/super-admin/app/latest</div>
+            <div class="stat-sub">No auth required</div>
+          </div>
         </div>
-        <div class="table-wrap" id="tableWrap">
-          <table>
-            <thead>
-              <tr>
-                <th>Status</th>
-                <th>Version</th>
-                <th class="hide-mobile">Deployed</th>
-                <th>Download URL</th>
-                <th class="hide-mobile">Notes</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody id="versionsTableBody">
-              <!-- Skeleton rows -->
-              <tr class="skel-row"><td><div class="skeleton" style="width:60px;height:20px;"></div></td><td><div class="skeleton" style="width:60px;height:16px;"></div></td><td class="hide-mobile"><div class="skeleton" style="width:80px;height:16px;"></div></td><td><div class="skeleton" style="width:200px;height:16px;"></div></td><td class="hide-mobile"><div class="skeleton" style="width:120px;height:16px;"></div></td><td><div class="skeleton" style="width:100px;height:28px;"></div></td></tr>
-              <tr class="skel-row"><td><div class="skeleton" style="width:60px;height:20px;"></div></td><td><div class="skeleton" style="width:50px;height:16px;"></div></td><td class="hide-mobile"><div class="skeleton" style="width:80px;height:16px;"></div></td><td><div class="skeleton" style="width:180px;height:16px;"></div></td><td class="hide-mobile"><div class="skeleton" style="width:100px;height:16px;"></div></td><td><div class="skeleton" style="width:100px;height:28px;"></div></td></tr>
-            </tbody>
-          </table>
+
+        <!-- ADD VERSION FORM -->
+        <div class="panel">
+          <div class="panel-header">
+            <div>
+              <div class="panel-title">Publish New Version</div>
+              <div class="panel-sub">Automatically marks all previous versions as non-latest</div>
+            </div>
+            <button class="btn btn-ghost btn-sm" onclick="toggleForm()" id="formToggleBtn">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 5v14M5 12h14" />
+              </svg>
+              Add Version
+            </button>
+          </div>
+          <div class="panel-body" id="addFormBody" style="display:none;">
+            <form id="addVersionForm" onsubmit="handleCreateVersion(event)">
+              <div class="form-grid">
+                <div>
+                  <label class="form-label" for="f_version">Version Number *</label>
+                  <input class="form-input" id="f_version" type="text" placeholder="e.g. 1.0.0" required>
+                </div>
+                <div>
+                  <label class="form-label" for="f_date">Deployed Date *</label>
+                  <input class="form-input" id="f_date" type="date" required>
+                </div>
+                <div class="span2">
+                  <label class="form-label" for="f_url">Download URL *</label>
+                  <input class="form-input" id="f_url" type="url"
+                    placeholder="https://github.com/user/repo/releases/download/v1.0.0/app.apk" required>
+                </div>
+                <div class="span2">
+                  <label class="form-label" for="f_notes">Release Notes</label>
+                  <textarea class="form-input" id="f_notes" placeholder="What changed in this version?"></textarea>
+                </div>
+              </div>
+              <div class="form-actions">
+                <button class="btn btn-primary" type="submit" id="createBtn">
+                  <span class="btn-label">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                      stroke-width="2.5">
+                      <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
+                      <polyline points="7,10 12,15 17,10" />
+                      <line x1="12" y1="15" x2="12" y2="3" />
+                    </svg>
+                    Publish Version
+                  </span>
+                  <span class="spinner"></span>
+                </button>
+                <button class="btn btn-ghost" type="button" onclick="resetForm()">Cancel</button>
+              </div>
+            </form>
+          </div>
         </div>
-      </div>
 
-    </main>
-  </div>
-</div>
+        <!-- VERSIONS TABLE -->
+        <div class="panel">
+          <div class="panel-header">
+            <div>
+              <div class="panel-title">All Versions</div>
+              <div class="panel-sub" id="tableSubtitle">Loading releases…</div>
+            </div>
+            <a href="https://appv1backend.onrender.com/api/super-admin/app/latest" target="_blank"
+              rel="noopener noreferrer" class="btn btn-ghost btn-sm">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6" />
+                <polyline points="15,3 21,3 21,9" />
+                <line x1="10" y1="14" x2="21" y2="3" />
+              </svg>
+              Public API
+            </a>
+          </div>
+          <div class="table-wrap" id="tableWrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Status</th>
+                  <th>Version</th>
+                  <th class="hide-mobile">Deployed</th>
+                  <th>Download URL</th>
+                  <th class="hide-mobile">Notes</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="versionsTableBody">
+                <!-- Skeleton rows -->
+                <tr class="skel-row">
+                  <td>
+                    <div class="skeleton" style="width:60px;height:20px;"></div>
+                  </td>
+                  <td>
+                    <div class="skeleton" style="width:60px;height:16px;"></div>
+                  </td>
+                  <td class="hide-mobile">
+                    <div class="skeleton" style="width:80px;height:16px;"></div>
+                  </td>
+                  <td>
+                    <div class="skeleton" style="width:200px;height:16px;"></div>
+                  </td>
+                  <td class="hide-mobile">
+                    <div class="skeleton" style="width:120px;height:16px;"></div>
+                  </td>
+                  <td>
+                    <div class="skeleton" style="width:100px;height:28px;"></div>
+                  </td>
+                </tr>
+                <tr class="skel-row">
+                  <td>
+                    <div class="skeleton" style="width:60px;height:20px;"></div>
+                  </td>
+                  <td>
+                    <div class="skeleton" style="width:50px;height:16px;"></div>
+                  </td>
+                  <td class="hide-mobile">
+                    <div class="skeleton" style="width:80px;height:16px;"></div>
+                  </td>
+                  <td>
+                    <div class="skeleton" style="width:180px;height:16px;"></div>
+                  </td>
+                  <td class="hide-mobile">
+                    <div class="skeleton" style="width:100px;height:16px;"></div>
+                  </td>
+                  <td>
+                    <div class="skeleton" style="width:100px;height:28px;"></div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
 
-<!-- ===== EDIT DRAWER ===== -->
-<div class="drawer-overlay" id="drawerOverlay" onclick="closeDrawer()"></div>
-<div class="drawer" id="editDrawer" role="dialog" aria-modal="true" aria-labelledby="drawerTitle">
-  <div class="drawer-header">
-    <span class="drawer-title" id="drawerTitle">Edit Version</span>
-    <button class="btn btn-ghost btn-sm" onclick="closeDrawer()" aria-label="Close drawer">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
-    </button>
+      </main>
+    </div>
   </div>
-  <div class="drawer-body">
-    <form id="editVersionForm" onsubmit="handleUpdateVersion(event)">
-      <input type="hidden" id="e_id">
-      <div class="form-group">
-        <label class="form-label" for="e_version">Version Number *</label>
-        <input class="form-input" id="e_version" type="text" placeholder="e.g. 1.0.0" required>
-      </div>
-      <div class="form-group">
-        <label class="form-label" for="e_date">Deployed Date *</label>
-        <input class="form-input" id="e_date" type="date" required>
-      </div>
-      <div class="form-group">
-        <label class="form-label" for="e_url">Download URL *</label>
-        <input class="form-input" id="e_url" type="url" required>
-      </div>
-      <div class="form-group">
-        <label class="form-label" for="e_notes">Release Notes</label>
-        <textarea class="form-input" id="e_notes"></textarea>
-      </div>
-    </form>
-  </div>
-  <div class="drawer-footer">
-    <button class="btn btn-ghost" onclick="closeDrawer()">Cancel</button>
-    <button class="btn btn-primary" id="updateBtn" onclick="document.getElementById('editVersionForm').requestSubmit()">
-      <span class="btn-label">Save Changes</span>
-      <span class="spinner"></span>
-    </button>
-  </div>
-</div>
 
-<!-- ===== DELETE CONFIRM MODAL ===== -->
-<div class="modal-overlay" id="deleteModal" role="dialog" aria-modal="true">
-  <div class="modal">
-    <h3>Delete this version?</h3>
-    <p id="deleteModalText">This action cannot be undone. The version record will be permanently removed from the database.</p>
-    <div class="modal-actions">
-      <button class="btn btn-ghost" onclick="closeDeleteModal()">Cancel</button>
-      <button class="btn btn-danger" id="confirmDeleteBtn" onclick="confirmDelete()">
-        <span class="btn-label">Delete Version</span>
+  <!-- ===== EDIT DRAWER ===== -->
+  <div class="drawer-overlay" id="drawerOverlay" onclick="closeDrawer()"></div>
+  <div class="drawer" id="editDrawer" role="dialog" aria-modal="true" aria-labelledby="drawerTitle">
+    <div class="drawer-header">
+      <span class="drawer-title" id="drawerTitle">Edit Version</span>
+      <button class="btn btn-ghost btn-sm" onclick="closeDrawer()" aria-label="Close drawer">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M18 6L6 18M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+    <div class="drawer-body">
+      <form id="editVersionForm" onsubmit="handleUpdateVersion(event)">
+        <input type="hidden" id="e_id">
+        <div class="form-group">
+          <label class="form-label" for="e_version">Version Number *</label>
+          <input class="form-input" id="e_version" type="text" placeholder="e.g. 1.0.0" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="e_date">Deployed Date *</label>
+          <input class="form-input" id="e_date" type="date" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="e_url">Download URL *</label>
+          <input class="form-input" id="e_url" type="url" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="e_notes">Release Notes</label>
+          <textarea class="form-input" id="e_notes"></textarea>
+        </div>
+      </form>
+    </div>
+    <div class="drawer-footer">
+      <button class="btn btn-ghost" onclick="closeDrawer()">Cancel</button>
+      <button class="btn btn-primary" id="updateBtn"
+        onclick="document.getElementById('editVersionForm').requestSubmit()">
+        <span class="btn-label">Save Changes</span>
         <span class="spinner"></span>
       </button>
     </div>
   </div>
-</div>
 
-<script>
-const API_BASE = 'https://appv1backend.onrender.com/api/super-admin/app';
-let TOKEN = '';
-let versions = [];
-let deleteTargetId = null;
+  <!-- ===== DELETE CONFIRM MODAL ===== -->
+  <div class="modal-overlay" id="deleteModal" role="dialog" aria-modal="true">
+    <div class="modal">
+      <h3>Delete this version?</h3>
+      <p id="deleteModalText">This action cannot be undone. The version record will be permanently removed from the
+        database.</p>
+      <div class="modal-actions">
+        <button class="btn btn-ghost" onclick="closeDeleteModal()">Cancel</button>
+        <button class="btn btn-danger" id="confirmDeleteBtn" onclick="confirmDelete()">
+          <span class="btn-label">Delete Version</span>
+          <span class="spinner"></span>
+        </button>
+      </div>
+    </div>
+  </div>
 
-// ===== THEME =====
-(function(){
-  const t=document.querySelector('[data-theme-toggle]'),r=document.documentElement;
-  let d=matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light';
-  r.setAttribute('data-theme',d);
-  function upd(){if(!t)return;t.innerHTML=d==='dark'?'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>':'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';t.setAttribute('aria-label','Switch to '+(d==='dark'?'light':'dark')+' mode');}
-  upd();
-  t&&t.addEventListener('click',()=>{d=d==='dark'?'light':'dark';r.setAttribute('data-theme',d);upd();});
-})();
+  <script>
+    const API_BASE = 'https://appv1backend.onrender.com/api/super-admin/app';
+    let TOKEN = '';
+    let versions = [];
+    let deleteTargetId = null;
 
-// ===== AUTH =====
-async function handleLogin(){
-  const input=document.getElementById('tokenInput').value.trim();
-  if(!input){showAuthError('Please enter your Super Admin token.');return;}
-  TOKEN=input.startsWith('Bearer ')?input.replace('Bearer ',''):input;
-  setLoginLoading(true);
-  try{
-    const res=await fetch(API_BASE,{headers:{Authorization:'Bearer '+TOKEN}});
-    if(res.status===401||res.status===403){showAuthError('Invalid token or insufficient permissions.');TOKEN='';setLoginLoading(false);return;}
-    if(!res.ok&&res.status!==200&&res.status!==304){
-      // Try anyway — might be empty list
+    // ===== THEME =====
+    (function () {
+      const t = document.querySelector('[data-theme-toggle]'), r = document.documentElement;
+      let d = matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light';
+      r.setAttribute('data-theme', d);
+      function upd() { if (!t) return; t.innerHTML = d === 'dark' ? '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>' : '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>'; t.setAttribute('aria-label', 'Switch to ' + (d === 'dark' ? 'light' : 'dark') + ' mode'); }
+      upd();
+      t && t.addEventListener('click', () => { d = d === 'dark' ? 'light' : 'dark'; r.setAttribute('data-theme', d); upd(); });
+    })();
+
+    // ===== AUTH =====
+    async function handleLogin() {
+      const input = document.getElementById('tokenInput').value.trim();
+      if (!input) { showAuthError('Please enter your Super Admin token.'); return; }
+      TOKEN = input.startsWith('Bearer ') ? input.replace('Bearer ', '') : input;
+      setLoginLoading(true);
+      try {
+        const res = await fetch(API_BASE, { headers: { Authorization: 'Bearer ' + TOKEN } });
+        if (res.status === 401 || res.status === 403) { showAuthError('Invalid token or insufficient permissions.'); TOKEN = ''; setLoginLoading(false); return; }
+        if (!res.ok && res.status !== 200 && res.status !== 304) {
+          // Try anyway — might be empty list
+        }
+        showApp();
+        loadVersions();
+      } catch (e) {
+        // Network error — still try to show app (Render cold start)
+        showApp();
+        loadVersions();
+      }
+      setLoginLoading(false);
     }
-    showApp();
-    loadVersions();
-  }catch(e){
-    // Network error — still try to show app (Render cold start)
-    showApp();
-    loadVersions();
-  }
-  setLoginLoading(false);
-}
-function setLoginLoading(v){const b=document.getElementById('loginBtn');b.classList.toggle('loading',v);b.disabled=v;}
-function showAuthError(msg){const el=document.getElementById('authError');el.textContent=msg;el.classList.add('show');}
-function showApp(){
-  document.getElementById('authScreen').style.display='none';
-  document.getElementById('mainLayout').classList.add('visible');
-}
-function handleLogout(){TOKEN='';document.getElementById('mainLayout').classList.remove('visible');document.getElementById('authScreen').style.display='flex';document.getElementById('tokenInput').value='';}
-document.getElementById('tokenInput').addEventListener('keydown',e=>{if(e.key==='Enter')handleLogin();});
-
-// ===== SIDEBAR MOBILE =====
-function openSidebar(){document.getElementById('sidebar').classList.add('mobile-open');}
-function closeSidebar(){document.getElementById('sidebar').classList.remove('mobile-open');}
-
-// ===== STATUS =====
-let statusTimer;
-function showToast(msg,type='success'){
-  const bar=document.getElementById('statusBar');
-  bar.textContent='';
-  // icon
-  const icons={success:'✓ ',error:'✕ ',loading:'↻ '};
-  bar.textContent=(icons[type]||'')+msg;
-  bar.className='status-bar show '+type;
-  clearTimeout(statusTimer);
-  if(type!=='loading') statusTimer=setTimeout(()=>bar.classList.remove('show'),4000);
-}
-function hideToast(){document.getElementById('statusBar').classList.remove('show');}
-
-// ===== LOAD VERSIONS =====
-async function loadVersions(){
-  showToast('Fetching versions…','loading');
-  try{
-    const res=await fetch(API_BASE,{headers:{Authorization:'Bearer '+TOKEN}});
-    if(!res.ok){
-      if(res.status===401||res.status===403){showToast('Session expired. Please sign in again.','error');return;}
-      throw new Error('HTTP '+res.status);
+    function setLoginLoading(v) { const b = document.getElementById('loginBtn'); b.classList.toggle('loading', v); b.disabled = v; }
+    function showAuthError(msg) { const el = document.getElementById('authError'); el.textContent = msg; el.classList.add('show'); }
+    function showApp() {
+      document.getElementById('authScreen').style.display = 'none';
+      document.getElementById('mainLayout').classList.add('visible');
     }
-    const data=await res.json();
-    versions=Array.isArray(data)?data:(data.data||data.versions||[]);
-    renderVersions();
-    updateStats();
-    hideToast();
-  }catch(e){
-    showToast('Failed to load versions: '+e.message,'error');
-    renderError();
-  }
-}
+    function handleLogout() { TOKEN = ''; document.getElementById('mainLayout').classList.remove('visible'); document.getElementById('authScreen').style.display = 'flex'; document.getElementById('tokenInput').value = ''; }
+    document.getElementById('tokenInput').addEventListener('keydown', e => { if (e.key === 'Enter') handleLogin(); });
 
-function updateStats(){
-  document.getElementById('statTotal').textContent=versions.length;
-  const latest=versions.find(v=>v.isLatest);
-  if(latest){
-    document.getElementById('statLatest').textContent='v'+latest.version;
-    document.getElementById('statLatestDate').textContent='Deployed '+formatDate(latest.deployedDate);
-  }else{
-    document.getElementById('statLatest').textContent='None';
-    document.getElementById('statLatestDate').textContent='No latest set';
-  }
-  document.getElementById('tableSubtitle').textContent=versions.length+' release'+(versions.length===1?'':'s')+' found';
-}
+    // ===== SIDEBAR MOBILE =====
+    function openSidebar() { document.getElementById('sidebar').classList.add('mobile-open'); }
+    function closeSidebar() { document.getElementById('sidebar').classList.remove('mobile-open'); }
 
-function formatDate(d){if(!d)return '—';try{return new Date(d).toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});}catch{return d;}}
-function escHtml(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+    // ===== STATUS =====
+    let statusTimer;
+    function showToast(msg, type = 'success') {
+      const bar = document.getElementById('statusBar');
+      bar.textContent = '';
+      // icon
+      const icons = { success: '✓ ', error: '✕ ', loading: '↻ ' };
+      bar.textContent = (icons[type] || '') + msg;
+      bar.className = 'status-bar show ' + type;
+      clearTimeout(statusTimer);
+      if (type !== 'loading') statusTimer = setTimeout(() => bar.classList.remove('show'), 4000);
+    }
+    function hideToast() { document.getElementById('statusBar').classList.remove('show'); }
 
-function renderVersions(){
-  const tbody=document.getElementById('versionsTableBody');
-  if(!versions.length){
-    tbody.innerHTML=`<tr><td colspan="6"><div class="empty-state"><svg class="empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7,10 12,15 17,10"/><line x1="12" y1="15" x2="12" y2="3"/></svg><h3>No versions published yet</h3><p>Use the form above to publish your first Flutter APK version.</p></div></td></tr>`;
-    return;
-  }
-  const sorted=[...versions].sort((a,b)=>new Date(b.deployedDate)-new Date(a.deployedDate));
-  tbody.innerHTML=sorted.map(v=>`
+    // ===== LOAD VERSIONS =====
+    async function loadVersions() {
+      showToast('Fetching versions…', 'loading');
+      try {
+        const res = await fetch(API_BASE, { headers: { Authorization: 'Bearer ' + TOKEN } });
+        if (!res.ok) {
+          if (res.status === 401 || res.status === 403) { showToast('Session expired. Please sign in again.', 'error'); return; }
+          throw new Error('HTTP ' + res.status);
+        }
+        const data = await res.json();
+        versions = Array.isArray(data) ? data : (data.data || data.versions || []);
+        renderVersions();
+        updateStats();
+        hideToast();
+      } catch (e) {
+        showToast('Failed to load versions: ' + e.message, 'error');
+        renderError();
+      }
+    }
+
+    function updateStats() {
+      document.getElementById('statTotal').textContent = versions.length;
+      const latest = versions.find(v => v.isLatest);
+      if (latest) {
+        document.getElementById('statLatest').textContent = 'v' + latest.version;
+        document.getElementById('statLatestDate').textContent = 'Deployed ' + formatDate(latest.deployedDate);
+      } else {
+        document.getElementById('statLatest').textContent = 'None';
+        document.getElementById('statLatestDate').textContent = 'No latest set';
+      }
+      document.getElementById('tableSubtitle').textContent = versions.length + ' release' + (versions.length === 1 ? '' : 's') + ' found';
+    }
+
+    function formatDate(d) { if (!d) return '—'; try { return new Date(d).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' }); } catch { return d; } }
+    function escHtml(s) { return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+
+    function renderVersions() {
+      const tbody = document.getElementById('versionsTableBody');
+      if (!versions.length) {
+        tbody.innerHTML = `<tr><td colspan="6"><div class="empty-state"><svg class="empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7,10 12,15 17,10"/><line x1="12" y1="15" x2="12" y2="3"/></svg><h3>No versions published yet</h3><p>Use the form above to publish your first Flutter APK version.</p></div></td></tr>`;
+        return;
+      }
+      const sorted = [...versions].sort((a, b) => new Date(b.deployedDate) - new Date(a.deployedDate));
+      tbody.innerHTML = sorted.map(v => `
     <tr>
-      <td>${v.isLatest?'<span class="badge badge-latest"><span class="badge-dot"></span>Latest</span>':'<span class="badge badge-old">Older</span>'}</td>
+      <td>${v.isLatest ? '<span class="badge badge-latest"><span class="badge-dot"></span>Latest</span>' : '<span class="badge badge-old">Older</span>'}</td>
       <td><span class="version-tag">v${escHtml(v.version)}</span></td>
       <td class="hide-mobile"><span class="date-text">${formatDate(v.deployedDate)}</span></td>
       <td class="td-url"><a href="${escHtml(v.downloadUrl)}" target="_blank" rel="noopener noreferrer" title="${escHtml(v.downloadUrl)}">${escHtml(v.downloadUrl)}</a></td>
-      <td class="hide-mobile"><span style="font-size:var(--text-xs);color:var(--color-text-muted);">${escHtml(v.notes||'—')}</span></td>
+      <td class="hide-mobile"><span style="font-size:var(--text-xs);color:var(--color-text-muted);">${escHtml(v.notes || '—')}</span></td>
       <td>
         <div class="td-actions">
           <button class="btn btn-ghost btn-sm" onclick="openEditDrawer('${escHtml(v._id)}')" aria-label="Edit version ${escHtml(v.version)}">
@@ -664,107 +1541,108 @@ function renderVersions(){
       </td>
     </tr>
   `).join('');
-}
+    }
 
-function renderError(){
-  document.getElementById('versionsTableBody').innerHTML=`<tr><td colspan="6"><div class="empty-state"><svg class="empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><h3>Failed to load versions</h3><p>Check your token and network connection, then try refreshing.</p></div></td></tr>`;
-}
+    function renderError() {
+      document.getElementById('versionsTableBody').innerHTML = `<tr><td colspan="6"><div class="empty-state"><svg class="empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><h3>Failed to load versions</h3><p>Check your token and network connection, then try refreshing.</p></div></td></tr>`;
+    }
 
-// ===== CREATE VERSION =====
-function toggleForm(){
-  const body=document.getElementById('addFormBody');
-  const isHidden=body.style.display==='none';
-  body.style.display=isHidden?'block':'none';
-  document.getElementById('formToggleBtn').querySelector('svg').style.transform=isHidden?'rotate(45deg)':'';
-  if(isHidden) document.getElementById('f_date').value=new Date().toISOString().split('T')[0];
-}
-function resetForm(){document.getElementById('addVersionForm').reset();document.getElementById('addFormBody').style.display='none';document.getElementById('formToggleBtn').querySelector('svg').style.transform='';}
+    // ===== CREATE VERSION =====
+    function toggleForm() {
+      const body = document.getElementById('addFormBody');
+      const isHidden = body.style.display === 'none';
+      body.style.display = isHidden ? 'block' : 'none';
+      document.getElementById('formToggleBtn').querySelector('svg').style.transform = isHidden ? 'rotate(45deg)' : '';
+      if (isHidden) document.getElementById('f_date').value = new Date().toISOString().split('T')[0];
+    }
+    function resetForm() { document.getElementById('addVersionForm').reset(); document.getElementById('addFormBody').style.display = 'none'; document.getElementById('formToggleBtn').querySelector('svg').style.transform = ''; }
 
-async function handleCreateVersion(e){
-  e.preventDefault();
-  const btn=document.getElementById('createBtn');
-  btn.classList.add('loading');btn.disabled=true;
-  const body={
-    version:document.getElementById('f_version').value.trim(),
-    downloadUrl:document.getElementById('f_url').value.trim(),
-    deployedDate:document.getElementById('f_date').value,
-    notes:document.getElementById('f_notes').value.trim()
-  };
-  try{
-    const res=await fetch(API_BASE,{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+TOKEN},body:JSON.stringify(body)});
-    const data=await res.json().catch(()=>({}));
-    if(!res.ok) throw new Error(data.message||'HTTP '+res.status);
-    showToast('Version v'+body.version+' published successfully!','success');
-    resetForm();
-    await loadVersions();
-  }catch(err){showToast('Error: '+err.message,'error');}
-  btn.classList.remove('loading');btn.disabled=false;
-}
+    async function handleCreateVersion(e) {
+      e.preventDefault();
+      const btn = document.getElementById('createBtn');
+      btn.classList.add('loading'); btn.disabled = true;
+      const body = {
+        version: document.getElementById('f_version').value.trim(),
+        downloadUrl: document.getElementById('f_url').value.trim(),
+        deployedDate: document.getElementById('f_date').value,
+        notes: document.getElementById('f_notes').value.trim()
+      };
+      try {
+        const res = await fetch(API_BASE, { method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + TOKEN }, body: JSON.stringify(body) });
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok) throw new Error(data.message || 'HTTP ' + res.status);
+        showToast('Version v' + body.version + ' published successfully!', 'success');
+        resetForm();
+        await loadVersions();
+      } catch (err) { showToast('Error: ' + err.message, 'error'); }
+      btn.classList.remove('loading'); btn.disabled = false;
+    }
 
-// ===== EDIT DRAWER =====
-function openEditDrawer(id){
-  const v=versions.find(x=>x._id===id);if(!v)return;
-  document.getElementById('e_id').value=v._id;
-  document.getElementById('e_version').value=v.version||'';
-  document.getElementById('e_date').value=v.deployedDate?v.deployedDate.split('T')[0]:'';
-  document.getElementById('e_url').value=v.downloadUrl||'';
-  document.getElementById('e_notes').value=v.notes||'';
-  document.getElementById('drawerOverlay').classList.add('open');
-  document.getElementById('editDrawer').classList.add('open');
-}
-function closeDrawer(){
-  document.getElementById('drawerOverlay').classList.remove('open');
-  document.getElementById('editDrawer').classList.remove('open');
-}
-document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeDrawer();closeDeleteModal();}});
+    // ===== EDIT DRAWER =====
+    function openEditDrawer(id) {
+      const v = versions.find(x => x._id === id); if (!v) return;
+      document.getElementById('e_id').value = v._id;
+      document.getElementById('e_version').value = v.version || '';
+      document.getElementById('e_date').value = v.deployedDate ? v.deployedDate.split('T')[0] : '';
+      document.getElementById('e_url').value = v.downloadUrl || '';
+      document.getElementById('e_notes').value = v.notes || '';
+      document.getElementById('drawerOverlay').classList.add('open');
+      document.getElementById('editDrawer').classList.add('open');
+    }
+    function closeDrawer() {
+      document.getElementById('drawerOverlay').classList.remove('open');
+      document.getElementById('editDrawer').classList.remove('open');
+    }
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeDrawer(); closeDeleteModal(); } });
 
-async function handleUpdateVersion(e){
-  e.preventDefault();
-  const btn=document.getElementById('updateBtn');
-  btn.classList.add('loading');btn.disabled=true;
-  const id=document.getElementById('e_id').value;
-  const body={
-    version:document.getElementById('e_version').value.trim(),
-    downloadUrl:document.getElementById('e_url').value.trim(),
-    deployedDate:document.getElementById('e_date').value,
-    notes:document.getElementById('e_notes').value.trim()
-  };
-  try{
-    const res=await fetch(API_BASE+'/'+id,{method:'PUT',headers:{'Content-Type':'application/json','Authorization':'Bearer '+TOKEN},body:JSON.stringify(body)});
-    const data=await res.json().catch(()=>({}));
-    if(!res.ok) throw new Error(data.message||'HTTP '+res.status);
-    showToast('Version updated successfully!','success');
-    closeDrawer();
-    await loadVersions();
-  }catch(err){showToast('Error: '+err.message,'error');}
-  btn.classList.remove('loading');btn.disabled=false;
-}
+    async function handleUpdateVersion(e) {
+      e.preventDefault();
+      const btn = document.getElementById('updateBtn');
+      btn.classList.add('loading'); btn.disabled = true;
+      const id = document.getElementById('e_id').value;
+      const body = {
+        version: document.getElementById('e_version').value.trim(),
+        downloadUrl: document.getElementById('e_url').value.trim(),
+        deployedDate: document.getElementById('e_date').value,
+        notes: document.getElementById('e_notes').value.trim()
+      };
+      try {
+        const res = await fetch(API_BASE + '/' + id, { method: 'PUT', headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + TOKEN }, body: JSON.stringify(body) });
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok) throw new Error(data.message || 'HTTP ' + res.status);
+        showToast('Version updated successfully!', 'success');
+        closeDrawer();
+        await loadVersions();
+      } catch (err) { showToast('Error: ' + err.message, 'error'); }
+      btn.classList.remove('loading'); btn.disabled = false;
+    }
 
-// ===== DELETE =====
-function openDeleteModal(id,version){
-  deleteTargetId=id;
-  document.getElementById('deleteModalText').textContent='You are about to permanently delete version v'+version+'. This cannot be undone.';
-  document.getElementById('deleteModal').classList.add('open');
-}
-function closeDeleteModal(){document.getElementById('deleteModal').classList.remove('open');deleteTargetId=null;}
+    // ===== DELETE =====
+    function openDeleteModal(id, version) {
+      deleteTargetId = id;
+      document.getElementById('deleteModalText').textContent = 'You are about to permanently delete version v' + version + '. This cannot be undone.';
+      document.getElementById('deleteModal').classList.add('open');
+    }
+    function closeDeleteModal() { document.getElementById('deleteModal').classList.remove('open'); deleteTargetId = null; }
 
-async function confirmDelete(){
-  if(!deleteTargetId)return;
-  const btn=document.getElementById('confirmDeleteBtn');
-  btn.classList.add('loading');btn.disabled=true;
-  try{
-    const res=await fetch(API_BASE+'/'+deleteTargetId,{method:'DELETE',headers:{'Authorization':'Bearer '+TOKEN}});
-    const data=await res.json().catch(()=>({}));
-    if(!res.ok) throw new Error(data.message||'HTTP '+res.status);
-    showToast('Version deleted.','success');
-    closeDeleteModal();
-    await loadVersions();
-  }catch(err){showToast('Error: '+err.message,'error');}
-  btn.classList.remove('loading');btn.disabled=false;
-}
+    async function confirmDelete() {
+      if (!deleteTargetId) return;
+      const btn = document.getElementById('confirmDeleteBtn');
+      btn.classList.add('loading'); btn.disabled = true;
+      try {
+        const res = await fetch(API_BASE + '/' + deleteTargetId, { method: 'DELETE', headers: { 'Authorization': 'Bearer ' + TOKEN } });
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok) throw new Error(data.message || 'HTTP ' + res.status);
+        showToast('Version deleted.', 'success');
+        closeDeleteModal();
+        await loadVersions();
+      } catch (err) { showToast('Error: ' + err.message, 'error'); }
+      btn.classList.remove('loading'); btn.disabled = false;
+    }
 
-// Set today's date default
-document.getElementById('f_date').value=new Date().toISOString().split('T')[0];
-</script>
+    // Set today's date default
+    document.getElementById('f_date').value = new Date().toISOString().split('T')[0];
+  </script>
 </body>
+
 </html>

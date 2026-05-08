@@ -20,8 +20,10 @@ import {
   Lock, 
   Layers, 
   Smartphone,
-  Play
+  Play,
+  Send
 } from 'lucide-react';
+import toast from 'react-hot-toast';
 
 function App() {
   const theme = useAppSelector((state: RootState) => state.theme.mode);
@@ -29,6 +31,17 @@ function App() {
   const { data: versions } = useGetAppVersionsQuery();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [formData, setFormData] = useState({
+    fullName: '',
+    workEmail: '',
+    phoneNumber: '',
+    role: '',
+    schoolName: '',
+    cityTown: '',
+    studentCount: '',
+    additionalNotes: ''
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const latestVersion = Array.isArray(versions) ? versions[0] : null;
 
@@ -72,6 +85,44 @@ function App() {
     document.body.style.overflow = '';
   };
 
+  const handleLicenseSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    try {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/license-request`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+      if (response.ok) {
+        const result = await response.json();
+        toast.success(result.message || 'License request submitted successfully!');
+        setFormData({
+          fullName: '',
+          workEmail: '',
+          phoneNumber: '',
+          role: '',
+          schoolName: '',
+          cityTown: '',
+          studentCount: '',
+          additionalNotes: ''
+        });
+      } else {
+        const errorData = await response.json();
+        toast.error(errorData.message || 'Failed to submit request');
+      }
+    } catch (error) {
+      toast.error('An error occurred. Please check your connection.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+    const { id, value } = e.target;
+    setFormData(prev => ({ ...prev, [id]: value }));
+  };
+
   return (
     <div className="app">
       <a href="#main" className="skip-link">Skip to content</a>
@@ -92,7 +143,7 @@ function App() {
             <div className="nav-links" aria-label="Section links">
               <a href="#features">Features</a>
               <a href="#roles">Who It's For</a>
-              <a href="#queries">Queries</a>
+              <a href="#queries">Get License</a>
               <a href="#download">Download</a>
             </div>
             <div className="nav-actions">
@@ -121,7 +172,7 @@ function App() {
       <div className={`mobile-menu ${isMobileMenuOpen ? 'open' : ''}`} role="dialog" aria-modal="true" aria-label="Mobile navigation">
         <a href="#features" onClick={closeMobileMenu}>Features</a>
         <a href="#roles" onClick={closeMobileMenu}>Who It's For</a>
-        <a href="#queries" onClick={closeMobileMenu}>Queries</a>
+        <a href="#queries" onClick={closeMobileMenu}>Get License</a>
         <a href="#download" onClick={closeMobileMenu}>Download</a>
         <a href="#download" className="btn btn-primary" onClick={closeMobileMenu}>
           <Download size={16} strokeWidth={2.5} />
@@ -439,38 +490,161 @@ function App() {
           </div>
         </section>
 
-        {/* QUERY FORM */}
-        <section className="queries" id="queries" aria-labelledby="queries-title">
+        {/* LICENSE REQUEST SECTION */}
+        <section className="license-request" id="queries" aria-labelledby="license-title">
           <div className="container">
-            <div className="section-header reveal">
-              <p className="section-tag">Have Questions?</p>
-              <h2 id="queries-title">Send us a Query</h2>
-              <p>Our team will get back to you within 24 hours to help you set up your school.</p>
-            </div>
-            <div className="query-card reveal">
-              <form className="query-form" onSubmit={(e) => { e.preventDefault(); alert('Query sent successfully!'); }}>
-                <div className="form-grid">
-                  <div className="form-group">
-                    <label htmlFor="name">Full Name</label>
-                    <input type="text" id="name" placeholder="John Doe" required />
+            <div className="license-grid">
+              <div className="license-info reveal">
+                <p className="section-tag">GET STARTED</p>
+                <h2 id="license-title" className="license-title">Request a License <br />Key for Your School</h2>
+                <p className="license-desc">SchoolSync is invite-only to ensure quality support. Submit a request and our team will issue your school's license key within 24 hours — unlocking the ability to register your organisation and onboard your staff.</p>
+                
+                <div className="license-steps">
+                  <div className="step-item">
+                    <div className="step-num">1</div>
+                    <div className="step-content">
+                      <h4>Submit this form</h4>
+                      <p>Tell us about your school — name, size, and contact details.</p>
+                    </div>
                   </div>
-                  <div className="form-group">
-                    <label htmlFor="email">Work Email</label>
-                    <input type="email" id="email" placeholder="john@school.edu" required />
+                  <div className="step-item">
+                    <div className="step-num">2</div>
+                    <div className="step-content">
+                      <h4>Receive your license key</h4>
+                      <p>We'll email a unique license key tied to your school within 24 hours.</p>
+                    </div>
+                  </div>
+                  <div className="step-item">
+                    <div className="step-num">3</div>
+                    <div className="step-content">
+                      <h4>Register your organisation</h4>
+                      <p>Use the key during admin registration in the SchoolSync app to activate your school.</p>
+                    </div>
+                  </div>
+                  <div className="step-item">
+                    <div className="step-num">4</div>
+                    <div className="step-content">
+                      <h4>Onboard your team</h4>
+                      <p>Add teachers, create classrooms, and invite students — you're live.</p>
+                    </div>
                   </div>
                 </div>
-                <div className="form-group">
-                  <label htmlFor="school">School Name</label>
-                  <input type="text" id="school" placeholder="Greenwood High School" required />
+              </div>
+              
+              <div className="license-form-card reveal">
+                <h3>License Key Request</h3>
+                <p>Fill in your school details and we'll send your activation key by email.</p>
+                <div className="license-disclaimer">
+                  <strong>Note:</strong> Request for license key is only for School Administrators. Students and Teachers are not eligible to request license keys.
                 </div>
-                <div className="form-group">
-                  <label htmlFor="message">How can we help?</label>
-                  <textarea id="message" rows={4} placeholder="Tell us about your school's needs..." required></textarea>
-                </div>
-                <button type="submit" className="btn btn-primary btn-form">
-                  Submit Request
-                </button>
-              </form>
+                
+                <form className="license-form" onSubmit={handleLicenseSubmit}>
+                  <div className="form-row">
+                    <div className="form-field">
+                      <label htmlFor="fullName">Full Name <span>*</span></label>
+                      <input 
+                        type="text" 
+                        id="fullName" 
+                        placeholder="John Doe" 
+                        required 
+                        value={formData.fullName}
+                        onChange={handleInputChange}
+                      />
+                    </div>
+                    <div className="form-field">
+                      <label htmlFor="workEmail">Work Email <span>*</span></label>
+                      <input 
+                        type="email" 
+                        id="workEmail" 
+                        placeholder="principal@school.edu" 
+                        required 
+                        value={formData.workEmail}
+                        onChange={handleInputChange}
+                      />
+                    </div>
+                  </div>
+                  
+                  <div className="form-row">
+                    <div className="form-field">
+                      <label htmlFor="phoneNumber">Phone Number <span>*</span></label>
+                      <input 
+                        type="tel" 
+                        id="phoneNumber" 
+                        placeholder="+91 98765 43210" 
+                        required 
+                        value={formData.phoneNumber}
+                        onChange={handleInputChange}
+                      />
+                    </div>
+                    <div className="form-field">
+                      <label htmlFor="role">Your Role <span>*</span></label>
+                      <select id="role" required value={formData.role} onChange={handleInputChange}>
+                        <option value="" disabled>Select your role</option>
+                        <option value="Principal / Head">Principal / Head</option>
+                        <option value="School Administrator">School Administrator</option>
+                        <option value="Senior Teacher">Senior Teacher</option>
+                        <option value="Trust / Management">Trust / Management</option>
+                        <option value="Other">Other</option>
+                      </select>
+                    </div>
+                  </div>
+                  
+                  <div className="form-field">
+                    <label htmlFor="schoolName">School Name <span>*</span></label>
+                    <input 
+                      type="text" 
+                      id="schoolName" 
+                      placeholder="Greenwood High School" 
+                      required 
+                      value={formData.schoolName}
+                      onChange={handleInputChange}
+                    />
+                  </div>
+                  
+                  <div className="form-row">
+                    <div className="form-field">
+                      <label htmlFor="cityTown">City / Town <span>*</span></label>
+                      <input 
+                        type="text" 
+                        id="cityTown" 
+                        placeholder="Bengaluru" 
+                        required 
+                        value={formData.cityTown}
+                        onChange={handleInputChange}
+                      />
+                    </div>
+                    <div className="form-field">
+                      <label htmlFor="studentCount">Approx. Student Count <span>*</span></label>
+                      <select id="studentCount" required value={formData.studentCount} onChange={handleInputChange}>
+                        <option value="" disabled>Select range</option>
+                        <option value="0-200">0-200</option>
+                        <option value="200-500">200-500</option>
+                        <option value="500-1000">500-1000</option>
+                        <option value="1000+">1000+</option>
+                      </select>
+                    </div>
+                  </div>
+                  
+                  <div className="form-field">
+                    <label htmlFor="additionalNotes">Additional Notes</label>
+                    <textarea 
+                      id="additionalNotes" 
+                      placeholder="Tell us about your school's needs, current systems, or any special requirements..."
+                      value={formData.additionalNotes}
+                      onChange={handleInputChange}
+                    ></textarea>
+                  </div>
+                  
+                  <p className="form-footer-text">
+                    Your details are used only to process this license request and will never be shared.
+                  </p>
+                  
+                  <button type="submit" className="btn-submit" disabled={isSubmitting}>
+                    <Send size={18} />
+                    {isSubmitting ? 'Sending...' : 'Send Request'}
+                  </button>
+                </form>
+              </div>
             </div>
           </div>
         </section>
