@@ -13,7 +13,6 @@ import {
   Calendar,
   X,
   CheckCircle,
-  Clock,
   ShieldCheck,
   Building,
   User,
