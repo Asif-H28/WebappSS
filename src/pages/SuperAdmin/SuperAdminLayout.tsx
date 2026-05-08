@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate, NavLink, Outlet } from 'react-router-dom';
+import { useNavigate, NavLink, Outlet, useLocation } from 'react-router-dom';
 import { useAppDispatch } from '../../store/hooks.ts';
 import { logout } from '../../store/authSlice.ts';
 import { 
@@ -19,6 +19,13 @@ const SuperAdminLayout = () => {
   const [isDarkMode, setIsDarkMode] = useState(document.documentElement.getAttribute('data-theme') === 'dark');
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const location = useLocation();
+
+  const getPageTitle = () => {
+    if (location.pathname.includes('licenses')) return 'License Management';
+    if (location.pathname.includes('dashboard')) return 'APK Version Manager';
+    return 'Super Admin Control';
+  };
 
   const toggleTheme = () => {
     const newTheme = isDarkMode ? 'light' : 'dark';
@@ -61,10 +68,10 @@ const SuperAdminLayout = () => {
             <Users size={16} />
             Organizations
           </div>
-          <div className="nav-item" style={{ opacity: 0.5, cursor: 'not-allowed' }}>
+          <NavLink to="/whitehouse/licenses" className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}>
             <Key size={16} />
             Licenses
-          </div>
+          </NavLink>
         </nav>
 
         <div className="sidebar-footer">
@@ -93,7 +100,7 @@ const SuperAdminLayout = () => {
             <button className="hamburger-btn" onClick={() => setIsMobileMenuOpen(true)}>
               <Menu size={20} />
             </button>
-            <span className="topbar-title">APK Version Manager</span>
+            <span className="topbar-title">{getPageTitle()}</span>
           </div>
           <div className="topbar-right">
             <button className="theme-toggle" onClick={toggleTheme}>

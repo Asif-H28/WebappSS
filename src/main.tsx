@@ -8,6 +8,7 @@ import SignIn from './pages/SuperAdmin/SignIn.tsx';
 import SignUp from './pages/SuperAdmin/SignUp.tsx';
 import SuperAdminLayout from './pages/SuperAdmin/SuperAdminLayout.tsx';
 import Dashboard from './pages/SuperAdmin/Dashboard.tsx';
+import Licenses from './pages/SuperAdmin/Licenses.tsx';
 import { Toaster } from 'react-hot-toast';
 import './index.css';
 
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
       {
         path: 'dashboard',
         element: <Dashboard />,
+      },
+      {
+        path: 'licenses',
+        element: <Licenses />,
       },
     ],
   },

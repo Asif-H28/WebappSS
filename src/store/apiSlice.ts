@@ -13,7 +13,7 @@ export const apiSlice = createApi({
       return headers;
     },
   }),
-  tagTypes: ['SuperAdmin', 'AppVersions'],
+  tagTypes: ['SuperAdmin', 'AppVersions', 'LicenseRequests', 'Organization'],
   endpoints: (builder) => ({
     superAdminSignIn: builder.mutation({
       query: (credentials) => ({
@@ -63,6 +63,34 @@ export const apiSlice = createApi({
       }),
       invalidatesTags: ['AppVersions'],
     }),
+    getLicenseRequests: builder.query<any[], void>({
+      query: () => '/license-request',
+      transformResponse: (response: any) => {
+        return Array.isArray(response) ? response : (response.data || []);
+      },
+      providesTags: ['LicenseRequests'],
+    }),
+    updateLicenseRequest: builder.mutation({
+      query: ({ id, ...data }) => ({
+        url: `/license-request/${id}`,
+        method: 'PATCH',
+        body: data,
+      }),
+      invalidatesTags: ['LicenseRequests'],
+    }),
+    getOrganization: builder.query<any, string>({
+      query: (orgId) => `/super-admin/app/org/${orgId}`,
+      transformResponse: (response: any) => response.data,
+      providesTags: (_result, _error, orgId) => [{ type: 'Organization', id: orgId }],
+    }),
+    toggleOrganizationStatus: builder.mutation({
+      query: ({ orgId, isActive }) => ({
+        url: `/super-admin/app/org/${orgId}/status`,
+        method: 'PATCH',
+        body: { isActive },
+      }),
+      invalidatesTags: (_result, _error, { orgId }) => [{ type: 'Organization', id: orgId }],
+    }),
   }),
 });
 
@@ -74,4 +102,8 @@ export const {
   useCreateAppVersionMutation,
   useUpdateAppVersionMutation,
   useDeleteAppVersionMutation,
+  useGetLicenseRequestsQuery,
+  useUpdateLicenseRequestMutation,
+  useGetOrganizationQuery,
+  useToggleOrganizationStatusMutation,
 } = apiSlice;
