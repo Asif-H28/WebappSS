@@ -28,7 +28,7 @@ import toast from 'react-hot-toast';
 function App() {
   const theme = useAppSelector((state: RootState) => state.theme.mode);
   const dispatch = useAppDispatch();
-  const { data: versions } = useGetAppVersionsQuery();
+  const { data: versions, isLoading } = useGetAppVersionsQuery();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [formData, setFormData] = useState({
@@ -43,7 +43,7 @@ function App() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const latestVersion = Array.isArray(versions) ? versions[0] : null;
+  const latestVersion = (Array.isArray(versions) && versions.length > 0) ? versions[0] : null;
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
@@ -196,7 +196,7 @@ function App() {
               <div className="hero-ctas">
                 <button className="btn btn-primary btn-hero" onClick={openModal}>
                   <Download size={18} strokeWidth={2.5} />
-                  Get the App
+                  {isLoading ? 'Loading...' : 'Get the App'}
                 </button>
                 <a href="#features" className="btn btn-ghost btn-hero">See Features</a>
               </div>
@@ -456,18 +456,22 @@ function App() {
             <div className="download-card reveal">
               <div className="version-badge">
                 <Play size={12} fill="currentColor" />
-                Flutter App · {latestVersion ? `v${latestVersion.version}` : 'v1.0'}
+                {latestVersion ? `v${latestVersion.version} · Latest` : 'v1.0.7 · Stable'}
               </div>
               <h2 id="download-title">Download SchoolSync Today</h2>
               <p>Get the full School Management System on your Android device — secure, fast, and ready to use.</p>
               <div className="download-buttons">
                 <button 
                   className="download-btn primary" 
+                  disabled={isLoading}
                   onClick={() => {
                     if (latestVersion?.downloadUrl) {
-                      window.location.href = latestVersion.downloadUrl;
+                      toast.success('Download starting...');
+                      window.open(latestVersion.downloadUrl, '_blank');
+                    } else if (isLoading) {
+                      toast.loading('Checking for updates...', { duration: 2000 });
                     } else {
-                      alert('APK link coming soon!');
+                      toast.error('APK link coming soon! Please check back later.');
                     }
                   }}
                 >
@@ -679,11 +683,15 @@ function App() {
             <div className="modal-options">
               <button 
                 className="modal-option" 
+                disabled={isLoading}
                 onClick={() => {
                   if (latestVersion?.downloadUrl) {
-                    window.location.href = latestVersion.downloadUrl;
+                    toast.success('Download starting...');
+                    window.open(latestVersion.downloadUrl, '_blank');
+                  } else if (isLoading) {
+                    toast.loading('Fetching download link...', { duration: 2000 });
                   } else {
-                    alert('APK download starting...');
+                    toast.error('Latest APK link not found. Please contact support.');
                   }
                 }}
               >
