@@ -20,7 +20,6 @@ import {
   Lock, 
   Layers, 
   Smartphone,
-  Play,
   Send
 } from 'lucide-react';
 import toast from 'react-hot-toast';
@@ -28,7 +27,7 @@ import toast from 'react-hot-toast';
 function App() {
   const theme = useAppSelector((state: RootState) => state.theme.mode);
   const dispatch = useAppDispatch();
-  const { data: versions, isLoading, refetch } = useGetAppVersionsQuery();
+  const { data,isLoading, refetch } = useGetAppVersionsQuery();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [formData, setFormData] = useState({
     fullName: '',
@@ -42,14 +41,7 @@ function App() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Robustly handle different response formats from the hook
-  const latestVersion = (() => {
-    if (!versions) return null;
-    if (Array.isArray(versions) && versions.length > 0) return versions[0];
-    if (typeof versions === 'object' && (versions as any).version) return versions as any;
-    return null;
-  })();
-
+console.log(data, "DATA");
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
   }, [theme]);
