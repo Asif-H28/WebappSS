@@ -28,9 +28,8 @@ import toast from 'react-hot-toast';
 function App() {
   const theme = useAppSelector((state: RootState) => state.theme.mode);
   const dispatch = useAppDispatch();
-  const { data: versions, isLoading } = useGetAppVersionsQuery();
+  const { data: versions, isLoading, refetch } = useGetAppVersionsQuery();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [formData, setFormData] = useState({
     fullName: '',
     workEmail: '',
@@ -81,14 +80,23 @@ function App() {
     document.body.style.overflow = !isMobileMenuOpen ? 'hidden' : '';
   };
 
-  const openModal = () => {
-    setIsModalOpen(true);
-    document.body.style.overflow = 'hidden';
-  };
+  const handleMainDownload = async () => {
+    const loadingToast = toast.loading('Checking for updates...');
+    try {
+      const result = await refetch();
+      const data = result.data;
+      
+      const version = (Array.isArray(data) && data.length > 0) ? data[0] : null;
 
-  const closeModal = () => {
-    setIsModalOpen(false);
-    document.body.style.overflow = '';
+      if (version?.downloadUrl) {
+        toast.success(`SchoolSync v${version.version} downloading...`, { id: loadingToast });
+        window.open(version.downloadUrl, '_blank');
+      } else {
+        toast.error('APK download link not found in system.', { id: loadingToast });
+      }
+    } catch (error) {
+      toast.error('Failed to connect to update server.', { id: loadingToast });
+    }
   };
 
   const handleLicenseSubmit = async (e: React.FormEvent) => {
@@ -150,7 +158,7 @@ function App() {
               <a href="#features">Features</a>
               <a href="#roles">Who It's For</a>
               <a href="#queries">Get License</a>
-              <a href="#download">Download</a>
+              <button onClick={handleMainDownload} className="nav-link-btn">Download</button>
             </div>
             <div className="nav-actions">
               <button 
@@ -160,7 +168,7 @@ function App() {
               >
                 {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
               </button>
-              <a href="#download" className="btn btn-ghost nav-download">Download App</a>
+              <button onClick={handleMainDownload} className="btn btn-ghost nav-download">Download App</button>
             </div>
             <button 
               className="nav-hamburger" 
@@ -179,11 +187,11 @@ function App() {
         <a href="#features" onClick={closeMobileMenu}>Features</a>
         <a href="#roles" onClick={closeMobileMenu}>Who It's For</a>
         <a href="#queries" onClick={closeMobileMenu}>Get License</a>
-        <a href="#download" onClick={closeMobileMenu}>Download</a>
-        <a href="#download" className="btn btn-primary" onClick={closeMobileMenu}>
+        <button onClick={() => { closeMobileMenu(); handleMainDownload(); }} className="mobile-nav-btn">Download</button>
+        <button className="btn btn-primary" onClick={() => { closeMobileMenu(); handleMainDownload(); }}>
           <Download size={16} strokeWidth={2.5} />
           Download Now
-        </a>
+        </button>
       </div>
 
       <main id="main">
@@ -200,7 +208,7 @@ function App() {
               <h1>The <span>Smarter</span> Way to Run Your School</h1>
               <p>SchoolSync brings admin, teachers, and students onto one unified platform — manage classes, attendance, exams, and communication with ease.</p>
               <div className="hero-ctas">
-                <button className="btn btn-primary btn-hero" onClick={openModal}>
+                <button className="btn btn-primary btn-hero" onClick={handleMainDownload}>
                   <Download size={18} strokeWidth={2.5} />
                   {isLoading ? 'Loading...' : 'Get the App'}
                 </button>
@@ -457,48 +465,6 @@ function App() {
           </div>
         </section>
 
-        <section className="download" id="download" aria-labelledby="download-title">
-          <div className="container">
-            <div className="download-card reveal">
-              <div className="version-badge">
-                <Play size={12} fill="currentColor" />
-                {latestVersion ? `v${latestVersion.version} · Latest` : 'v1.0.7 · Stable'}
-              </div>
-              <h2 id="download-title">Download SchoolSync Today</h2>
-              <p>Get the full School Management System on your Android device — secure, fast, and ready to use.</p>
-              <div className="download-buttons">
-                <button 
-                  className="download-btn primary" 
-                  disabled={isLoading}
-                  onClick={() => {
-                    if (latestVersion?.downloadUrl) {
-                      toast.success('Download starting...');
-                      window.open(latestVersion.downloadUrl, '_blank');
-                    } else if (isLoading) {
-                      toast.loading('Checking for updates...', { duration: 2000 });
-                    } else {
-                      toast.error('APK link coming soon! Please check back later.');
-                    }
-                  }}
-                >
-                  <Smartphone size={24} />
-                  <div className="download-btn-label">
-                    <span>Download for</span>
-                    <span>Android APK</span>
-                  </div>
-                </button>
-                <button className="download-btn" onClick={openModal}>
-                  <Layers size={22} />
-                  <div className="download-btn-label">
-                    <span>More options</span>
-                    <span>All Versions</span>
-                  </div>
-                </button>
-              </div>
-              <p className="download-note">Secure Download · Android 6.0+ required · Organisation ID required</p>
-            </div>
-          </div>
-        </section>
 
         {/* LICENSE REQUEST SECTION */}
         <section className="license-request" id="queries" aria-labelledby="license-title">
@@ -679,45 +645,6 @@ function App() {
         </footer>
       </main>
 
-      {/* DOWNLOAD MODAL */}
-      {isModalOpen && (
-        <div className={`modal-overlay ${isModalOpen ? 'open' : ''}`} role="dialog" aria-modal="true" aria-labelledby="modal-title" onClick={(e) => e.target === e.currentTarget && closeModal()}>
-          <div className="modal">
-            <button className="modal-close" onClick={closeModal} aria-label="Close modal">×</button>
-            <h3 id="modal-title">Download SchoolSync</h3>
-            <p>Choose your preferred download option:</p>
-            <div className="modal-options">
-              <button 
-                className="modal-option" 
-                disabled={isLoading}
-                onClick={() => {
-                  if (latestVersion?.downloadUrl) {
-                    toast.success('Download starting...');
-                    window.open(latestVersion.downloadUrl, '_blank');
-                  } else if (isLoading) {
-                    toast.loading('Fetching download link...', { duration: 2000 });
-                  } else {
-                    toast.error('Latest APK link not found. Please contact support.');
-                  }
-                }}
-              >
-                <div className="modal-option-icon" aria-hidden="true">📱</div>
-                <div className="modal-option-text">
-                  <h4>Android APK</h4>
-                  <p>Direct APK download for Android 6.0 and above. Enable "Install from unknown sources" in settings.</p>
-                </div>
-              </button>
-              <button className="modal-option" onClick={() => alert('Coming soon on Play Store!')}>
-                <div className="modal-option-icon" aria-hidden="true">🏪</div>
-                <div className="modal-option-text">
-                  <h4>Google Play Store</h4>
-                  <p>Coming soon — one-tap install with auto-updates via Play Store.</p>
-                </div>
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
