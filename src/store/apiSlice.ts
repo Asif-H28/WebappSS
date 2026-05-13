@@ -13,7 +13,7 @@ export const apiSlice = createApi({
       return headers;
     },
   }),
-  tagTypes: ['SuperAdmin', 'AppVersions', 'LicenseRequests', 'Organization'],
+  tagTypes: ['SuperAdmin', 'AppVersions', 'LicenseRequests', 'Organization', 'GlobalConfig'],
   endpoints: (builder) => ({
     superAdminSignIn: builder.mutation({
       query: (credentials) => ({
@@ -91,6 +91,27 @@ export const apiSlice = createApi({
       }),
       invalidatesTags: (_result, _error, { orgId }) => [{ type: 'Organization', id: orgId }],
     }),
+    getOrganizations: builder.query<any[], void>({
+      query: () => '/super-admin/app/org/all',
+      transformResponse: (response: any) => response.data || response,
+      providesTags: (result) => 
+        result 
+          ? [...result.map(({ orgId }: any) => ({ type: 'Organization' as const, id: orgId })), 'Organization']
+          : ['Organization'],
+    }),
+    getGlobalConfigs: builder.query<any[], void>({
+      query: () => '/super-admin/config',
+      transformResponse: (response: any) => response.data || response,
+      providesTags: ['GlobalConfig'],
+    }),
+    updateGlobalConfig: builder.mutation({
+      query: (data) => ({
+        url: '/super-admin/config',
+        method: 'POST',
+        body: data,
+      }),
+      invalidatesTags: ['GlobalConfig'],
+    }),
   }),
 });
 
@@ -105,5 +126,8 @@ export const {
   useGetLicenseRequestsQuery,
   useUpdateLicenseRequestMutation,
   useGetOrganizationQuery,
+  useGetOrganizationsQuery,
   useToggleOrganizationStatusMutation,
+  useGetGlobalConfigsQuery,
+  useUpdateGlobalConfigMutation,
 } = apiSlice;

@@ -24,6 +24,7 @@ const SuperAdminLayout = () => {
   const getPageTitle = () => {
     if (location.pathname.includes('licenses')) return 'License Management';
     if (location.pathname.includes('dashboard')) return 'APK Version Manager';
+    if (location.pathname.includes('config')) return 'Organisation Settings';
     return 'Super Admin Control';
   };
 
@@ -71,6 +72,10 @@ const SuperAdminLayout = () => {
           <NavLink to="/whitehouse/licenses" className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}>
             <Key size={16} />
             Licenses
+          </NavLink>
+          <NavLink to="/whitehouse/config" className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}>
+            <Shield size={16} />
+            Global Settings
           </NavLink>
         </nav>
 
