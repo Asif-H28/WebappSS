@@ -36,10 +36,11 @@ export const apiSlice = createApi({
     getAppVersions: builder.query<any[], void>({
       query: () => '/super-admin/app',
       transformResponse: (response: any) => {
-        if (Array.isArray(response)) return response;
-        if (Array.isArray(response.data)) return response.data;
-        if (response.data && Array.isArray(response.data.versions)) return response.data.versions;
-        if (Array.isArray(response.versions)) return response.versions;
+        const data = response?.data || response?.versions || response;
+        if (Array.isArray(data)) return data;
+        if (data && typeof data === 'object' && (data.version || data.downloadUrl)) {
+          return [data];
+        }
         return [];
       },
       providesTags: ['AppVersions'],

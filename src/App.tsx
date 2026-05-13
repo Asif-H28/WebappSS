@@ -43,7 +43,13 @@ function App() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const latestVersion = (Array.isArray(versions) && versions.length > 0) ? versions[0] : null;
+  // Robustly handle different response formats from the hook
+  const latestVersion = (() => {
+    if (!versions) return null;
+    if (Array.isArray(versions) && versions.length > 0) return versions[0];
+    if (typeof versions === 'object' && (versions as any).version) return versions as any;
+    return null;
+  })();
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
