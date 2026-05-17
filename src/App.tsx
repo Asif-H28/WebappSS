@@ -12,14 +12,9 @@ import {
   Users, 
   Calendar, 
   Star, 
-  Home, 
+
   Bell, 
-  User, 
-  CheckCircle, 
-  FileText, 
-  Lock, 
-  Layers, 
-  Smartphone,
+
   Send
 } from 'lucide-react';
 import toast from 'react-hot-toast';
@@ -337,122 +332,101 @@ console.log(data, "DATA");
           </div>
         </section>
 
-        {/* MODULES GRID */}
-        <section className="modules" aria-labelledby="modules-title">
+        {/* ROLES & FEATURES */}
+        <section className="features-showcase" id="roles" aria-labelledby="roles-title">
           <div className="container">
             <div className="section-header reveal">
-              <p className="section-tag">11 Powerful Modules</p>
-              <h2 id="modules-title">Built for every corner of school life</h2>
-              <p>From enrolment to exam results, every workflow is covered — securely and efficiently.</p>
+               <p className="section-tag">Comprehensive Portals</p>
+               <h2 id="roles-title">Purpose-Built for Every Role</h2>
+               <p>Explore the complete usage and flow of the application, categorized by user role.</p>
             </div>
-            <div className="modules-grid">
-              <ModuleCard 
-                icon={<Home size={20} />} 
-                title="Organisation & Admin" 
-                description="Create school organisations, manage profiles, run academic year rollups, and bulk promote students." 
-              />
-              <ModuleCard 
-                icon={<Users size={20} />} 
-                title="Teacher Management" 
-                description="Teacher registration, join-request workflows, admin verification, and classroom ownership." 
-              />
-              <ModuleCard 
-                icon={<User size={20} />} 
-                title="Student Module" 
-                description="Student enrolment, class browsing, join requests, and individual attendance & result views." 
-              />
-              <ModuleCard 
-                icon={<Layers size={20} />} 
-                title="Classroom & Academics" 
-                description="Manage classrooms, subjects, lesson plans, completion tracking, and weekly timetables." 
-              />
-              <ModuleCard 
-                icon={<CheckCircle size={20} />} 
-                title="Join Requests" 
-                description="Real-time pending request queues, automated approval engine, and full history for auditing." 
-              />
-              <ModuleCard 
-                icon={<Calendar size={20} />} 
-                title="Attendance & Leave" 
-                description="Digital registers, attendance trends, leave applications with teacher review and FCM notifications." 
-              />
-              <ModuleCard 
-                icon={<Bell size={20} />} 
-                title="Notices & Notes" 
-                description="Org-wide announcements, classroom notices with Cloudinary attachments, and teacher remarks." 
-              />
-              <ModuleCard 
-                icon={<FileText size={20} />} 
-                title="Examinations & Results" 
-                description="CA templates, mark entry, feedback recording, and aggregated performance report generation." 
-              />
-              <ModuleCard 
-                icon={<Bell size={20} />} 
-                title="Push Notifications" 
-                description="FCM-powered real-time alerts for join requests, leave status, and notices. Persistent in-app history." 
-              />
-              <ModuleCard 
-                icon={<Lock size={20} />} 
-                title="Security & Auth" 
-                description="JWT sessions, Bcrypt password hashing, license gating (Standard/Active/Expired), and rate limiting." 
-              />
-              <ModuleCard 
-                icon={<Smartphone size={20} />} 
-                title="Multi-Tenant Architecture" 
-                description="Strict data isolation — every user only sees data belonging to their own organisation. Fully scalable." 
-              />
+            
+            {/* Admin */}
+            <div className="role-detail-section reveal">
+               <div className="role-detail-header">
+                  <div className="role-icon-large" style={{ background: 'var(--color-primary-highlight)', color: 'var(--color-primary)' }}>🏫</div>
+                  <div>
+                    <h3>1. Admin Role <span>(Supervision & Governance)</span></h3>
+                    <p className="role-subtitle">The central hub for institutional oversight and configuration.</p>
+                  </div>
+               </div>
+               <div className="role-feature-grid">
+                  <FeatureBox title="Institutional Hierarchy" desc="Define administrative roles (Principal, Coordinator, etc.) and assign leadership personnel." />
+                  <FeatureBox title="Organization Setup" desc="Manage school branding, basic details, and global settings." />
+                  <FeatureBox title="Staff Governance" desc="Approve or reject Teacher join requests and manage the active staff roster." />
+                  <FeatureBox title="Leave Management" desc="Review, approve, or reject leave applications submitted by Teachers." />
+                  <FeatureBox title="Institutional Communication" desc="Broadcast school-wide notices and chat directly with any staff member in real-time." />
+                  <FeatureBox title="Excellence Tracking" desc="Manage the school-wide Achievement Feed to recognize student and staff milestones." />
+               </div>
             </div>
+
+            {/* Teacher */}
+            <div className="role-detail-section reveal">
+               <div className="role-detail-header">
+                  <div className="role-icon-large" style={{ background: 'oklch(0.3 0 0 / 0.12)' }}>👨‍🏫</div>
+                  <div>
+                    <h3>2. Teacher Role <span>(Academic & Classroom Management)</span></h3>
+                    <p className="role-subtitle">The engine room for academic delivery and operational management.</p>
+                  </div>
+               </div>
+               <div className="role-feature-grid">
+                  <FeatureBox title="Smart Dashboard" desc="At-a-glance view of today’s schedule, attendance summaries, and recent activity." />
+                  <FeatureBox title="Classroom Ecosystem" desc="Manage student rosters, organize subjects, and design complex weekly timetables." />
+                  <FeatureBox title="Academic Excellence" desc="Record assessments, generate AI-powered quizzes instantly, and share digital study notes." />
+                  <FeatureBox title="Operational Tools" desc="Mark live digital attendance, approve student leaves, and monitor live school bus GPS." />
+                  <FeatureBox title="Communication" desc="Direct chat with students and parents, and seamless access to school-wide notice boards." />
+               </div>
+            </div>
+
+            {/* Student */}
+            <div className="role-detail-section reveal">
+               <div className="role-detail-header">
+                  <div className="role-icon-large" style={{ background: 'oklch(0.2 0 0 / 0.1)' }}>🎓</div>
+                  <div>
+                    <h3>3. Student Role <span>(Learning & Engagement)</span></h3>
+                    <p className="role-subtitle">A personalized companion for student success and records.</p>
+                  </div>
+               </div>
+               <div className="role-feature-grid">
+                  <FeatureBox title="Learning Hub" desc="Personalized dashboard showing current attendance, next period, and upcoming tests." />
+                  <FeatureBox title="Academic Records" desc="Detailed performance reports, interactive quizzes, and downloadable class resources." />
+                  <FeatureBox title="Participation Tools" desc="Monitor visual attendance charts, digital timetables, and track leave approval statuses." />
+                  <FeatureBox title="Stay Informed" desc="Instant push alerts, notice board access, and an achievement feed to celebrate success." />
+               </div>
+            </div>
+
+            {/* Transport */}
+            <div className="role-detail-section reveal">
+               <div className="role-detail-header">
+                  <div className="role-icon-large" style={{ background: 'oklch(0.85 0.15 80 / 0.3)' }}>🚌</div>
+                  <div>
+                    <h3>4. Transport Features <span>(Coordinators & Fleet)</span></h3>
+                    <p className="role-subtitle">Specific tools for safety and logistics management.</p>
+                  </div>
+               </div>
+               <div className="role-feature-grid">
+                  <FeatureBox title="Fleet Management" desc="Create and maintain accurate vehicle records for buses, vans, and drivers." />
+                  <FeatureBox title="Real-time Tracking" desc="Interactive map view showing live coordinates and movement of all school vehicles." />
+                  <FeatureBox title="Security Access" desc="Secure PIN-based lookup system for drivers and transport coordinators." />
+                  <FeatureBox title="Role-Based Access" desc="Specialized transport status flags for Teachers acting as dedicated transport coordinators." />
+               </div>
+            </div>
+
           </div>
         </section>
 
-        {/* ROLES */}
-        <section className="roles" id="roles" aria-labelledby="roles-title">
+        {/* TECH HIGHLIGHTS */}
+        <section className="tech-highlights" id="tech" aria-labelledby="tech-title">
           <div className="container">
             <div className="section-header reveal">
-              <p className="section-tag">Three User Roles</p>
-              <h2 id="roles-title">Built for everyone in your school</h2>
-              <p>Each role gets a purpose-built experience tailored to their daily tasks.</p>
+               <p className="section-tag">Demo Highlights</p>
+               <h2 id="tech-title">🚀 Key Technical Features</h2>
             </div>
-            <div className="roles-grid">
-              <RoleCard 
-                icon="🏫" 
-                iconBg="var(--color-primary-highlight)"
-                title="Admin"
-                description="Full control over your school's digital infrastructure — from setup to year-end rollup."
-                list={[
-                  "Create & manage the school organisation",
-                  "Approve teachers & manage staff",
-                  "Publish org-wide notices",
-                  "Generate & manage license keys",
-                  "View school-wide metrics & stats"
-                ]}
-              />
-              <RoleCard 
-                icon="👩‍🏫" 
-                iconBg="#1a2a1a"
-                title="Teacher"
-                description="Manage classrooms, lessons, and student progress — all from the app."
-                list={[
-                  "Take & edit daily attendance",
-                  "Manage subjects & lesson plans",
-                  "Review & approve leave requests",
-                  "Post classroom notices",
-                  "Enter exam marks & feedback"
-                ]}
-              />
-              <RoleCard 
-                icon="🎒" 
-                iconBg="#1a1a2a"
-                title="Student"
-                description="Stay on top of classes, attendance, leave, and exam results in one place."
-                list={[
-                  "Browse & join classes",
-                  "View personal attendance record",
-                  "Apply for leave with reasons",
-                  "View exam results & reports",
-                  "Receive real-time notifications"
-                ]}
-              />
+            <div className="highlights-grid">
+               <HighlightCard icon={<Send size={24}/>} title="Real-Time Connectivity" desc="Socket.io integration for instant chat and live status badges." />
+               <HighlightCard icon={<Download size={24}/>} title="Dynamic Updates" desc="OTA (Over-the-Air) app update system directly within the app." />
+               <HighlightCard icon={<Star size={24}/>} title="Premium UI" desc="Clean, modern aesthetics using a teal-based professional color palette." />
+               <HighlightCard icon={<Bell size={24}/>} title="Push Notifications" desc="Integrated FCM (Firebase Cloud Messaging) for all roles." />
             </div>
           </div>
         </section>
@@ -641,29 +615,21 @@ console.log(data, "DATA");
   );
 }
 
-function ModuleCard({ icon, title, description }: { icon: React.ReactNode, title: string, description: string }) {
+function FeatureBox({ title, desc }: { title: string, desc: string }) {
   return (
-    <article className="module-card reveal">
-      <div className="module-card-icon" aria-hidden="true">
-        {icon}
-      </div>
-      <h3>{title}</h3>
-      <p>{description}</p>
-    </article>
+    <div className="feature-box reveal">
+      <h4>{title}</h4>
+      <p>{desc}</p>
+    </div>
   );
 }
 
-function RoleCard({ icon, iconBg, title, description, list }: { icon: string, iconBg: string, title: string, description: string, list: string[] }) {
+function HighlightCard({ icon, title, desc }: { icon: React.ReactNode, title: string, desc: string }) {
   return (
-    <div className="role-card reveal">
-      <div className="role-icon" style={{ background: iconBg }} aria-hidden="true">{icon}</div>
+    <div className="highlight-card reveal">
+      <div className="highlight-icon">{icon}</div>
       <h3>{title}</h3>
-      <p>{description}</p>
-      <ul className="role-list">
-        {list.map((item, i) => (
-          <li key={i}>{item}</li>
-        ))}
-      </ul>
+      <p>{desc}</p>
     </div>
   );
 }
