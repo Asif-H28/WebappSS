@@ -1016,3 +1016,327 @@ th:last-child { text-align: right; }
   color: var(--color-text-faint);
   font-size: 13px;
 }
+
+/* ===== PWA INSTALLATION SECTION ===== */
+.pwa-section {
+  padding: clamp(var(--space-10), 5vw, var(--space-16)) 0;
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.pwa-card {
+  background: var(--color-surface-2);
+  border: 1.5px solid var(--color-primary-highlight);
+  border-radius: var(--radius-2xl);
+  padding: var(--space-8) var(--space-6);
+  text-align: center;
+  box-shadow: var(--shadow-md), 0 0 30px var(--color-accent-glow);
+  position: relative;
+  overflow: hidden;
+  max-width: 680px;
+  margin: 0 auto;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+}
+
+.pwa-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg), 0 0 45px var(--color-accent-glow);
+  border-color: var(--color-primary);
+}
+
+.pwa-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, var(--color-accent-glow) 0%, transparent 60%);
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.pwa-card-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.pwa-icon-badge {
+  font-size: 3rem;
+  margin-bottom: var(--space-4);
+  filter: drop-shadow(0 4px 8px var(--color-accent-glow));
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.pwa-card h2 {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: var(--space-2);
+}
+
+.pwa-card p {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  max-width: 48ch;
+  margin-bottom: var(--space-6);
+  line-height: 1.5;
+}
+
+.btn-pwa-install {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-8);
+  border-radius: var(--radius-xl);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  width: 100%;
+  max-width: 320px;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* iOS Apple Style Button */
+.btn-pwa-install.ios {
+  background: #111827;
+  color: #ffffff;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+  border: 1.5px solid rgba(255, 255, 255, 0.1);
+}
+
+.btn-pwa-install.ios:hover {
+  background: #000000;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6), 0 0 0 3px var(--color-accent-glow);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.btn-pwa-install.ios:active {
+  transform: translateY(0);
+}
+
+.apple-logo-svg {
+  fill: currentColor;
+}
+
+/* Android Chrome Style Button */
+.btn-pwa-install.android {
+  background: var(--color-primary);
+  color: var(--color-text-inverse);
+  box-shadow: 0 4px 14px var(--color-accent-glow);
+}
+
+.btn-pwa-install.android:hover {
+  background: var(--color-primary-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px var(--color-accent-glow), 0 0 0 3px var(--color-primary-highlight);
+}
+
+.btn-pwa-install.android:active {
+  transform: translateY(0);
+}
+
+/* ===== PWA SAFARI INSTALLATION MODAL ===== */
+.pwa-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4);
+  animation: pwaFadeIn 0.3s ease-out forwards;
+}
+
+@keyframes pwaFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.pwa-modal-card {
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  border-radius: 24px;
+  padding: var(--space-8) var(--space-6);
+  max-width: 440px;
+  width: 100%;
+  box-shadow: var(--shadow-lg), 0 10px 40px rgba(0,0,0,0.2);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  animation: pwaSlideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes pwaSlideUp {
+  from { opacity: 0; transform: translateY(40px) scale(0.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.pwa-modal-close {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-muted);
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.pwa-modal-close:hover {
+  background: var(--color-surface-offset);
+  color: var(--color-text);
+  transform: rotate(90deg);
+}
+
+.pwa-modal-header {
+  text-align: center;
+  margin-bottom: var(--space-6);
+}
+
+.pwa-modal-icon {
+  font-size: 2.5rem;
+  margin-bottom: var(--space-2);
+}
+
+.pwa-modal-header h3 {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: 6px;
+}
+
+.pwa-modal-header p {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  line-height: 1.4;
+}
+
+.pwa-modal-steps {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+}
+
+.pwa-modal-step {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-4);
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 16px;
+  transition: transform 0.2s;
+}
+
+.pwa-modal-step:hover {
+  transform: translateX(4px);
+  border-color: var(--color-primary);
+}
+
+.pwa-step-number {
+  width: 28px;
+  height: 28px;
+  background: var(--color-primary-highlight);
+  color: var(--color-primary);
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 800;
+  flex-shrink: 0;
+  box-shadow: 0 2px 6px oklch(from var(--color-primary) l c h / 0.1);
+}
+
+.pwa-step-content p {
+  font-size: 13px;
+  color: var(--color-text);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.pwa-step-content strong {
+  color: var(--color-primary);
+  font-weight: 700;
+}
+
+.btn-pwa-gotit {
+  background: var(--color-primary);
+  color: var(--color-text-inverse);
+  padding: 12px 24px;
+  border-radius: 99px;
+  font-weight: 700;
+  font-size: 14px;
+  text-align: center;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s;
+}
+
+.btn-pwa-gotit:hover {
+  background: var(--color-primary-hover);
+  box-shadow: 0 4px 12px var(--color-accent-glow);
+  transform: translateY(-1px);
+}
+
+.pwa-bounce-arrow {
+  position: absolute;
+  bottom: -45px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #ffffff;
+  animation: bounce 1.8s infinite;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 1001;
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.5));
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateX(-50%) translateY(0);
+  }
+  40% {
+    transform: translateX(-50%) translateY(-10px);
+  }
+  60% {
+    transform: translateX(-50%) translateY(-5px);
+  }
+}
+
+@media (max-width: 480px) {
+  .pwa-modal-card {
+    padding: var(--space-6) var(--space-4);
+  }
+  .pwa-bounce-arrow {
+    bottom: -32px;
+  }
+}
+
