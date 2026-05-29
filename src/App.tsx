@@ -134,7 +134,7 @@ console.log(data, "DATA");
 
       if (version?.downloadUrl) {
         toast.success(`SchoolSync v${version.version} downloading...`, { id: loadingToast });
-        window.open(version.downloadUrl, '_blank');
+        window.location.href = version.downloadUrl;
       } else {
         toast.error('APK download link not found in system.', { id: loadingToast });
       }
@@ -202,7 +202,8 @@ console.log(data, "DATA");
               <a href="#features">Features</a>
               <a href="#roles">Who It's For</a>
               <a href="#queries">Get License</a>
-              <button onClick={handleMainDownload} className="nav-link-btn">Download</button>
+              <button onClick={handleMainDownload} className="nav-link-btn">Android App</button>
+              <button onClick={() => setShowPwaModal(true)} className="nav-link-btn">iOS App</button>
             </div>
             <div className="nav-actions">
               <button 
@@ -212,7 +213,8 @@ console.log(data, "DATA");
               >
                 {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
               </button>
-              <button onClick={handleMainDownload} className="btn btn-ghost nav-download">Download App</button>
+              <button onClick={handleMainDownload} className="btn btn-ghost nav-download">Android App</button>
+              <button onClick={() => setShowPwaModal(true)} className="btn btn-ghost nav-download">iOS App</button>
             </div>
             <button 
               className="nav-hamburger" 
@@ -231,10 +233,11 @@ console.log(data, "DATA");
         <a href="#features" onClick={closeMobileMenu}>Features</a>
         <a href="#roles" onClick={closeMobileMenu}>Who It's For</a>
         <a href="#queries" onClick={closeMobileMenu}>Get License</a>
-        <button onClick={() => { closeMobileMenu(); handleMainDownload(); }} className="mobile-nav-btn">Download</button>
+        <button onClick={() => { closeMobileMenu(); handleMainDownload(); }} className="mobile-nav-btn">Android App</button>
+        <button onClick={() => { closeMobileMenu(); setShowPwaModal(true); }} className="mobile-nav-btn">iOS App</button>
         <button className="btn btn-primary" onClick={() => { closeMobileMenu(); handleMainDownload(); }}>
           <Download size={16} strokeWidth={2.5} />
-          Download Now
+          Download Android
         </button>
       </div>
 
@@ -254,9 +257,12 @@ console.log(data, "DATA");
               <div className="hero-ctas">
                 <button className="btn btn-primary btn-hero" onClick={handleMainDownload}>
                   <Download size={18} strokeWidth={2.5} />
-                  {isLoading ? 'Loading...' : 'Get the App'}
+                  {isLoading ? 'Loading...' : 'Android App'}
                 </button>
-                <a href="#features" className="btn btn-ghost btn-hero">See Features</a>
+                <button className="btn btn-ghost btn-hero" onClick={() => setShowPwaModal(true)}>
+                  <Star size={18} strokeWidth={2.5} />
+                  iOS / Web App
+                </button>
               </div>
               <div className="hero-stats">
                 <div className="hero-stat">
@@ -718,29 +724,30 @@ console.log(data, "DATA");
             
             <div className="pwa-modal-header">
               <div className="pwa-modal-icon">📲</div>
-              <h3>How to Install</h3>
-              <p>Follow these 3 simple steps to add SchoolSync to your Home Screen:</p>
+              <h3>iOS & Web Installation</h3>
+              <p>For iOS devices, use our Progressive Web App (PWA):</p>
             </div>
 
             <div className="pwa-modal-steps">
               <div className="pwa-modal-step">
                 <div className="pwa-step-number">1</div>
                 <div className="pwa-step-content">
-                  <p>The app has opened in Safari. Look for the Share button (📤) at the bottom of the screen.</p>
+                  <p>Open Safari on your iPhone/iPad and visit:</p>
+                  <a href={PWA_URL} target="_blank" rel="noreferrer" style={{color: 'var(--color-primary)', fontWeight: 'bold'}}>{PWA_URL}</a>
                 </div>
               </div>
 
               <div className="pwa-modal-step">
                 <div className="pwa-step-number">2</div>
                 <div className="pwa-step-content">
-                  <p>Scroll down in the Share menu and tap <strong>'Add to Home Screen'</strong>.</p>
+                  <p>Look for the Share button (📤) at the bottom of the screen.</p>
                 </div>
               </div>
 
               <div className="pwa-modal-step">
                 <div className="pwa-step-number">3</div>
                 <div className="pwa-step-content">
-                  <p>Tap <strong>'Add'</strong> in the top right corner. Done! 🎉</p>
+                  <p>Scroll down in the Share menu and tap <strong>'Add to Home Screen'</strong>.</p>
                 </div>
               </div>
             </div>

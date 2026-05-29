@@ -13,7 +13,7 @@ export const apiSlice = createApi({
       return headers;
     },
   }),
-  tagTypes: ['SuperAdmin', 'AppVersions', 'LicenseRequests', 'Organization', 'GlobalConfig'],
+  tagTypes: ['SuperAdmin', 'AppVersions', 'LicenseRequests', 'Organization', 'GlobalConfig', 'Tickets'],
   endpoints: (builder) => ({
     superAdminSignIn: builder.mutation({
       query: (credentials) => ({
@@ -117,6 +117,19 @@ export const apiSlice = createApi({
       }),
       invalidatesTags: ['GlobalConfig'],
     }),
+    getTickets: builder.query<any, void>({
+      query: () => '/support/org/all/tickets?all=true',
+      transformResponse: (response: any) => response.tickets || [],
+      providesTags: ['Tickets'],
+    }),
+    updateTicketStatus: builder.mutation({
+      query: ({ ticketId, status, orgId }) => ({
+        url: `/support/ticket/${ticketId}/status`,
+        method: 'PATCH',
+        body: { status, orgId },
+      }),
+      invalidatesTags: ['Tickets'],
+    }),
   }),
 });
 
@@ -135,4 +148,6 @@ export const {
   useToggleOrganizationStatusMutation,
   useGetGlobalConfigsQuery,
   useUpdateGlobalConfigMutation,
+  useGetTicketsQuery,
+  useUpdateTicketStatusMutation,
 } = apiSlice;

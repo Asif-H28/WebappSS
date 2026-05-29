@@ -10,6 +10,7 @@ import SuperAdminLayout from './pages/SuperAdmin/SuperAdminLayout.tsx';
 import Dashboard from './pages/SuperAdmin/Dashboard.tsx';
 import Licenses from './pages/SuperAdmin/Licenses.tsx';
 import GlobalConfig from './pages/SuperAdmin/GlobalConfig.tsx';
+import Tickets from './pages/SuperAdmin/Tickets.tsx';
 import { Toaster } from 'react-hot-toast';
 import './index.css';
 
@@ -41,6 +42,10 @@ const router = createBrowserRouter([
       {
         path: 'config',
         element: <GlobalConfig />,
+      },
+      {
+        path: 'tickets',
+        element: <Tickets />,
       },
     ],
   },
