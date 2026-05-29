@@ -53,6 +53,8 @@ const SupportStaffSignup: React.FC = () => {
       }).unwrap();
       
       if (loginRes.success) {
+        localStorage.setItem('webToken', loginRes.token);
+        localStorage.setItem('webUser', JSON.stringify(loginRes.user));
         toast.success('Logged in successfully!');
         navigate('/dashboard');
       }

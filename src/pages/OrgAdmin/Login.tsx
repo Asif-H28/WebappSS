@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 import { Mail, Lock, ArrowRight, Eye, EyeOff, ShieldCheck, GraduationCap } from 'lucide-react';
 import {
-  useOrgAdminLoginMutation,
+  useWebDashboardLoginMutation,
   useForgotPasswordRequestOTPMutation,
   useVerifyOTPMutation,
   useResetPasswordMutation,
@@ -25,7 +25,7 @@ const OrgAdminLogin = () => {
   const [resetToken, setResetToken] = useState('');
   const [showPassword, setShowPassword] = useState(false);
 
-  const [orgAdminLogin, { isLoading: isLoginLoading }] = useOrgAdminLoginMutation();
+  const [webDashboardLogin, { isLoading: isLoginLoading }] = useWebDashboardLoginMutation();
   const [requestOTP, { isLoading: isRequestLoading }] = useForgotPasswordRequestOTPMutation();
   const [verifyOTP, { isLoading: isVerifyLoading }] = useVerifyOTPMutation();
   const [resetPassword, { isLoading: isResetLoading }] = useResetPasswordMutation();
@@ -33,11 +33,13 @@ const OrgAdminLogin = () => {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await orgAdminLogin({ adminEmail: email, adminPassword: password }).unwrap();
-      toast.success('Login successful!');
-      // Assuming response contains token/userData that we'd want to store in context/redux
-      // localStorage.setItem('token', response.token); 
-      navigate('/');
+      const loginRes = await webDashboardLogin({ email, password }).unwrap();
+      if (loginRes.success) {
+        localStorage.setItem('webToken', loginRes.token);
+        localStorage.setItem('webUser', JSON.stringify(loginRes.user));
+        toast.success('Login successful!');
+        navigate('/dashboard');
+      }
     } catch (err: any) {
       toast.error(err?.data?.message || 'Failed to login');
     }
