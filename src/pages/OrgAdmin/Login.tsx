@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
-import { Mail, Lock, Key, ArrowRight, Eye, EyeOff, ShieldCheck, GraduationCap } from 'lucide-react';
+import { Mail, Lock, ArrowRight, Eye, EyeOff, ShieldCheck, GraduationCap } from 'lucide-react';
 import {
   useOrgAdminLoginMutation,
   useForgotPasswordRequestOTPMutation,
@@ -33,7 +33,7 @@ const OrgAdminLogin = () => {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await orgAdminLogin({ adminEmail: email, adminPassword: password }).unwrap();
+      await orgAdminLogin({ adminEmail: email, adminPassword: password }).unwrap();
       toast.success('Login successful!');
       // Assuming response contains token/userData that we'd want to store in context/redux
       // localStorage.setItem('token', response.token); 
