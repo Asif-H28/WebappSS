@@ -12,6 +12,8 @@ import Licenses from './pages/SuperAdmin/Licenses.tsx';
 import GlobalConfig from './pages/SuperAdmin/GlobalConfig.tsx';
 import Tickets from './pages/SuperAdmin/Tickets.tsx';
 import OrgAdminLogin from './pages/OrgAdmin/Login.tsx';
+import SupportStaffSignup from './pages/SupportStaff/Signup.tsx';
+import UnifiedDashboard from './pages/Dashboard/index.tsx';
 import { Toaster } from 'react-hot-toast';
 import './index.css';
 
@@ -24,6 +26,14 @@ const router = createBrowserRouter([
   {
     path: '/org/login',
     element: <OrgAdminLogin />,
+  },
+  {
+    path: '/support-staff/signup',
+    element: <SupportStaffSignup />,
+  },
+  {
+    path: '/dashboard',
+    element: <UnifiedDashboard />,
   },
   {
     path: '/whitehouse',

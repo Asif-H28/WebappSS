@@ -160,6 +160,20 @@ export const apiSlice = createApi({
         body: data,
       }),
     }),
+    registerSupportStaff: builder.mutation<any, any>({
+      query: (data) => ({
+        url: '/support-staff/register',
+        method: 'POST',
+        body: data,
+      }),
+    }),
+    webDashboardLogin: builder.mutation<any, any>({
+      query: (data) => ({
+        url: '/web-dashboard/login',
+        method: 'POST',
+        body: data,
+      }),
+    }),
   }),
 });
 
@@ -184,4 +198,6 @@ export const {
   useForgotPasswordRequestOTPMutation,
   useVerifyOTPMutation,
   useResetPasswordMutation,
+  useRegisterSupportStaffMutation,
+  useWebDashboardLoginMutation,
 } = apiSlice;
