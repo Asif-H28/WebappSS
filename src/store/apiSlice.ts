@@ -130,6 +130,36 @@ export const apiSlice = createApi({
       }),
       invalidatesTags: ['Tickets'],
     }),
+
+    // --- ORG ADMIN AUTH ---
+    orgAdminLogin: builder.mutation({
+      query: (credentials) => ({
+        url: '/org/admin/login',
+        method: 'POST',
+        body: credentials,
+      }),
+    }),
+    forgotPasswordRequestOTP: builder.mutation({
+      query: (data) => ({
+        url: '/auth/forgot-password',
+        method: 'POST',
+        body: data,
+      }),
+    }),
+    verifyOTP: builder.mutation({
+      query: (data) => ({
+        url: '/auth/verify-otp',
+        method: 'POST',
+        body: data,
+      }),
+    }),
+    resetPassword: builder.mutation({
+      query: (data) => ({
+        url: '/auth/reset-password',
+        method: 'POST',
+        body: data,
+      }),
+    }),
   }),
 });
 
@@ -150,4 +180,8 @@ export const {
   useUpdateGlobalConfigMutation,
   useGetTicketsQuery,
   useUpdateTicketStatusMutation,
+  useOrgAdminLoginMutation,
+  useForgotPasswordRequestOTPMutation,
+  useVerifyOTPMutation,
+  useResetPasswordMutation,
 } = apiSlice;

@@ -162,6 +162,7 @@ console.log(data, "DATA");
               </button>
               <button onClick={handleMainDownload} className="btn btn-ghost nav-download">Android App</button>
               <button onClick={() => setShowPwaModal(true)} className="btn btn-ghost nav-download">iOS App</button>
+              <a href="/org/login" className="btn btn-primary">My organization</a>
             </div>
             <button 
               className="nav-hamburger" 
@@ -180,6 +181,7 @@ console.log(data, "DATA");
         <a href="#features" onClick={closeMobileMenu}>Features</a>
         <a href="#roles" onClick={closeMobileMenu}>Who It's For</a>
         <a href="#queries" onClick={closeMobileMenu}>Get License</a>
+        <a href="/org/login" onClick={closeMobileMenu}>My organization</a>
         <button onClick={() => { closeMobileMenu(); handleMainDownload(); }} className="mobile-nav-btn">Android App</button>
         <button onClick={() => { closeMobileMenu(); setShowPwaModal(true); }} className="mobile-nav-btn">iOS App</button>
         <button className="btn btn-primary" onClick={() => { closeMobileMenu(); handleMainDownload(); }}>
