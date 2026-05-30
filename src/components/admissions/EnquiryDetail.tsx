@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ArrowLeft, User, Phone, Mail, GraduationCap } from 'lucide-react';
+import { ArrowLeft, User, Phone } from 'lucide-react';
 import { toast } from 'react-hot-toast';
 import {
   useGetAdmissionByIdQuery,

@@ -182,7 +182,7 @@ export const apiSlice = createApi({
     }),
     getAdmissionById: builder.query<any, string>({
       query: (id) => `/admissions/${id}`,
-      providesTags: (result, error, id) => [{ type: 'Admissions' as const, id }],
+      providesTags: (_result, _error, id) => [{ type: 'Admissions' as const, id }],
     }),
     createAdmission: builder.mutation<any, any>({
       query: (data) => ({
@@ -198,7 +198,7 @@ export const apiSlice = createApi({
         method: 'PATCH',
         body: payload,
       }),
-      invalidatesTags: (result, error, { id }) => [{ type: 'Admissions' as const, id }, 'Admissions'],
+      invalidatesTags: (_result, _error, { id }) => [{ type: 'Admissions' as const, id }, 'Admissions'],
     }),
     addAdmissionNote: builder.mutation<any, { id: string, note: string }>({
       query: ({ id, note }) => ({
@@ -206,7 +206,7 @@ export const apiSlice = createApi({
         method: 'POST',
         body: { note },
       }),
-      invalidatesTags: (result, error, { id }) => [{ type: 'Admissions' as const, id }],
+      invalidatesTags: (_result, _error, { id }) => [{ type: 'Admissions' as const, id }],
     }),
     deleteAdmission: builder.mutation<any, string>({
       query: (id) => ({
