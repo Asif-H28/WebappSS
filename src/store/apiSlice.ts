@@ -1,19 +1,10 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { type RootState } from './index.ts';
+import { createApi } from '@reduxjs/toolkit/query/react';
+import { customBaseQuery } from './baseQuery.ts';
 
 export const apiSlice = createApi({
   reducerPath: 'api',
-  baseQuery: fetchBaseQuery({
-    baseUrl: import.meta.env.VITE_API_BASE_URL,
-    prepareHeaders: (headers, { getState }) => {
-      const token = (getState() as RootState).auth.token;
-      if (token) {
-        headers.set('authorization', `Bearer ${token}`);
-      }
-      return headers;
-    },
-  }),
-  tagTypes: ['SuperAdmin', 'AppVersions', 'LicenseRequests', 'Organization', 'GlobalConfig', 'Tickets'],
+  baseQuery: customBaseQuery,
+  tagTypes: ['SuperAdmin', 'AppVersions', 'LicenseRequests', 'Organization', 'GlobalConfig', 'Tickets', 'Admissions'],
   endpoints: (builder) => ({
     superAdminSignIn: builder.mutation({
       query: (credentials) => ({
@@ -174,6 +165,56 @@ export const apiSlice = createApi({
         body: data,
       }),
     }),
+    getAdmissionStats: builder.query<any, void>({
+      query: () => '/admissions/stats',
+      providesTags: ['Admissions'],
+    }),
+    getAdmissions: builder.query<any, { status?: string, classAppliedFor?: string, search?: string }>({
+      query: (params) => {
+        let url = '/admissions';
+        if (params && Object.keys(params).length > 0) {
+           const queryStr = new URLSearchParams(params as any).toString();
+           url += `?${queryStr}`;
+        }
+        return url;
+      },
+      providesTags: ['Admissions'],
+    }),
+    getAdmissionById: builder.query<any, string>({
+      query: (id) => `/admissions/${id}`,
+      providesTags: (result, error, id) => [{ type: 'Admissions' as const, id }],
+    }),
+    createAdmission: builder.mutation<any, any>({
+      query: (data) => ({
+        url: '/admissions',
+        method: 'POST',
+        body: data,
+      }),
+      invalidatesTags: ['Admissions'],
+    }),
+    updateAdmissionStatus: builder.mutation<any, { id: string, payload: any }>({
+      query: ({ id, payload }) => ({
+        url: `/admissions/${id}/status`,
+        method: 'PATCH',
+        body: payload,
+      }),
+      invalidatesTags: (result, error, { id }) => [{ type: 'Admissions' as const, id }, 'Admissions'],
+    }),
+    addAdmissionNote: builder.mutation<any, { id: string, note: string }>({
+      query: ({ id, note }) => ({
+        url: `/admissions/${id}/notes`,
+        method: 'POST',
+        body: { note },
+      }),
+      invalidatesTags: (result, error, { id }) => [{ type: 'Admissions' as const, id }],
+    }),
+    deleteAdmission: builder.mutation<any, string>({
+      query: (id) => ({
+        url: `/admissions/${id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['Admissions'],
+    }),
   }),
 });
 
@@ -200,4 +241,11 @@ export const {
   useResetPasswordMutation,
   useRegisterSupportStaffMutation,
   useWebDashboardLoginMutation,
+  useGetAdmissionStatsQuery,
+  useGetAdmissionsQuery,
+  useGetAdmissionByIdQuery,
+  useCreateAdmissionMutation,
+  useUpdateAdmissionStatusMutation,
+  useAddAdmissionNoteMutation,
+  useDeleteAdmissionMutation,
 } = apiSlice;
