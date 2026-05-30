@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Users, UserCheck, UserX, Clock, Search, Plus, Trash2, Eye, Inbox, Percent, Calendar, History } from 'lucide-react';
+import { Modal } from 'antd';
 import { toast } from 'react-hot-toast';
 import {
   useGetAdmissionStatsQuery,
@@ -36,15 +37,22 @@ const AdmissionDashboard: React.FC<AdmissionDashboardProps> = ({ onBreadcrumbCha
   };
   const admissions = admissionsData?.enquiries || [];
 
-  const handleDelete = async (id: string) => {
-    if (window.confirm('Are you sure you want to delete this enquiry?')) {
-      try {
-        await deleteAdmission(id).unwrap();
-        toast.success('Enquiry deleted successfully');
-      } catch (err: any) {
-        toast.error(err?.data?.message || 'Failed to delete enquiry');
+  const handleDelete = (id: string) => {
+    Modal.confirm({
+      title: 'Are you sure you want to delete this enquiry?',
+      content: 'This action cannot be undone and will permanently remove the record.',
+      okText: 'Yes, Delete',
+      okType: 'danger',
+      cancelText: 'Cancel',
+      onOk: async () => {
+        try {
+          await deleteAdmission(id).unwrap();
+          toast.success('Enquiry deleted successfully');
+        } catch (err: any) {
+          toast.error(err?.data?.message || 'Failed to delete enquiry');
+        }
       }
-    }
+    });
   };
 
   const getBadgeClass = (status: string) => {

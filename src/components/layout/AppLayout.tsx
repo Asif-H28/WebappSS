@@ -5,7 +5,8 @@ import {
   UserOutlined, 
   LogoutOutlined,
   MenuFoldOutlined,
-  MenuUnfoldOutlined
+  MenuUnfoldOutlined,
+  BookOutlined
 } from '@ant-design/icons';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
@@ -51,6 +52,12 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children, breadcrumbs }) => {
       icon: <DashboardOutlined />,
       label: 'Dashboard',
       onClick: () => navigate('/dashboard'),
+    },
+    {
+      key: '/dashboard/library',
+      icon: <BookOutlined />,
+      label: 'Library',
+      onClick: () => navigate('/dashboard/library'),
     },
     // Future items can be added here
   ];

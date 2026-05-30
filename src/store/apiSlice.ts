@@ -4,7 +4,7 @@ import { customBaseQuery } from './baseQuery.ts';
 export const apiSlice = createApi({
   reducerPath: 'api',
   baseQuery: customBaseQuery,
-  tagTypes: ['SuperAdmin', 'AppVersions', 'LicenseRequests', 'Organization', 'GlobalConfig', 'Tickets', 'Admissions'],
+  tagTypes: ['SuperAdmin', 'AppVersions', 'LicenseRequests', 'Organization', 'GlobalConfig', 'Tickets', 'Admissions', 'Library'],
   endpoints: (builder) => ({
     superAdminSignIn: builder.mutation({
       query: (credentials) => ({
@@ -215,6 +215,45 @@ export const apiSlice = createApi({
       }),
       invalidatesTags: ['Admissions'],
     }),
+    getClassroomList: builder.query<any, string>({
+      query: (orgId) => `/classroom/list/${orgId}`,
+    }),
+    getStudentNamesByClass: builder.query<any, string>({
+      query: (classId) => `/student/class/${classId}/names`,
+    }),
+    getLibraryIssues: builder.query<any, { status?: string, search?: string }>({
+      query: (params) => {
+        let url = '/library/issues';
+        if (params && Object.keys(params).length > 0) {
+           const queryStr = new URLSearchParams(params as any).toString();
+           url += `?${queryStr}`;
+        }
+        return url;
+      },
+      providesTags: ['Library'],
+    }),
+    issueBook: builder.mutation<any, any>({
+      query: (data) => ({
+        url: '/library/issue',
+        method: 'POST',
+        body: data,
+      }),
+      invalidatesTags: ['Library'],
+    }),
+    returnBook: builder.mutation<any, string>({
+      query: (issueId) => ({
+        url: `/library/issue/${issueId}/return`,
+        method: 'PATCH',
+      }),
+      invalidatesTags: ['Library'],
+    }),
+    deleteLibraryIssue: builder.mutation<any, string>({
+      query: (issueId) => ({
+        url: `/library/issue/${issueId}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['Library'],
+    }),
   }),
 });
 
@@ -248,4 +287,10 @@ export const {
   useUpdateAdmissionStatusMutation,
   useAddAdmissionNoteMutation,
   useDeleteAdmissionMutation,
+  useGetClassroomListQuery,
+  useGetStudentNamesByClassQuery,
+  useGetLibraryIssuesQuery,
+  useIssueBookMutation,
+  useReturnBookMutation,
+  useDeleteLibraryIssueMutation,
 } = apiSlice;
