@@ -67,10 +67,10 @@ const SuperAdminLayout = () => {
             <Download size={16} />
             APK Versions
           </NavLink>
-          <div className="nav-item" style={{ opacity: 0.5, cursor: 'not-allowed' }}>
+          <NavLink to="/whitehouse/organizations" className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}>
             <Users size={16} />
             Organizations
-          </div>
+          </NavLink>
           <NavLink to="/whitehouse/licenses" className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}>
             <Key size={16} />
             Licenses

@@ -11,6 +11,7 @@ import Dashboard from './pages/SuperAdmin/Dashboard.tsx';
 import Licenses from './pages/SuperAdmin/Licenses.tsx';
 import GlobalConfig from './pages/SuperAdmin/GlobalConfig.tsx';
 import Tickets from './pages/SuperAdmin/Tickets.tsx';
+import Organizations from './pages/SuperAdmin/Organizations.tsx';
 import OrgAdminLogin from './pages/OrgAdmin/Login.tsx';
 import SupportStaffSignup from './pages/SupportStaff/Signup.tsx';
 import UnifiedDashboard from './pages/Dashboard/index.tsx';
@@ -59,6 +60,10 @@ const router = createBrowserRouter([
       {
         path: 'licenses',
         element: <Licenses />,
+      },
+      {
+        path: 'organizations',
+        element: <Organizations />,
       },
       {
         path: 'config',

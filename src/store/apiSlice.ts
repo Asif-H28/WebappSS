@@ -89,11 +89,16 @@ export const apiSlice = createApi({
     }),
     getOrganizations: builder.query<any[], void>({
       query: () => '/super-admin/app/org/all',
-      transformResponse: (response: any) => response.data || response,
+      transformResponse: (response: any) => response.organizations || response.data || response,
       providesTags: (result) => 
-        result 
+        Array.isArray(result) 
           ? [...result.map(({ orgId }: any) => ({ type: 'Organization' as const, id: orgId })), 'Organization']
           : ['Organization'],
+    }),
+    getOrganizationStats: builder.query<any, string>({
+      query: (orgId) => `/super-admin/app/org/${orgId}/stats`,
+      transformResponse: (response: any) => response.data,
+      providesTags: (_result, _error, orgId) => [{ type: 'Organization' as const, id: `STATS_${orgId}` }],
     }),
     getGlobalConfigs: builder.query<any[], void>({
       query: () => '/super-admin/config',
@@ -269,6 +274,7 @@ export const {
   useUpdateLicenseRequestMutation,
   useGetOrganizationQuery,
   useGetOrganizationsQuery,
+  useGetOrganizationStatsQuery,
   useToggleOrganizationStatusMutation,
   useGetGlobalConfigsQuery,
   useUpdateGlobalConfigMutation,
