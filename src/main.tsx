@@ -16,6 +16,7 @@ import OrgAdminLogin from './pages/OrgAdmin/Login.tsx';
 import SupportStaffSignup from './pages/SupportStaff/Signup.tsx';
 import UnifiedDashboard from './pages/Dashboard/index.tsx';
 import LibraryIndex from './pages/Library/index.tsx';
+import LearningResourceIndex from './pages/LearningResource/index.tsx';
 import { Toaster } from 'react-hot-toast';
 import './index.css';
 
@@ -40,6 +41,10 @@ const router = createBrowserRouter([
   {
     path: '/dashboard/library',
     element: <LibraryIndex />,
+  },
+  {
+    path: '/dashboard/learning-resource',
+    element: <LearningResourceIndex />,
   },
   {
     path: '/whitehouse',

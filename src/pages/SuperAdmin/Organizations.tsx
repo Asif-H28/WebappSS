@@ -47,6 +47,14 @@ const OrganizationDrawer = ({ org, onClose }: { org: any, onClose: () => void })
             {!org.isActive && (
                <span className="badge" style={{ background: 'rgba(239, 68, 68, 0.1)', color: '#ef4444', marginLeft: 'auto' }}>Inactive</span>
             )}
+            <button 
+              onClick={handleToggleStatus} 
+              disabled={isUpdating}
+              className="btn btn-sm" 
+              style={{ marginLeft: org.isActive ? 'auto' : '0.5rem' }}
+            >
+              {isUpdating ? 'Updating...' : org.isActive ? 'Deactivate' : 'Activate'}
+            </button>
           </div>
           <div style={{ fontSize: '13px', color: 'var(--color-text-muted)', marginBottom: '0.5rem' }}>
             ID: <span style={{ fontFamily: 'monospace' }}>{org.orgId}</span>

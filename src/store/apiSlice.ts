@@ -4,7 +4,7 @@ import { customBaseQuery } from './baseQuery.ts';
 export const apiSlice = createApi({
   reducerPath: 'api',
   baseQuery: customBaseQuery,
-  tagTypes: ['SuperAdmin', 'AppVersions', 'LicenseRequests', 'Organization', 'GlobalConfig', 'Tickets', 'Admissions', 'Library'],
+  tagTypes: ['SuperAdmin', 'AppVersions', 'LicenseRequests', 'Organization', 'GlobalConfig', 'Tickets', 'Admissions', 'Library', 'LessonVideos'],
   endpoints: (builder) => ({
     superAdminSignIn: builder.mutation({
       query: (credentials) => ({
@@ -259,6 +259,41 @@ export const apiSlice = createApi({
       }),
       invalidatesTags: ['Library'],
     }),
+    getClassroomsWithSubjects: builder.query<any, string>({
+      query: (orgId) => `/classroom/org/${orgId}`,
+    }),
+    getLessonVideos: builder.query<any, { orgId: string, classId?: string, subjectId?: string, lessonId?: string, videoType?: string }>({
+      query: ({ orgId, ...params }) => {
+        let url = `/lesson-video/org/${orgId}`;
+        const queryParams: Record<string, string> = {};
+        Object.entries(params).forEach(([key, value]) => {
+          if (value !== undefined && value !== '') {
+            queryParams[key] = String(value);
+          }
+        });
+        if (Object.keys(queryParams).length > 0) {
+           const queryStr = new URLSearchParams(queryParams).toString();
+           url += `?${queryStr}`;
+        }
+        return url;
+      },
+      providesTags: ['LessonVideos'],
+    }),
+    addLessonVideo: builder.mutation<any, any>({
+      query: (data) => ({
+        url: '/lesson-video/add',
+        method: 'POST',
+        body: data,
+      }),
+      invalidatesTags: ['LessonVideos'],
+    }),
+    deleteLessonVideo: builder.mutation<any, string>({
+      query: (videoId) => ({
+        url: `/lesson-video/${videoId}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['LessonVideos'],
+    }),
   }),
 });
 
@@ -299,4 +334,8 @@ export const {
   useIssueBookMutation,
   useReturnBookMutation,
   useDeleteLibraryIssueMutation,
+  useGetClassroomsWithSubjectsQuery,
+  useGetLessonVideosQuery,
+  useAddLessonVideoMutation,
+  useDeleteLessonVideoMutation,
 } = apiSlice;
