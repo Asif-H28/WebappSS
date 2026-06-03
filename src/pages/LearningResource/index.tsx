@@ -19,7 +19,6 @@ import {
   VideoCameraAddOutlined,
   DeleteOutlined,
   PlayCircleOutlined,
-  YoutubeOutlined
 } from '@ant-design/icons';
 import { toast } from 'react-hot-toast';
 import AppLayout from '../../components/layout/AppLayout.tsx';
