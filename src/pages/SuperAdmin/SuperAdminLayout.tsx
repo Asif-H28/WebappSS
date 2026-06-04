@@ -12,7 +12,8 @@ import {
   X, 
   Moon, 
   Sun,
-  LifeBuoy
+  LifeBuoy,
+  ToggleLeft
 } from 'lucide-react';
 
 const SuperAdminLayout = () => {
@@ -27,6 +28,7 @@ const SuperAdminLayout = () => {
     if (location.pathname.includes('dashboard')) return 'APK Version Manager';
     if (location.pathname.includes('config')) return 'Organisation Settings';
     if (location.pathname.includes('tickets')) return 'Support Tickets';
+    if (location.pathname.includes('feature-flags')) return 'Feature Flags';
     return 'Super Admin Control';
   };
 
@@ -82,6 +84,10 @@ const SuperAdminLayout = () => {
           <NavLink to="/whitehouse/tickets" className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}>
             <LifeBuoy size={16} />
             Tickets
+          </NavLink>
+          <NavLink to="/whitehouse/feature-flags" className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}>
+            <ToggleLeft size={16} />
+            Feature Flags
           </NavLink>
         </nav>
 

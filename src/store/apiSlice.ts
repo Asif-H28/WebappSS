@@ -4,7 +4,7 @@ import { customBaseQuery } from './baseQuery.ts';
 export const apiSlice = createApi({
   reducerPath: 'api',
   baseQuery: customBaseQuery,
-  tagTypes: ['SuperAdmin', 'AppVersions', 'LicenseRequests', 'Organization', 'GlobalConfig', 'Tickets', 'Admissions', 'Library', 'LessonVideos'],
+  tagTypes: ['SuperAdmin', 'AppVersions', 'LicenseRequests', 'Organization', 'GlobalConfig', 'Tickets', 'Admissions', 'Library', 'LessonVideos', 'FeatureFlags'],
   endpoints: (builder) => ({
     superAdminSignIn: builder.mutation({
       query: (credentials) => ({
@@ -125,6 +125,26 @@ export const apiSlice = createApi({
         body: { status, orgId },
       }),
       invalidatesTags: ['Tickets'],
+    }),
+    createFeatureFlagDefinition: builder.mutation({
+      query: (data) => ({
+        url: '/feature-flags/definition',
+        method: 'POST',
+        body: data,
+      }),
+      invalidatesTags: ['FeatureFlags'],
+    }),
+    getFeatureFlagDefinitions: builder.query<any, void>({
+      query: () => '/feature-flags/definition',
+      transformResponse: (response: any) => response.data || response,
+      providesTags: ['FeatureFlags'],
+    }),
+    toggleFeatureFlagForOrg: builder.mutation({
+      query: ({ orgId, featureKey, isEnabled }) => ({
+        url: `/feature-flags/org/${orgId}/toggle`,
+        method: 'POST',
+        body: { featureKey, isEnabled },
+      }),
     }),
 
     // --- ORG ADMIN AUTH ---
@@ -315,6 +335,9 @@ export const {
   useUpdateGlobalConfigMutation,
   useGetTicketsQuery,
   useUpdateTicketStatusMutation,
+  useCreateFeatureFlagDefinitionMutation,
+  useGetFeatureFlagDefinitionsQuery,
+  useToggleFeatureFlagForOrgMutation,
   useOrgAdminLoginMutation,
   useForgotPasswordRequestOTPMutation,
   useVerifyOTPMutation,

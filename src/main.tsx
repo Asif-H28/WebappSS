@@ -11,6 +11,7 @@ import Dashboard from './pages/SuperAdmin/Dashboard.tsx';
 import Licenses from './pages/SuperAdmin/Licenses.tsx';
 import GlobalConfig from './pages/SuperAdmin/GlobalConfig.tsx';
 import Tickets from './pages/SuperAdmin/Tickets.tsx';
+import FeatureFlags from './pages/SuperAdmin/FeatureFlags';
 import Organizations from './pages/SuperAdmin/Organizations.tsx';
 import OrgAdminLogin from './pages/OrgAdmin/Login.tsx';
 import SupportStaffSignup from './pages/SupportStaff/Signup.tsx';
@@ -77,6 +78,10 @@ const router = createBrowserRouter([
       {
         path: 'tickets',
         element: <Tickets />,
+      },
+      {
+        path: 'feature-flags',
+        element: <FeatureFlags />,
       },
     ],
   },
