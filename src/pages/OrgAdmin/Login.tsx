@@ -34,14 +34,18 @@ const OrgAdminLogin = () => {
     e.preventDefault();
     try {
       const loginRes = await webDashboardLogin({ email, password }).unwrap();
-      if (loginRes.success) {
+      if (loginRes.success || loginRes.token) {
         localStorage.setItem('webToken', loginRes.token);
         localStorage.setItem('webUser', JSON.stringify(loginRes.user));
         toast.success('Login successful!');
         navigate('/dashboard');
+      } else {
+        toast.error(loginRes.message || 'Invalid credentials');
       }
     } catch (err: any) {
-      toast.error(err?.data?.message || 'Failed to login');
+      console.error("Login error:", err);
+      const errorMsg = err?.data?.message || err?.data?.error || err?.message || 'Invalid credentials';
+      toast.error(errorMsg);
     }
   };
 
@@ -220,7 +224,7 @@ const OrgAdminLogin = () => {
               <>
                 <div className="login-header">
                   <h2>Enter OTP</h2>
-                  <p>We've sent a 6-digit code to <strong>{email}</strong>.</p>
+                  <p>We've sent a 4-digit code to <strong>{email}</strong>.</p>
                 </div>
                 <form onSubmit={handleVerifyOtp} className="login-form">
                   <div className="form-group">
@@ -229,11 +233,11 @@ const OrgAdminLogin = () => {
                       <input
                         type="text"
                         required
-                        maxLength={6}
+                        maxLength={4}
                         value={otp}
                         onChange={(e) => setOtp(e.target.value.replace(/\D/g, ''))}
                         className="login-input otp-input"
-                        placeholder="123456"
+                        placeholder="1234"
                       />
                     </div>
                   </div>
@@ -247,7 +251,7 @@ const OrgAdminLogin = () => {
                     </button>
                     <button
                       type="submit"
-                      disabled={isVerifyLoading || otp.length < 6}
+                      disabled={isVerifyLoading || otp.length < 4}
                       className="btn-primary flex-1"
                     >
                       {isVerifyLoading ? 'Verifying...' : 'Verify OTP'}

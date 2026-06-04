@@ -4,7 +4,7 @@ import { customBaseQuery } from './baseQuery.ts';
 export const apiSlice = createApi({
   reducerPath: 'api',
   baseQuery: customBaseQuery,
-  tagTypes: ['SuperAdmin', 'AppVersions', 'LicenseRequests', 'Organization', 'GlobalConfig', 'Tickets', 'Admissions', 'Library', 'LessonVideos', 'FeatureFlags'],
+  tagTypes: ['SuperAdmin', 'AppVersions', 'LicenseRequests', 'Organization', 'GlobalConfig', 'Tickets', 'Admissions', 'Library', 'LessonVideos', 'FeatureFlags', 'OrgDetails', 'Transport', 'AdminNotices'],
   endpoints: (builder) => ({
     superAdminSignIn: builder.mutation({
       query: (credentials) => ({
@@ -314,6 +314,87 @@ export const apiSlice = createApi({
       }),
       invalidatesTags: ['LessonVideos'],
     }),
+    // --- ORGANIZATION DASHBOARD ---
+    getOrgBasicDetails: builder.query<any, string>({
+      query: (orgId) => `/org/school/basic?orgId=${orgId}`,
+      transformResponse: (response: any) => response.data || null,
+      providesTags: ['OrgDetails'],
+    }),
+    updateOrgBasicDetails: builder.mutation<any, any>({
+      query: (data) => ({
+        url: '/org/school/basic',
+        method: 'PUT',
+        body: data,
+      }),
+      invalidatesTags: ['OrgDetails'],
+    }),
+    getOrgFeeStructures: builder.query<any[], string>({
+      query: (orgId) => `/org/school/fee?orgId=${orgId}`,
+      transformResponse: (response: any) => response.data || [],
+      providesTags: ['OrgDetails'],
+    }),
+    createOrgFeeStructure: builder.mutation<any, any>({
+      query: (data) => ({
+        url: '/org/school/fee',
+        method: 'POST',
+        body: data,
+      }),
+      invalidatesTags: ['OrgDetails'],
+    }),
+    deleteOrgFeeStructure: builder.mutation<any, string>({
+      query: (feeId) => ({
+        url: `/org/school/fee/${feeId}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['OrgDetails'],
+    }),
+    getOrgRoles: builder.query<any[], string>({
+      query: (orgId) => `/org/school/roles?orgId=${orgId}`,
+      transformResponse: (response: any) => response.data || [],
+      providesTags: ['OrgDetails'],
+    }),
+    createOrgRole: builder.mutation<any, any>({
+      query: (data) => ({
+        url: '/org/school/roles',
+        method: 'POST',
+        body: data,
+      }),
+      invalidatesTags: ['OrgDetails'],
+    }),
+    deleteOrgRole: builder.mutation<any, string>({
+      query: (roleId) => ({
+        url: `/org/school/roles/${roleId}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['OrgDetails'],
+    }),
+    getOrgStats: builder.query<any, string>({
+      query: (orgId) => `/org/${orgId}/stats`,
+      transformResponse: (response: any) => response.data || {},
+      providesTags: ['OrgDetails'],
+    }),
+    // --- ADMIN NOTICES ---
+    createAdminNotice: builder.mutation<any, any>({
+      query: (data) => ({
+        url: '/admin-notices/create',
+        method: 'POST',
+        body: data,
+      }),
+      invalidatesTags: ['AdminNotices'],
+    }),
+    // --- VEHICLES ---
+    getOrgVehicles: builder.query<any, string>({
+      query: (orgId) => `/transport/vehicles/${orgId}`,
+      providesTags: ['Transport'],
+    }),
+    getActiveVehicleLocations: builder.query<any, string>({
+      query: (orgId) => `/transport/location/org/${orgId}`,
+      providesTags: ['Transport'],
+    }),
+    getVehicleLocation: builder.query<any, string>({
+      query: (vehicleId) => `/transport/location/${vehicleId}`,
+      providesTags: ['Transport'],
+    }),
   }),
 });
 
@@ -361,4 +442,17 @@ export const {
   useGetLessonVideosQuery,
   useAddLessonVideoMutation,
   useDeleteLessonVideoMutation,
+  useGetOrgBasicDetailsQuery,
+  useUpdateOrgBasicDetailsMutation,
+  useGetOrgFeeStructuresQuery,
+  useCreateOrgFeeStructureMutation,
+  useDeleteOrgFeeStructureMutation,
+  useGetOrgRolesQuery,
+  useCreateOrgRoleMutation,
+  useDeleteOrgRoleMutation,
+  useGetOrgStatsQuery,
+  useCreateAdminNoticeMutation,
+  useGetOrgVehiclesQuery,
+  useGetActiveVehicleLocationsQuery,
+  useGetVehicleLocationQuery,
 } = apiSlice;

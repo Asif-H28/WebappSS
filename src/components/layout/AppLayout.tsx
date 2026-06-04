@@ -7,7 +7,10 @@ import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
   BookOutlined,
-  PlaySquareOutlined
+  PlaySquareOutlined,
+  BankOutlined,
+  BellOutlined,
+  CarOutlined
 } from '@ant-design/icons';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
@@ -48,6 +51,24 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children, breadcrumbs }) => {
   ];
 
   const sidebarMenu = [
+    {
+      key: '/organization',
+      icon: <BankOutlined />,
+      label: 'Organization',
+      onClick: () => navigate('/organization'),
+    },
+    {
+      key: '/dashboard/notifications',
+      icon: <BellOutlined />,
+      label: 'Notifications',
+      onClick: () => navigate('/dashboard/notifications'),
+    },
+    {
+      key: '/dashboard/vehicles',
+      icon: <CarOutlined />,
+      label: 'Vehicles',
+      onClick: () => navigate('/dashboard/vehicles'),
+    },
     {
       key: '/dashboard',
       icon: <DashboardOutlined />,

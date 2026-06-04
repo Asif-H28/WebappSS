@@ -18,6 +18,9 @@ import SupportStaffSignup from './pages/SupportStaff/Signup.tsx';
 import UnifiedDashboard from './pages/Dashboard/index.tsx';
 import LibraryIndex from './pages/Library/index.tsx';
 import LearningResourceIndex from './pages/LearningResource/index.tsx';
+import OrganizationIndex from './pages/Organization/index.tsx';
+import NotificationsIndex from './pages/Notifications/index.tsx';
+import VehiclesIndex from './pages/Vehicles/index.tsx';
 import { Toaster } from 'react-hot-toast';
 import './index.css';
 
@@ -38,6 +41,18 @@ const router = createBrowserRouter([
   {
     path: '/dashboard',
     element: <UnifiedDashboard />,
+  },
+  {
+    path: '/organization',
+    element: <OrganizationIndex />,
+  },
+  {
+    path: '/dashboard/notifications',
+    element: <NotificationsIndex />,
+  },
+  {
+    path: '/dashboard/vehicles',
+    element: <VehiclesIndex />,
   },
   {
     path: '/dashboard/library',
