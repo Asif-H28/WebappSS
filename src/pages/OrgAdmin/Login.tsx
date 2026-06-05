@@ -38,7 +38,7 @@ const OrgAdminLogin = () => {
         localStorage.setItem('webToken', loginRes.token);
         localStorage.setItem('webUser', JSON.stringify(loginRes.user));
         toast.success('Login successful!');
-        navigate('/dashboard');
+        navigate('/organization');
       } else {
         toast.error(loginRes.message || 'Invalid credentials');
       }

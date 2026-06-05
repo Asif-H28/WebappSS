@@ -58,10 +58,10 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children, breadcrumbs }) => {
       onClick: () => navigate('/organization'),
     },
     {
-      key: '/dashboard/notifications',
+      key: '/dashboard/notices',
       icon: <BellOutlined />,
-      label: 'Notifications',
-      onClick: () => navigate('/dashboard/notifications'),
+      label: 'Notices',
+      onClick: () => navigate('/dashboard/notices'),
     },
     {
       key: '/dashboard/vehicles',
@@ -72,7 +72,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children, breadcrumbs }) => {
     {
       key: '/dashboard',
       icon: <DashboardOutlined />,
-      label: 'Dashboard',
+      label: 'Enquiries',
       onClick: () => navigate('/dashboard'),
     },
     {

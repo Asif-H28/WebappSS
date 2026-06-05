@@ -382,6 +382,10 @@ export const apiSlice = createApi({
       }),
       invalidatesTags: ['AdminNotices'],
     }),
+    getAdminNoticesByOrg: builder.query<any, string>({
+      query: (orgId) => `/admin-notices/org/${orgId}`,
+      providesTags: ['AdminNotices'],
+    }),
     // --- VEHICLES ---
     getOrgVehicles: builder.query<any, string>({
       query: (orgId) => `/transport/vehicles/${orgId}`,
@@ -452,6 +456,7 @@ export const {
   useDeleteOrgRoleMutation,
   useGetOrgStatsQuery,
   useCreateAdminNoticeMutation,
+  useGetAdminNoticesByOrgQuery,
   useGetOrgVehiclesQuery,
   useGetActiveVehicleLocationsQuery,
   useGetVehicleLocationQuery,
