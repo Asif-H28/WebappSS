@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Select, Typography, Table, Button, Modal, Form, Input, InputNumber, Space, message, Tag } from 'antd';
+import { Card, Select, Typography, Table, Button, Modal, Form, Input, InputNumber, Space, message } from 'antd';
 import { FormOutlined, PlusOutlined, MinusCircleOutlined } from '@ant-design/icons';
 import AppLayout from '../../components/layout/AppLayout.tsx';
 import { 
@@ -16,7 +16,6 @@ const { Option } = Select;
 
 const AssessmentsIndex: React.FC = () => {
   const [orgId, setOrgId] = useState<string>('');
-  const [webUser, setWebUser] = useState<any>(null);
 
   const [selectedClassId, setSelectedClassId] = useState<string | null>(null);
   const [selectedAssessment, setSelectedAssessment] = useState<any>(null);
@@ -34,7 +33,7 @@ const AssessmentsIndex: React.FC = () => {
   const { data: studentData, isLoading: isStudentLoading } = useGetStudentNamesByClassQuery(selectedClassId || '', { skip: !selectedClassId });
   const students = studentData?.students || [];
 
-  const { data: detailsData, isLoading: isDetailsLoading } = useGetAssessmentDetailsQuery(selectedAssessment?.assessmentId || '', { skip: !selectedAssessment?.assessmentId });
+  const { data: detailsData } = useGetAssessmentDetailsQuery(selectedAssessment?.assessmentId || '', { skip: !selectedAssessment?.assessmentId });
   const assessmentDetails = detailsData || null;
 
   const { data: orgData } = useGetOrgBasicDetailsQuery(orgId, { skip: !orgId });
@@ -46,7 +45,6 @@ const AssessmentsIndex: React.FC = () => {
       const webUserStr = localStorage.getItem('webUser');
       if (webUserStr) {
         const user = JSON.parse(webUserStr);
-        setWebUser(user);
         if (user && user.orgId) {
           setOrgId(user.orgId);
         }
