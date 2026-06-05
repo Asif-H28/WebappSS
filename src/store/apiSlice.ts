@@ -399,6 +399,23 @@ export const apiSlice = createApi({
       query: (vehicleId) => `/transport/location/${vehicleId}`,
       providesTags: ['Transport'],
     }),
+    // --- ASSESSMENTS ---
+    getAssessmentsByClass: builder.query<any, string>({
+      query: (classId) => `/comprehensive-assessment/class/${classId}`,
+    }),
+    getAssessmentDetails: builder.query<any, string>({
+      query: (assessmentId) => `/comprehensive-assessment/details/${assessmentId}`,
+    }),
+    submitAssessmentResult: builder.mutation<any, any>({
+      query: (data) => ({
+        url: `/comprehensive-result/assessment/${data.assessmentId}/result`,
+        method: 'POST',
+        body: data.payload,
+      }),
+    }),
+    getStudentResults: builder.query<any, string>({
+      query: (studentId) => `/comprehensive-result/student/${studentId}`,
+    }),
   }),
 });
 
@@ -460,4 +477,8 @@ export const {
   useGetOrgVehiclesQuery,
   useGetActiveVehicleLocationsQuery,
   useGetVehicleLocationQuery,
+  useGetAssessmentsByClassQuery,
+  useGetAssessmentDetailsQuery,
+  useSubmitAssessmentResultMutation,
+  useGetStudentResultsQuery,
 } = apiSlice;

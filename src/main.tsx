@@ -21,6 +21,8 @@ import LearningResourceIndex from './pages/LearningResource/index.tsx';
 import OrganizationIndex from './pages/Organization/index.tsx';
 import NoticesIndex from './pages/Notices/index.tsx';
 import VehiclesIndex from './pages/Vehicles/index.tsx';
+import AssessmentsIndex from './pages/Assessments/index.tsx';
+import ResultsIndex from './pages/Results/index.tsx';
 import { Toaster } from 'react-hot-toast';
 import './index.css';
 
@@ -61,6 +63,14 @@ const router = createBrowserRouter([
   {
     path: '/dashboard/learning-resource',
     element: <LearningResourceIndex />,
+  },
+  {
+    path: '/dashboard/assessments',
+    element: <AssessmentsIndex />,
+  },
+  {
+    path: '/dashboard/results',
+    element: <ResultsIndex />,
   },
   {
     path: '/whitehouse',

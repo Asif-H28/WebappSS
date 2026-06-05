@@ -10,7 +10,8 @@ import {
   PlaySquareOutlined,
   BankOutlined,
   BellOutlined,
-  CarOutlined
+  CarOutlined,
+  FormOutlined
 } from '@ant-design/icons';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
@@ -58,22 +59,28 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children, breadcrumbs }) => {
       onClick: () => navigate('/organization'),
     },
     {
+      key: '/dashboard',
+      icon: <DashboardOutlined />,
+      label: 'Enquiries',
+      onClick: () => navigate('/dashboard'),
+    },
+    {
       key: '/dashboard/notices',
       icon: <BellOutlined />,
       label: 'Notices',
       onClick: () => navigate('/dashboard/notices'),
     },
     {
-      key: '/dashboard/vehicles',
-      icon: <CarOutlined />,
-      label: 'Vehicles',
-      onClick: () => navigate('/dashboard/vehicles'),
+      key: '/dashboard/assessments',
+      icon: <FormOutlined />,
+      label: 'Assessments',
+      onClick: () => navigate('/dashboard/assessments'),
     },
     {
-      key: '/dashboard',
-      icon: <DashboardOutlined />,
-      label: 'Enquiries',
-      onClick: () => navigate('/dashboard'),
+      key: '/dashboard/results',
+      icon: <BookOutlined />,
+      label: 'Results',
+      onClick: () => navigate('/dashboard/results'),
     },
     {
       key: '/dashboard/library',
@@ -86,6 +93,12 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children, breadcrumbs }) => {
       icon: <PlaySquareOutlined />,
       label: 'Learning Resource',
       onClick: () => navigate('/dashboard/learning-resource'),
+    },
+    {
+      key: '/dashboard/vehicles',
+      icon: <CarOutlined />,
+      label: 'Vehicles',
+      onClick: () => navigate('/dashboard/vehicles'),
     },
     // Future items can be added here
   ];
