@@ -116,7 +116,7 @@
   background-color: var(--color-surface);
 }
 
-.btn-primary {
+.signup-page .btn-primary {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -134,13 +134,13 @@
   margin-top: 1rem;
 }
 
-.btn-primary:hover:not(:disabled) {
+.signup-page .btn-primary:hover:not(:disabled) {
   background-color: var(--color-primary-hover);
   transform: translateY(-1px);
   box-shadow: 0 4px 12px var(--color-accent-glow);
 }
 
-.btn-primary:disabled {
+.signup-page .btn-primary:disabled {
   opacity: 0.7;
   cursor: not-allowed;
 }

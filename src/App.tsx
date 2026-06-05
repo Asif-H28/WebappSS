@@ -149,8 +149,6 @@ console.log(data, "DATA");
               <a href="#features">Features</a>
               <a href="#roles">Who It's For</a>
               <a href="#queries">Get License</a>
-              <button onClick={handleMainDownload} className="nav-link-btn">Android App</button>
-              <button onClick={() => setShowPwaModal(true)} className="nav-link-btn">iOS App</button>
             </div>
             <div className="nav-actions">
               <button 
@@ -181,7 +179,6 @@ console.log(data, "DATA");
         <a href="#features" onClick={closeMobileMenu}>Features</a>
         <a href="#roles" onClick={closeMobileMenu}>Who It's For</a>
         <a href="#queries" onClick={closeMobileMenu}>Get License</a>
-        <a href="/org/login" onClick={closeMobileMenu}>My organization</a>
         <button onClick={() => { closeMobileMenu(); handleMainDownload(); }} className="mobile-nav-btn">Android App</button>
         <button onClick={() => { closeMobileMenu(); setShowPwaModal(true); }} className="mobile-nav-btn">iOS App</button>
         <button className="btn btn-primary" onClick={() => { closeMobileMenu(); handleMainDownload(); }}>
@@ -197,10 +194,6 @@ console.log(data, "DATA");
           <div className="hero-glow" aria-hidden="true"></div>
           <div className="container" style={{ width: '100%' }}>
             <div className="hero-content">
-              <div className="hero-badge">
-                <span className="hero-badge-dot"></span>
-                Built with Flutter · Enterprise Grade
-              </div>
               <h1>The <span>Smarter</span> Way to Run Your School</h1>
               <p>SchoolSync brings admin, teachers, and students onto one unified platform — manage classes, attendance, exams, and communication with ease.</p>
               <div className="hero-ctas">
@@ -212,24 +205,6 @@ console.log(data, "DATA");
                   <Star size={18} strokeWidth={2.5} />
                   iOS / Web App
                 </button>
-              </div>
-              <div className="hero-stats">
-                <div className="hero-stat">
-                  <span className="hero-stat-num">11</span>
-                  <span className="hero-stat-label">Core Modules</span>
-                </div>
-                <div className="hero-stat">
-                  <span className="hero-stat-num">3</span>
-                  <span className="hero-stat-label">User Roles</span>
-                </div>
-                <div className="hero-stat">
-                  <span className="hero-stat-num">FCM</span>
-                  <span className="hero-stat-label">Push Notifications</span>
-                </div>
-                <div className="hero-stat">
-                  <span className="hero-stat-num">JWT</span>
-                  <span className="hero-stat-label">Secure Auth</span>
-                </div>
               </div>
             </div>
           </div>
