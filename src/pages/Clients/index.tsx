@@ -1,4 +1,3 @@
-import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { ArrowLeft, ExternalLink } from 'lucide-react';
 import EduSparkLogo from '../../assets/Tution Logo 2.png';
