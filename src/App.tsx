@@ -149,6 +149,7 @@ console.log(data, "DATA");
               <a href="#features">Features</a>
               <a href="#roles">Who It's For</a>
               <a href="#queries">Get License</a>
+              <a href="/clients">Clients</a>
             </div>
             <div className="nav-actions">
               <button 
@@ -179,6 +180,7 @@ console.log(data, "DATA");
         <a href="#features" onClick={closeMobileMenu}>Features</a>
         <a href="#roles" onClick={closeMobileMenu}>Who It's For</a>
         <a href="#queries" onClick={closeMobileMenu}>Get License</a>
+        <a href="/clients" onClick={closeMobileMenu}>Clients</a>
         <button onClick={() => { closeMobileMenu(); handleMainDownload(); }} className="mobile-nav-btn">Android App</button>
         <button onClick={() => { closeMobileMenu(); setShowPwaModal(true); }} className="mobile-nav-btn">iOS App</button>
         <button className="btn btn-primary" onClick={() => { closeMobileMenu(); handleMainDownload(); }}>

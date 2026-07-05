@@ -23,6 +23,8 @@ import NoticesIndex from './pages/Notices/index.tsx';
 import VehiclesIndex from './pages/Vehicles/index.tsx';
 import AssessmentsIndex from './pages/Assessments/index.tsx';
 import ResultsIndex from './pages/Results/index.tsx';
+import ClientsIndex from './pages/Clients/index.tsx';
+import EduSparkApplication from './pages/Clients/EduSparkApplication.tsx';
 import { Toaster } from 'react-hot-toast';
 import './index.css';
 
@@ -30,6 +32,14 @@ const router = createBrowserRouter([
   {
     path: '/',
     element: <App />,
+  },
+  {
+    path: '/clients',
+    element: <ClientsIndex />,
+  },
+  {
+    path: '/clients/eduspark-tuition-classes',
+    element: <EduSparkApplication />,
   },
 
   {
